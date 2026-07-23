@@ -33,7 +33,7 @@
   <!-- 
     - preload images
   -->
-  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
 
@@ -229,7 +229,7 @@
           <li class="slider-item active" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-1.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-1.png" width="1880" height="950" alt="" class="img-cover">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">Tradisional & Higienis</p>
@@ -356,7 +356,7 @@
                     <a href="#">Sarapan</a>
                   </h3>
 
-                  <a href="#" class="btn-text hover-underline label-2">Lihat Menu</a>
+                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
 
                 </div>
 
@@ -445,7 +445,7 @@
 
             <a href="tel:+804001234567" class="body-1 contact-number hover-underline">+62 812 3456 7890</a>
 
-            <a href="#" class="btn btn-primary">
+            <a href="#about" class="btn btn-primary">
               <span class="text text-1">Selengkapnya</span>
 
               <span class="text text-2" aria-hidden="true">Selengkapnya</span>
@@ -1174,7 +1174,7 @@
           <p class="label-1">
             Berlangganan & Dapatkan <span class="span">Diskon 25%.</span>
           </p>
-git
+
           <form action="{{ route('subscribe.store') }}" method="POST" class="input-wrapper">
             @csrf
             <div class="icon-wrapper">
