@@ -194,10 +194,22 @@
 
       </nav>
 
-      <a href="#" class="btn btn-secondary">
-        <span class="text text-1">Pesan Meja</span>
+      <a href="{{ route('cart.index') }}" class="btn btn-secondary" target="_blank">
 
-        <span class="text text-2" aria-hidden="true">Pesan Meja</span>
+          <span class="text text-1">
+              Pesanan
+              @if($cartCount > 0)
+                  ({{ $cartCount }})
+              @endif
+          </span>
+
+          <span class="text text-2" aria-hidden="true">
+              Pesanan
+              @if($cartCount > 0)
+                  ({{ $cartCount }})
+              @endif
+          </span>
+
       </a>
 
       <button class="nav-open-btn" aria-label="buka menu" data-nav-toggler>
@@ -311,7 +323,7 @@
           <ion-icon name="chevron-forward"></ion-icon>
         </button>
 
-        <a href="#" class="hero-btn has-after">
+        <a href="#reservasi" class="hero-btn has-after">
           <img src="./assets/images/hero-icon.png" width="48" height="48" alt="ikon pemesanan">
 
           <span class="label-2 text-center span">Pesan Meja</span>
@@ -548,231 +560,76 @@
 
           <div class="menu-grid">
 
-            <!-- Menu Item 1 - Nasi Kuning -->
-            <div class="menu-item-card" data-category="nasi">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-1.png" width="300" height="300" loading="lazy" alt="Nasi Kuning">
-                <span class="menu-badge">Terlaris</span>
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
+           @foreach ($menus as $menu)
+
+            <div class="menu-item-card" data-category="{{ $menu->category }}">
+
+                <div class="menu-item-image">
+
+                    <img src="{{ asset('uploads/menu/' . $menu->image) }}"
+                        alt="{{ $menu->name }}"
+                        width="300"
+                        height="300"
+                        loading="lazy">
+
+                    @if($menu->status)
+                        <span class="menu-badge">
+                            Tersedia
+                        </span>
+                    @else
+                        <span class="menu-badge menu-badge-danger">
+                            Habis
+                        </span>
+                    @endif
+
+                    <div class="menu-overlay">
+                        <a href="#" class="menu-quick-view">
+                            <ion-icon name="eye-outline"></ion-icon>
+                            <span>Lihat Detail</span>
+                        </a>
+                    </div>
+
                 </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Nasi Kuning</h3>
-                  <span class="menu-item-price">Rp 25.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Nasi kuning dengan ayam suwir, telur rebus, sambal, dan kerupuk. 
-                  Disajikan dengan bumbu rahasia Ibu Opik.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-half"></ion-icon>
-                    <span>4.5</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
+
+                <div class="menu-item-content">
+
+                    <div class="menu-item-header">
+
+                        <h3 class="menu-item-title">
+                            {{ $menu->name }}
+                        </h3>
+
+                        <span class="menu-item-price">
+                            Rp {{ number_format($menu->price,0,',','.') }}
+                        </span>
+
+                    </div>
+
+                    <p class="menu-item-description">
+                        {{ $menu->description }}
+                    </p>
+
+                    <div class="menu-item-footer">
+
+                        <span class="menu-item-rating">
+                            {{ ucfirst($menu->category) }}
+                        </span>
+
+                        <form action="{{ route('cart.add', $menu->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn-order">
+                                <ion-icon name="cart-outline"></ion-icon>
+                                <span>Pesan</span>
+                            </button>
+                        </form>
+
+                    </div>
+
             </div>
 
-            <!-- Menu Item 2 - Nasi Goreng -->
-            <div class="menu-item-card" data-category="nasi">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-2.png" width="300" height="300" loading="lazy" alt="Nasi Goreng">
-                <span class="menu-badge menu-badge-new">Baru</span>
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
-                </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Nasi Goreng</h3>
-                  <span class="menu-item-price">Rp 30.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Nasi goreng spesial dengan telur mata sapi, ayam, sayuran segar, 
-                  dan bumbu rempah khas Indonesia.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <span>5.0</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+          </div>
 
-            <!-- Menu Item 3 - Ayam Penyet -->
-            <div class="menu-item-card" data-category="ayam">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-3.png" width="300" height="300" loading="lazy" alt="Ayam Penyet">
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
-                </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Ayam Penyet</h3>
-                  <span class="menu-item-price">Rp 28.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Ayam goreng yang disajikan dengan sambal terasi pedas, 
-                  lalapan segar, dan nasi putih hangat.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <span>4.2</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Menu Item 4 - Sate Ayam -->
-            <div class="menu-item-card" data-category="ayam">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-4.png" width="300" height="300" loading="lazy" alt="Sate Ayam">
-                <span class="menu-badge menu-badge-new">Baru</span>
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
-                </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Sate Ayam</h3>
-                  <span class="menu-item-price">Rp 35.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Sate ayam dengan bumbu kacang yang gurih, disajikan dengan 
-                  lontong, bawang, dan sambal.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-half"></ion-icon>
-                    <span>4.7</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Menu Item 5 - Gado-Gado -->
-            <div class="menu-item-card" data-category="sayur">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-5.png" width="300" height="300" loading="lazy" alt="Gado-Gado">
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
-                </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Gado-Gado</h3>
-                  <span class="menu-item-price">Rp 22.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Sayuran segar rebus dengan bumbu kacang yang creamy, 
-                  telur, dan kerupuk sebagai pelengkap.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <span>4.3</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Menu Item 6 - Ikan Bakar -->
-            <div class="menu-item-card" data-category="seafood">
-              <div class="menu-item-image">
-                <img src="./assets/images/menu-6.png" width="300" height="300" loading="lazy" alt="Ikan Bakar">
-                <span class="menu-badge">Favorit</span>
-                <div class="menu-overlay">
-                  <a href="#" class="menu-quick-view">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    <span>Lihat Detail</span>
-                  </a>
-                </div>
-              </div>
-              <div class="menu-item-content">
-                <div class="menu-item-header">
-                  <h3 class="menu-item-title">Ikan Bakar</h3>
-                  <span class="menu-item-price">Rp 40.000</span>
-                </div>
-                <p class="menu-item-description">
-                  Ikan bakar dengan bumbu kecap manis pedas, disajikan dengan 
-                  sambal dabu-dabu dan lalapan.
-                </p>
-                <div class="menu-item-footer">
-                  <div class="menu-item-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <span>4.9</span>
-                  </div>
-                  <a href="#" class="btn-order">
-                    <ion-icon name="cart-outline"></ion-icon>
-                    <span>Pesan</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+          @endforeach
 
           </div>
 
@@ -833,7 +690,7 @@
       -->
 
       <section class="reservation">
-        <div class="container">
+        <div class="container" id="reservasi">
 
           <div class="form reservation-form bg-black-10">
 

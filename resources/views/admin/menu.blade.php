@@ -43,33 +43,16 @@
         <nav class="sidebar-nav">
             <div class="nav-label">Main Menu</div>
             
-            <a href="index.html">
-                <i class="fas fa-th-large"></i>
-                <span>Dashboard</span>
-            </a>
-            
-            <a href="menu.html" class="active">
+            <a href="{{ route('menu.index') }}" class="active">
                 <i class="fas fa-utensils"></i>
                 <span>Menu</span>
                 <span class="badge gold">{{ $menus->count() }}</span>
             </a>
-            
-            <a href="orders.html">
-                <i class="fas fa-shopping-cart"></i>
+
+            <a href="{{ route('orders.index') }}">
+                <i class="fas fa-utensils"></i>
                 <span>Pesanan</span>
-                <span class="badge warning">8</span>
-            </a>
-            
-            <a href="customers.html">
-                <i class="fas fa-users"></i>
-                <span>Pelanggan</span>
-                <span class="badge">245</span>
-            </a>
-            
-            <a href="reviews.html">
-                <i class="fas fa-star"></i>
-                <span>Ulasan</span>
-                <span class="badge">4.8★</span>
+                <span class="badge gold">{{ $menus->count() }}</span>
             </a>
             
             <div class="nav-label" style="margin-top: 24px;">Settings</div>
