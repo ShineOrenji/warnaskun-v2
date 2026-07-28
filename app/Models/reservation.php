@@ -13,5 +13,6 @@ class Reservation extends Model
         'reservation_date',
         'reservation_time',
         'message',
+        'status',
     ];
 }

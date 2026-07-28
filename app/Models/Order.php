@@ -9,10 +9,12 @@ class Order extends Model
     protected $fillable = [
         'customer_name',
         'phone',
+        'delivery_type',
         'address',
+        'landmark',
         'note',
         'total',
-        'status'
+        'status',
     ];
 
     public function items()

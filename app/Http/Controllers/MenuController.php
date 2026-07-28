@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -13,8 +14,9 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::all();
+        $orderCount = Order::count();
 
-        return view('admin.menu', compact('menus'));
+        return view('admin.menu', compact('menus', 'orderCount'));
     }
 
     /**

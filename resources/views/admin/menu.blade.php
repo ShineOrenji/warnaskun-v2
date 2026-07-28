@@ -43,16 +43,32 @@
         <nav class="sidebar-nav">
             <div class="nav-label">Main Menu</div>
             
+            <a href="{{ route('dashboard.index') }}">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
             <a href="{{ route('menu.index') }}" class="active">
                 <i class="fas fa-utensils"></i>
                 <span>Menu</span>
-                <span class="badge gold">{{ $menus->count() }}</span>
+                <span class="badge gold">{{ $totalMenus }}</span>
             </a>
 
             <a href="{{ route('orders.index') }}">
                 <i class="fas fa-utensils"></i>
                 <span>Pesanan</span>
-                <span class="badge gold">{{ $menus->count() }}</span>
+                <span class="badge warning">{{ $pendingOrders }}</span>
+            </a>
+
+            <a href="{{ route('customers.index') }}">
+                <i class="fas fa-users"></i>
+                <span>Pelanggan</span>
+                <span class="badge">{{ $totalCustomers }}</span>
+            </a>
+
+            <a href="{{ route('reservations.index') }}">
+                <i class="fas fa-calendar-check"></i>
+                <span>Reservasi</span>
             </a>
             
             <div class="nav-label" style="margin-top: 24px;">Settings</div>
@@ -108,10 +124,9 @@
             <div class="filter-container">
                 <button class="btn btn-primary menu-filter-btn" data-filter="all">Semua</button>
                 <button class="btn btn-outline menu-filter-btn" data-filter="nasi">Nasi</button>
-                <button class="btn btn-outline menu-filter-btn" data-filter="ayam">Ayam</button>
-                <button class="btn btn-outline menu-filter-btn" data-filter="seafood">Seafood</button>
-                <button class="btn btn-outline menu-filter-btn" data-filter="sayur">Sayuran</button>
+                <button class="btn btn-outline menu-filter-btn" data-filter="lauk">Lauk</button>
                 <button class="btn btn-outline menu-filter-btn" data-filter="minuman">Minuman</button>
+                <button class="btn btn-outline menu-filter-btn" data-filter="soon">Soon</button>
             </div>
 
             <!-- Menu Grid -->
@@ -215,10 +230,9 @@
                         <select id="menuCategory" name="category" required>
                             <option value="">Pilih Kategori</option>
                             <option value="nasi">Nasi</option>
-                            <option value="ayam">Ayam</option>
-                            <option value="seafood">Seafood</option>
-                            <option value="sayur">Sayuran</option>
+                            <option value="lauk">Lauk</option>
                             <option value="minuman">Minuman</option>
+                            <option value="soon">Soon</option>
                         </select>
                     </div>
                     

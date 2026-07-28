@@ -49,17 +49,17 @@ class CartController extends Controller
         return view('checkout', compact('cart'));
     }
 
-    public function remove($id)
+    public function remove(Request $request, $id)
     {
-        $cart = session()->get('cart', []);
+            $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-        }
+            if(isset($cart[$id])){
+                unset($cart[$id]);
+            }
 
-        session()->put('cart', $cart);
+            session()->put('cart',$cart);
 
-        return back()->with('success', 'Menu dihapus dari keranjang.');
+            return back()->with('success','Menu dihapus.');
     }
 
     public function update(Request $request, $id)
@@ -74,41 +74,50 @@ class CartController extends Controller
         return back();
     }
 
-    public function increase($id)
+    public function increase(Request $request, $id)
 {
-    $cart = session()->get('cart', []);
-
-    if (isset($cart[$id])) {
-        $cart[$id]['qty']++;
-    }
-
-    session()->put('cart', $cart);
-
-    return back();
-}
-
-    public function decrease($id)
     {
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
-
-            if ($cart[$id]['qty'] > 1) {
-                $cart[$id]['qty']--;
-            } else {
-                unset($cart[$id]);
-            }
-
+            $cart[$id]['qty']++;
         }
 
         session()->put('cart', $cart);
 
         return back();
     }
+}
+
+    public function decrease(Request $request,$id)
+    {
+            $cart = session()->get('cart', []);
+
+            if(isset($cart[$id])){
+
+                if($cart[$id]['qty']>1){
+                    $cart[$id]['qty']--;
+                }else{
+                    unset($cart[$id]);
+                }
+
+            }
+
+            session()->put('cart',$cart);
+
+            return back();
+    }
 
     public function checkout(Request $request)
     {
         $cart = session()->get('cart', []);
+
+        $request->validate([
+        'customer_name' => 'required',
+        'phone' => 'required',
+        'delivery_type' => 'required',
+        'address' => 'required_if:delivery_type,antar',
+    ]);
 
         if (empty($cart)) {
             return back()->with('error', 'Keranjang masih kosong.');
@@ -121,13 +130,15 @@ class CartController extends Controller
         }
 
         $order = Order::create([
-            'customer_name' => $request->customer_name,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'note' => $request->note,
-            'total' => $total,
-            'status' => 'Menunggu'
-        ]);
+        'customer_name' => $request->customer_name,
+        'phone'         => $request->phone,
+        'delivery_type' => $request->delivery_type,
+        'address'       => $request->address,
+        'landmark'      => $request->landmark,
+        'note'          => $request->note,
+        'total'         => $total,
+        'status'        => 'Menunggu',
+    ]);
 
         foreach ($cart as $id => $item) {
 
@@ -151,7 +162,13 @@ class CartController extends Controller
 
         session()->forget('cart');
 
-        return redirect('/')
-                ->with('success', 'Pesanan berhasil dibuat!');
+        return redirect()->route('cart.success', [
+            'order' => $order->id
+        ]);
+    }
+
+    public function success(Order $order)
+    {
+        return view('checkout-success', compact('order'));
     }
 }

@@ -67,7 +67,7 @@
         </div>
 
         <span class="span">
-          Jl. Kuliner Nusantara, Kota Delicious, Indonesia
+          Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
         </span>
       </address>
 
@@ -78,25 +78,25 @@
           <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
         </div>
 
-        <span class="span">Setiap Hari : 08.00 - 22.00</span>
+        <span class="span">Setiap Hari : 08.00 - 23.00</span>
       </div>
 
-      <a href="tel:+11234567890" class="topbar-item link">
+      <a href="tel:+6285559150809" class="topbar-item link">
         <div class="icon">
           <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
         </div>
 
-        <span class="span">+62 812 3456 7890</span>
+        <span class="span">+62 855 915 0809</span>
       </a>
 
       <div class="separator"></div>
 
-      <a href="mailto:booking@warungibuopik.com" class="topbar-item link">
+      <a href="mailto:fahmirhamadan5@gmail.com" class="topbar-item link">
         <div class="icon">
           <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
         </div>
 
-        <span class="span">booking@warungibuopik.com</span>
+        <span class="span">fahmirhamadan5@gmail.com</span>
       </a>
 
     </div>
@@ -114,7 +114,7 @@
     <div class="container">
 
       <a href="#" class="logo">
-        <img src="./assets/images/logo.svg" width="160" height="50" alt="Warung Nasi Kuning Ibu Opik - Beranda">
+        <img src="./assets/images/logo.png" width="160" height="50" alt="Warung Nasi Kuning Ibu Opik - Beranda">
       </a>
 
       <nav class="navbar" data-navbar>
@@ -124,7 +124,7 @@
         </button>
 
         <a href="#" class="logo mobile-logo">
-          <img src="./assets/images/logo.svg" width="160" height="50" alt="Warung Nasi Kuning Ibu Opik - Beranda">
+          <img src="./assets/images/logo.png" width="160" height="50" alt="Warung Nasi Kuning Ibu Opik - Beranda">
         </a>
 
         <ul class="navbar-list">
@@ -154,15 +154,15 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link hover-underline" data-nav-link>
+            <a href="#reservasi" class="navbar-link hover-underline" data-nav-link>
               <div class="separator"></div>
 
-              <span class="span">Koki Kami</span>
+              <span class="span">Reservasi</span>
             </a>
           </li>
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link hover-underline" data-nav-link>
+            <a href="#kontak" class="navbar-link hover-underline" data-nav-link>
               <div class="separator"></div>
 
               <span class="span">Kontak</span>
@@ -175,26 +175,25 @@
           <p class="headline-1 navbar-title">Kunjungi Kami</p>
 
           <address class="body-4">
-            Jl. Kuliner Nusantara, Kota Delicious, <br>
-            Indonesia
+            Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
           </address>
 
-          <p class="body-4 navbar-text">Buka: 09.30 - 14.30</p>
+          <p class="body-4 navbar-text">Buka: 08.00 - 23.00</p>
 
-          <a href="mailto:booking@warungibuopik.com" class="body-4 sidebar-link">booking@warungibuopik.com</a>
+          <a href="mailto:fahmirhamadan5@gmail.com" class="body-4 sidebar-link">fahmirhamadan5@gmail.com</a>
 
           <div class="separator"></div>
 
           <p class="contact-label">Pemesanan</p>
 
-          <a href="tel:+88123123456" class="body-1 contact-number hover-underline">
-            +62 812 3456 7890
+          <a href="tel:+6285559150809" class="body-1 contact-number hover-underline">
+            +62 855 5915 0809
           </a>
         </div>
 
       </nav>
 
-      <a href="{{ route('cart.index') }}" class="btn btn-secondary" target="_blank">
+      <a href="{{ route('cart.index') }}" class="btn btn-secondary">
 
           <span class="text text-1">
               Pesanan
@@ -357,7 +356,7 @@
 
                 <a href="#" class="has-before hover:shine">
                   <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="./assets/images/service-1.jpg" width="285" height="336" loading="lazy" alt="Sarapan"
+                    <img src="https://www.dapurkintamani.com/wp-content/uploads/2023/09/nasi-kuning.webp" width="285" height="336" loading="lazy" alt="Sarapan"
                       class="img-cover">
                   </figure>
                 </a>
@@ -380,7 +379,7 @@
 
                 <a href="#" class="has-before hover:shine">
                   <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="./assets/images/service-2.jpg" width="285" height="336" loading="lazy" alt="Camilan"
+                    <img src="https://c1.wallpaperflare.com/preview/88/726/522/krupuk-deep-fried-crackers-keropok.jpg" width="285" height="336" loading="lazy" alt="Camilan"
                       class="img-cover">
                   </figure>
                 </a>
@@ -391,7 +390,7 @@
                     <a href="#">Camilan</a>
                   </h3>
 
-                  <a href="#" class="btn-text hover-underline label-2">Lihat Menu</a>
+                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
 
                 </div>
 
@@ -403,7 +402,7 @@
 
                 <a href="#" class="has-before hover:shine">
                   <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="./assets/images/service-3.jpg" width="285" height="336" loading="lazy" alt="Minuman"
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt_ic7CUTliN-h8l0M1iJz7zYp1xsq_zzReLl_LGiGBiLw8RDbZplj3Ocs&s=10" width="285" height="336" loading="lazy" alt="Minuman"
                       class="img-cover">
                   </figure>
                 </a>
@@ -414,7 +413,7 @@
                     <a href="#">Minuman</a>
                   </h3>
 
-                  <a href="#" class="btn-text hover-underline label-2">Lihat Menu</a>
+                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
 
                 </div>
 
@@ -553,9 +552,9 @@
           <div class="menu-filter">
             <button class="filter-btn active" data-filter="all">Semua</button>
             <button class="filter-btn" data-filter="nasi">Nasi</button>
-            <button class="filter-btn" data-filter="ayam">Ayam</button>
-            <button class="filter-btn" data-filter="seafood">Seafood</button>
-            <button class="filter-btn" data-filter="sayur">Sayuran</button>
+            <button class="filter-btn" data-filter="lauk">Lauk</button>
+            <button class="filter-btn" data-filter="minuman">minuman</button>
+            <button class="filter-btn" data-filter="seafood">Soon</button>
           </div>
 
           <div class="menu-grid">
@@ -617,7 +616,7 @@
 
                         <form action="{{ route('cart.add', $menu->id) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn-order">
+                            <button href="#menu" type="submit" class="btn-order">
                                 <ion-icon name="cart-outline"></ion-icon>
                                 <span>Pesan</span>
                             </button>
@@ -634,7 +633,7 @@
           </div>
 
           <p class="menu-text text-center">
-            Setiap hari mulai <span class="span">19.00</span> sampai <span class="span">21.00</span>
+            Setiap hari mulai <span class="span">08.00</span> sampai <span class="span">23.00</span>
           </p>
 
           <a href="#" class="btn btn-primary">
@@ -661,8 +660,7 @@
           <div class="quote">”</div>
 
           <p class="headline-2 testi-text">
-            Terima kasih telah mengundang kami untuk menikmati makan malam yang luar biasa. 
-            Makanannya sungguh istimewa dan rasanya tak terlupakan.
+            Nasi Kuning Paling Mantap se-Galaxy Andromeda
           </p>
 
           <div class="wrapper">
@@ -670,20 +668,8 @@
             <div class="separator"></div>
             <div class="separator"></div>
           </div>
-
-          <div class="profile">
-            <img src="./assets/images/testi-avatar.jpg" width="100" height="100" loading="lazy" alt="Budi Santoso"
-              class="img">
-
-            <p class="label-2 profile-name">Budi Santoso</p>
-          </div>
-
         </div>
       </section>
-
-
-
-
 
       <!-- 
         - #RESERVATION
@@ -988,10 +974,6 @@
     </article>
   </main>
 
-
-
-
-
   <!-- 
     - #FOOTER
   -->
@@ -1005,19 +987,19 @@
         <div class="footer-brand has-before has-after">
 
           <a href="#" class="logo">
-            <img src="./assets/images/logo.svg" width="160" height="50" loading="lazy" alt="Warung Nasi Kuning Ibu Opik">
+            <img src="./assets/images/logo.png" width="160" height="50" loading="lazy" alt="Warung Nasi Kuning Ibu Opik">
           </a>
 
           <address class="body-4">
-            Jl. Kuliner Nusantara, Kota Delicious, Indonesia
+            Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
           </address>
 
-          <a href="mailto:booking@warungibuopik.com" class="body-4 contact-link">booking@warungibuopik.com</a>
+          <a href="mailto:fahmirhamadan5@gmail.com" class="body-4 contact-link">fahmirhamadan5@gmail.com</a>
 
-          <a href="tel:+88123123456" class="body-4 contact-link">Pemesanan : +62 812 3456 7890</a>
+          <a href="tel:+6285559150809" class="body-4 contact-link">Pemesanan : +62 855 5915 0809</a>
 
           <p class="body-4">
-            Buka : 09.00 - 13.00
+            Buka : 08.00 - 23.00
           </p>
 
           <div class="wrapper">
@@ -1076,19 +1058,19 @@
         <ul class="footer-list">
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Facebook</a>
+            <a href="https://facebook.com/fhmirmdnn" class="label-2 footer-link hover-underline">Facebook</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Instagram</a>
+            <a href="https://www.instagram.com/fhmirmdnn" class="label-2 footer-link hover-underline">Instagram</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Twitter</a>
+            <a href="https://twitter.com/fhmirmdnn" class="label-2 footer-link hover-underline">Twitter</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Youtube</a>
+            <a href="https://www.youtube.com/fhmirmdnn" class="label-2 footer-link hover-underline">Youtube</a>
           </li>
 
           <li>
@@ -1102,8 +1084,8 @@
       <div class="footer-bottom">
 
         <p class="copyright">
-          &copy; 2022 Warung Nasi Kuning Ibu Opik. All Rights Reserved | Crafted by <a href="https://github.com/codewithsadee"
-            target="_blank" class="link">codewithsadee</a>
+          &copy; 2025 Warung Nasi Kuning Ibu Opik. All Rights Reserved | Crafted by <a href="https://github.com/codewithsadee"
+            target="_blank" class="link">ShineOrenji</a>
         </p>
 
       </div>

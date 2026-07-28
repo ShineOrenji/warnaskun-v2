@@ -20,4 +20,35 @@ class ReservationController extends Controller
 
     return back()->with('success', 'Reservasi berhasil!');
 }
+
+    public function show(Reservation $reservation)
+    {
+        return view('admin.reservation-detail', compact('reservation'));
+    }
+
+    public function updateStatus(Reservation $reservation)
+    {
+        if ($reservation->status == 'pending') {
+
+            $reservation->status = 'confirmed';
+
+        } elseif ($reservation->status == 'confirmed') {
+
+            $reservation->status = 'completed';
+
+        }
+
+        $reservation->save();
+
+        return back()->with('success', 'Status reservasi berhasil diperbarui.');
+    }
+
+    public function destroy(Reservation $reservation)
+    {
+        $reservation->delete();
+
+        return redirect()
+            ->route('reservations.index')
+            ->with('success', 'Reservasi berhasil dihapus.');
+    }
 }

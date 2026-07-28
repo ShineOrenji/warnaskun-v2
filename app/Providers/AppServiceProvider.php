@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Menu;
+use App\Models\Order;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +34,24 @@ class AppServiceProvider extends ServiceProvider
 
             session()->put('cart', $cart);
 
-            $view->with('cartCount', count($cart));
+            $totalMenus = Menu::count();
+
+            $pendingOrders = Order::whereIn('status', [
+                'Menunggu',
+                'Diproses'
+            ])->count();
+
+            $totalCustomers = Order::where('status', 'Selesai')
+                ->select('phone')
+                ->distinct()
+                ->count();
+
+            $view->with([
+            'cartCount'      => count($cart),
+            'totalMenus'     => $totalMenus,
+            'pendingOrders'  => $pendingOrders,
+            'totalCustomers' => $totalCustomers,
+        ]);
 
         });
     }
