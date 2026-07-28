@@ -12,6 +12,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservationAdminController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,15 @@ Route::get('/', function () {
     return view('home', compact('menus'));
 
 })->name('home');
+
+Route::get('/login', [LoginController::class, 'index'])
+    ->name('login');
+
+Route::post('/login', [LoginController::class, 'authenticate'])
+    ->name('login.process');
+
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +54,7 @@ Route::post('/subscribe', [SubscribeController::class, 'store'])
 | MENU ADMIN
 |--------------------------------------------------------------------------
 */
+Route::middleware('auth')->group(function () {
 
 Route::get('/admin/menu', [MenuController::class, 'index'])
     ->name('menu.index');
@@ -60,6 +71,78 @@ Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])
 Route::patch('/menu/{menu}/toggle-status',
     [MenuController::class, 'toggleStatus'])
     ->name('menu.toggleStatus');
+
+/*
+|--------------------------------------------------------------------------
+| RESERVATIONS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/reservations',
+    [ReservationAdminController::class, 'index'])
+    ->name('reservations.index');
+
+Route::get('/admin/reservations/{reservation}',
+    [ReservationAdminController::class, 'show'])
+    ->name('reservations.show');
+
+Route::patch('/admin/reservations/{reservation}/status',
+    [ReservationAdminController::class, 'updateStatus'])
+    ->name('reservations.status');
+
+Route::delete('/admin/reservations/{reservation}',
+    [ReservationAdminController::class, 'destroy'])
+    ->name('reservations.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/dashboard',
+    [DashboardController::class, 'index'])
+    ->name('dashboard.index');
+
+Route::get(
+    '/admin/orders/{order}/modal',
+    [OrdersController::class, 'modal']
+)->name('orders.modal');
+
+/*
+|--------------------------------------------------------------------------
+| ORDERS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/orders',
+    [OrdersController::class, 'index'])
+    ->name('orders.index');
+
+Route::get('/admin/orders/{order}',
+    [OrdersController::class, 'show'])
+    ->name('orders.show');
+
+Route::patch('/admin/orders/{order}/status',
+    [OrdersController::class, 'updateStatus'])
+    ->name('orders.status');
+
+Route::delete('/admin/orders/{order}',
+    [OrdersController::class, 'destroy'])
+    ->name('orders.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| CUSTOMERS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/customers',
+    [CustomerController::class, 'index'])
+    ->name('customers.index');
+
+
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -109,73 +192,5 @@ Route::get('/checkout/success/{order}',
     [CartController::class, 'success'])
     ->name('cart.success');
 
-/*
-|--------------------------------------------------------------------------
-| DASHBOARD
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/admin/dashboard',
-    [DashboardController::class, 'index'])
-    ->name('dashboard.index');
-
-Route::get(
-    '/admin/orders/{order}/modal',
-    [OrdersController::class, 'modal']
-)->name('orders.modal');
-
-/*
-|--------------------------------------------------------------------------
-| ORDERS
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/admin/orders',
-    [OrdersController::class, 'index'])
-    ->name('orders.index');
-
-Route::get('/admin/orders/{order}',
-    [OrdersController::class, 'show'])
-    ->name('orders.show');
-
-Route::patch('/admin/orders/{order}/status',
-    [OrdersController::class, 'updateStatus'])
-    ->name('orders.status');
-
-Route::delete('/admin/orders/{order}',
-    [OrdersController::class, 'destroy'])
-    ->name('orders.destroy');
-
-/*
-|--------------------------------------------------------------------------
-| CUSTOMERS
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/admin/customers',
-    [CustomerController::class, 'index'])
-    ->name('customers.index');
-
-/*
-|--------------------------------------------------------------------------
-| RESERVATIONS
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/admin/reservations',
-    [ReservationAdminController::class, 'index'])
-    ->name('reservations.index');
-
-Route::get('/admin/reservations/{reservation}',
-    [ReservationAdminController::class, 'show'])
-    ->name('reservations.show');
-
-Route::patch('/admin/reservations/{reservation}/status',
-    [ReservationAdminController::class, 'updateStatus'])
-    ->name('reservations.status');
-
-Route::delete('/admin/reservations/{reservation}',
-    [ReservationAdminController::class, 'destroy'])
-    ->name('reservations.destroy');
 
 //KAMPRET

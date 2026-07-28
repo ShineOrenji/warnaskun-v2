@@ -81,10 +81,13 @@
                 <span>Pengaturan</span>
             </a>
 
-            <a href="#">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit">
+                    <i class="fas fa-sign-out"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
         </nav>
     </aside>
 

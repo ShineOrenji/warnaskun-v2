@@ -966,11 +966,11 @@ body.preload-active { overflow: hidden; }
 }
 
 .filter-btn {
-  padding: 5px 10px;
+  padding: 10px 28px;
   border-radius: 50px;
   background: var(--smoky-black-2);
   color: var(--quick-silver);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: var(--letterSpacing-3);
@@ -1018,11 +1018,9 @@ body.preload-active { overflow: hidden; }
 
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
   margin-block-end: 50px;
-  padding: 40px;
-  margin: 50px;
 }
 
 .menu-item-card {
@@ -1945,74 +1943,5 @@ body:not(.nav-active) {
   .menu-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
-  }
-}
-
-/*-----------------------------------*\
-  #NAVBAR FIX - PUSATKAN NAVBAR
-\*-----------------------------------*/
-
-/* Untuk layar desktop (1200px ke atas) */
-@media (min-width: 1200px) {
-  .navbar-list {
-    display: flex !important;
-    gap: 30px !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-  
-  /* Pastikan navbar tidak kepotong */
-  .navbar,
-  .navbar.active {
-    margin-inline: auto !important;
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-  
-  .header .container {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    gap: 20px !important;
-  }
-  
-  /* Biarkan logo di kiri, navbar di tengah, tombol di kanan */
-  .header .logo {
-    flex-shrink: 0 !important;
-  }
-  
-  .navbar {
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-  
-  .header .btn {
-    flex-shrink: 0 !important;
-    margin-inline-start: 0 !important;
-  }
-}
-
-/* Untuk layar 992px - 1199px (tablet besar) */
-@media (min-width: 992px) and (max-width: 1199px) {
-  .navbar-list {
-    display: flex !important;
-    gap: 20px !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-  
-  .navbar {
-    flex: 1 !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-  
-  .header .container {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    gap: 15px !important;
   }
 }

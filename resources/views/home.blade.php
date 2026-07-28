@@ -454,7 +454,7 @@
 
             <div class="contact-label">Pesan Lewat Telepon</div>
 
-            <a href="tel:+804001234567" class="body-1 contact-number hover-underline">+62 812 3456 7890</a>
+            <a href="tel:+6285559150809" class="body-1 contact-number hover-underline">+62 855 5915 0809</a>
 
             <a href="#about" class="btn btn-primary">
               <span class="text text-1">Selengkapnya</span>
@@ -997,7 +997,7 @@
           <a href="mailto:fahmirhamadan5@gmail.com" class="body-4 contact-link">fahmirhamadan5@gmail.com</a>
 
           <a href="tel:+6285559150809" class="body-4 contact-link">Pemesanan : +62 855 5915 0809</a>
-
+          
           <p class="body-4">
             Buka : 08.00 - 23.00
           </p>
@@ -1009,7 +1009,7 @@
           </div>
 
           <p class="title-1">Dapatkan Berita & Penawaran</p>
-
+          
           <p class="label-1">
             Berlangganan & Dapatkan <span class="span">Diskon 25%.</span>
           </p>
@@ -1028,7 +1028,7 @@
               <span class="text text-2" aria-hidden="true">Berlangganan</span>
             </button>
           </form>
-
+        
         </div>
 
         <ul class="footer-list">
@@ -1078,13 +1078,12 @@
           </li>
 
         </ul>
-
       </div>
 
       <div class="footer-bottom">
 
         <p class="copyright">
-          &copy; 2025 Warung Nasi Kuning Ibu Opik. All Rights Reserved | Crafted by <a href="https://github.com/codewithsadee"
+          &copy; 2025 Warung Nasi Kuning Ibu Opik. All Rights Reserved | Crafted by <a href="https://github.com/ShineOrenji"
             target="_blank" class="link">ShineOrenji</a>
         </p>
 
