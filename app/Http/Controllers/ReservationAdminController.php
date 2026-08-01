@@ -26,4 +26,23 @@ class ReservationAdminController extends Controller
             ->route('reservations.index')
             ->with('success', 'Reservasi berhasil dihapus.');
     }
+
+    public function updateStatus(Reservation $reservation)
+{
+    if ($reservation->status == 'Menunggu') {
+
+        $reservation->update([
+            'status' => 'Diterima'
+        ]);
+
+    } elseif ($reservation->status == 'Diterima') {
+
+        $reservation->update([
+            'status' => 'Selesai'
+        ]);
+
+    }
+
+    return back()->with('success', 'Status reservasi berhasil diperbarui.');
+}
 }

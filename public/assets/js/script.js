@@ -212,3 +212,40 @@ window.addEventListener('mousemove', function (event) {
   }
 
 });
+
+// ============================================
+// FLOATING CART - MUNCUL PAS SCROLL
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const floatingCart = document.getElementById('floatingCart');
+    let isVisible = false;
+
+    // Cek posisi scroll
+    function checkScroll() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const heroHeight = document.querySelector('.hero')?.offsetHeight || 600;
+
+        // Munculin kalo scroll > 200px dari atas
+        if (scrollY > 200) {
+            if (!isVisible) {
+                floatingCart.classList.add('show');
+                isVisible = true;
+            }
+        } else {
+            if (isVisible) {
+                floatingCart.classList.remove('show');
+                isVisible = false;
+            }
+        }
+    }
+
+    // Cek pas load
+    setTimeout(checkScroll, 100);
+
+    // Cek pas scroll
+    window.addEventListener('scroll', checkScroll);
+
+    console.log('🟡 Floating Cart - muncul pas scroll!');
+});

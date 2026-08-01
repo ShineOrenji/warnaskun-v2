@@ -385,11 +385,11 @@
 
                     @php
                         $statusMap = [
-                            'pending' => ['badge-warning', 'Menunggu'],
-                            'confirmed' => ['badge-info', 'Dikonfirmasi'],
-                            'completed' => ['badge-success', 'Selesai'],
-                            'cancelled' => ['badge-danger', 'Dibatalkan'],
-                        ];
+                        'Menunggu' => ['warning', 'Menunggu'],
+                        'Diterima' => ['gold', 'Diterima'],
+                        'Selesai' => ['', 'Selesai'],
+                        'Ditolak' => ['danger', 'Ditolak'],
+                    ];
 
                         $status = $statusMap[$reservation->status] ?? ['badge-warning', $reservation->status];
                     @endphp
@@ -404,25 +404,37 @@
             <!-- Status & Actions -->
             <div class="action-wrapper">
 
-                @if($reservation->status == 'pending')
+                @if($reservation->status == 'Menunggu')
+
 
                     <form action="{{ route('reservations.status', $reservation->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn-action btn-confirm">
-                            <i class="fas fa-check-circle"></i> Konfirmasi Reservasi
+
+                        <button class="btn-action btn-confirm">
+                            <i class="fas fa-check"></i>
+                            Terima Reservasi
                         </button>
                     </form>
 
-                @elseif($reservation->status == 'confirmed')
+                @elseif($reservation->status == 'Diterima')
 
                     <form action="{{ route('reservations.status', $reservation->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn-action btn-complete">
-                            <i class="fas fa-check-double"></i> Tandai Selesai
+
+                        <button class="btn-action btn-complete">
+                            <i class="fas fa-check-double"></i>
+                            Tandai Selesai
                         </button>
                     </form>
+
+                @elseif($reservation->status == 'Ditolak')
+
+                <div class="status-message" style="color:#ef4444;">
+                    <i class="fas fa-times-circle"></i>
+                    Reservasi telah ditolak.
+                </div>
 
                 @else
 

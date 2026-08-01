@@ -81,12 +81,13 @@
                 <span>Pengaturan</span>
             </a>
 
-            <form action="{{ route('logout') }}" method="POST">
+            <button type="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--text-secondary, #a0a0a0); text-decoration: none; font-size: 14px; font-family: 'DM Sans', sans-serif; transition: all 0.3s ease; margin-bottom: 2px; cursor: pointer; width: 100%; background: transparent; border: none; text-align: left;">
+                <i class="fas fa-sign-out-alt" style="width: 20px; font-size: 16px; text-align: center;"></i>
+                <span>Logout</span>
+            </button>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
-                <button type="submit">
-                    <i class="fas fa-sign-out"></i>
-                    <span>Logout</span>
-                </button>
             </form>
         </nav>
     </aside>

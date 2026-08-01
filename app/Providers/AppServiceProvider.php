@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
                 ->count();
 
             $view->with([
-            'cartCount'      => count($cart),
+            'cartCount' => collect($cart)->sum('qty'),
             'totalMenus'     => $totalMenus,
             'pendingOrders'  => $pendingOrders,
             'totalCustomers' => $totalCustomers,

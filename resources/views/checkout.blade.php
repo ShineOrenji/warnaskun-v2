@@ -124,8 +124,28 @@
                                                 </button>
                                             </form>
 
-                                            <span class="qty-number">{{ $item['qty'] }}</span>
-
+                                            <input
+    type="text"
+    class="qty-number"
+    value="{{ $item['qty'] }}"
+    inputmode="numeric"
+    autocomplete="off"
+    style="
+        width: 35px !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        color: inherit !important;
+        text-align: center !important;
+        font: inherit !important;
+        border-radius: 0 !important;
+        appearance: none !important;
+    "
+>
                                             <!-- TOMBOL + (TAMBAH) -->
                                             <form action="{{ route('cart.increase', $item['id']) }}" method="POST" class="qty-form">
                                                 @csrf
@@ -300,6 +320,238 @@
     <!-- SCRIPTS -->
     <!-- ============================================ -->
     <script src="{{ asset('assets/js/checkout.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ================================
+            // Update jumlah item
+            // ================================
+            function updateItemCount() {
+                let totalItems = 0;
+
+                document.querySelectorAll('.qty-number').forEach(input => {
+                    totalItems += parseInt(input.value) || 0;
+                });
+
+                const itemCount = document.querySelector('.item-count');
+
+                if (itemCount) {
+                    itemCount.textContent = totalItems + ' item';
+                }
+            }
+
+            // ================================
+            // Update total harga
+            // ================================
+            function updateTotals() {
+                let grandTotal = 0;
+
+                document.querySelectorAll('.item-subtotal').forEach(el => {
+                    grandTotal += parseInt(el.textContent.replace(/\D/g, '')) || 0;
+                });
+
+                document.querySelectorAll('.total-row').forEach(row => {
+                    const label = row.querySelector('span:first-child');
+                    const value = row.querySelector('span:last-child');
+
+                    if (!label || !value) return;
+
+                    const text = label.textContent.trim();
+
+                    if (text === 'Subtotal' || text === 'Total') {
+                        value.textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
+                    }
+                });
+            }
+
+            // ================================
+            // Update subtotal item
+            // ================================
+            function updateItemSubtotal(item) {
+                const qtyInput = item.querySelector('.qty-number');
+                const priceElement = item.querySelector('.item-price');
+                const subtotalElement = item.querySelector('.item-subtotal');
+
+                if (!qtyInput || !priceElement || !subtotalElement) return;
+
+                const qty = parseInt(qtyInput.value) || 0;
+                const price = parseInt(priceElement.textContent.replace(/\D/g, '')) || 0;
+
+                subtotalElement.textContent =
+                    'Rp ' + (qty * price).toLocaleString('id-ID');
+            }
+
+            // ================================
+            // Keranjang kosong
+            // ================================
+            function checkEmptyCart() {
+                if (document.querySelectorAll('.order-item').length > 0) return;
+
+                const checkoutGrid = document.querySelector('.checkout-grid');
+
+                if (!checkoutGrid) return;
+
+                checkoutGrid.innerHTML = `
+                    <div class='empty-cart' style='grid-column:1/-1;'>
+                        <div class='empty-cart-icon'>
+                            <i class='fas fa-shopping-cart'></i>
+                        </div>
+
+                        <h2>Keranjang Belanja Kosong</h2>
+
+                        <p>Yuk, pilih menu favoritmu dari Warung Ibu Opik!</p>
+
+                        <a href='{{ url('/') }}#menu' class='btn btn-primary'>
+                            <i class='fas fa-utensils'></i>
+                            Lihat Menu
+                        </a>
+                    </div>
+                `;
+            }
+
+            // ================================
+            // Simpan quantity ke Laravel
+            // ================================
+            function saveQty(item, qtyInput) {
+                const increaseForm = item.querySelector('form[action*="/increase/"]');
+
+                if (!increaseForm) return;
+
+                const id = increaseForm.action.split('/').pop();
+
+                const formData = new FormData();
+
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('qty', qtyInput.value);
+
+                fetch('{{ url('/cart/update') }}/' + id, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('Qty saved', data);
+                })
+                .catch(err => {
+                    console.error('Save error', err);
+                });
+            }
+
+            // ================================
+            // Tombol + / - / hapus
+            // ================================
+            document.querySelectorAll('.qty-form').forEach(form => {
+
+                form.addEventListener('submit', function (e) {
+
+                    e.preventDefault();
+
+                    const item = form.closest('.order-item');
+
+                    if (!item) return;
+
+                    const qtyInput = item.querySelector('.qty-number');
+
+                    const isIncrease = form.action.includes('/increase/');
+                    const isDecrease = form.action.includes('/decrease/');
+                    const isRemove = form.action.includes('/cart/remove/');
+
+                    // Hapus
+                    if (isRemove) {
+                        item.remove();
+                        updateItemCount();
+                        updateTotals();
+                        checkEmptyCart();
+                    }
+
+                    // Tambah / kurang
+                    else if (qtyInput && (isIncrease || isDecrease)) {
+
+                        let qty = parseInt(qtyInput.value) || 1;
+
+                        if (isIncrease) qty++;
+                        if (isDecrease) qty--;
+
+                        if (qty <= 0) {
+                            item.remove();
+                        } else {
+                            qtyInput.value = qty;
+                            updateItemSubtotal(item);
+                        }
+
+                        updateItemCount();
+                        updateTotals();
+                        checkEmptyCart();
+                    }
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('Cart updated', data);
+                    })
+                    .catch(err => {
+                        console.error('Cart error', err);
+                    });
+                });
+
+            });
+
+            // ================================
+            // Input quantity langsung
+            // ================================
+            document.querySelectorAll('.qty-number').forEach(input => {
+
+                // Enter = simpan
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        input.blur();
+                    }
+                });
+
+                // Saat berubah
+                let saveTimer;
+
+                input.addEventListener('input', function () {
+
+                    clearTimeout(saveTimer);
+
+                    saveTimer = setTimeout(function () {
+
+                    let qty = parseInt(input.value);
+
+                    if (isNaN(qty) || qty < 1) qty = 1;
+                    if (qty > 999) qty = 999;
+
+                    input.value = qty;
+
+                    const item = input.closest('.order-item');
+
+                    if (!item) return;
+
+                    updateItemSubtotal(item);
+                    updateItemCount();
+                    updateTotals();
+
+                    saveQty(item, input);
+
+                        }, 300);
+                });
+
+            });
+
+        });
+        </script>
 
 </body>
 </html>

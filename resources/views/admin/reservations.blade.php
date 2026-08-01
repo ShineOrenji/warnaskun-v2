@@ -84,10 +84,14 @@
                 <span>Pengaturan</span>
             </a>
 
-            <a href="#">
-                <i class="fas fa-sign-out-alt"></i>
+            <button type="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--text-secondary, #a0a0a0); text-decoration: none; font-size: 14px; font-family: 'DM Sans', sans-serif; transition: all 0.3s ease; margin-bottom: 2px; cursor: pointer; width: 100%; background: transparent; border: none; text-align: left;">
+                <i class="fas fa-sign-out-alt" style="width: 20px; font-size: 16px; text-align: center;"></i>
                 <span>Logout</span>
-            </a>
+            </button>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
 
         </nav>
 
@@ -170,26 +174,26 @@
                                 <td>
                                     @php
                                         $statusMap = [
-                                            'Menunggu' => [
-                                                'class' => 'badge-warning',
-                                                'label' => 'Menunggu'
-                                            ],
+                                        'Menunggu' => [
+                                            'class' => 'badge-warning',
+                                            'label' => 'Menunggu'
+                                        ],
 
-                                            'Diproses' => [
-                                                'class' => 'badge-info',
-                                                'label' => 'Diproses'
-                                            ],
+                                        'Diterima' => [
+                                            'class' => 'badge-info',
+                                            'label' => 'Diterima'
+                                        ],
 
-                                            'Selesai' => [
-                                                'class' => 'badge-success',
-                                                'label' => 'Selesai'
-                                            ],
+                                        'Selesai' => [
+                                            'class' => 'badge-success',
+                                            'label' => 'Selesai'
+                                        ],
 
-                                            'Dibatalkan' => [
-                                                'class' => 'badge-danger',
-                                                'label' => 'Dibatalkan'
-                                            ]
-                                        ];
+                                        'Ditolak' => [
+                                            'class' => 'badge-danger',
+                                            'label' => 'Ditolak'
+                                        ]
+                                    ];
                                         $status = $statusMap[$reservation->status] ?? $statusMap['Menunggu'];
                                     @endphp
                                     <span class="badge {{ $status['class'] }}">
@@ -202,6 +206,19 @@
                                     <a href="{{ route('reservations.show', $reservation->id) }}" class="btn btn-primary btn-sm">
                                         Detail
                                     </a>
+
+                                    @if($reservation->status != 'Selesai')
+
+                                    <form action="{{ route('reservations.status', $reservation->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            {{ $reservation->status == 'Menunggu' ? 'Terima' : 'Selesaikan' }}
+                                        </button>
+                                    </form>
+
+                                    @endif
 
                                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus reservasi ini?')">
                                         @csrf

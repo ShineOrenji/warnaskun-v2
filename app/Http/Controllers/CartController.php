@@ -27,6 +27,14 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'cartCount' => collect($cart)->sum('qty'),
+                'message' => 'Menu berhasil ditambahkan ke keranjang!'
+            ]);
+        }
+
         return back()->with('success', 'Menu berhasil ditambahkan ke keranjang!');
     }
 
@@ -37,9 +45,7 @@ class CartController extends Controller
         foreach ($cart as $id => $item) {
 
             if (!Menu::find($id)) {
-
                 unset($cart[$id]);
-
             }
 
         }
@@ -51,31 +57,57 @@ class CartController extends Controller
 
     public function remove(Request $request, $id)
     {
-            $cart = session()->get('cart', []);
+        $cart = session()->get('cart', []);
 
-            if(isset($cart[$id])){
-                unset($cart[$id]);
-            }
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+        }
 
-            session()->put('cart',$cart);
+        session()->put('cart', $cart);
 
-            return back()->with('success','Menu dihapus.');
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'cart' => $cart
+            ]);
+        }
+
+        return back()->with('success', 'Menu dihapus.');
     }
 
     public function update(Request $request, $id)
     {
         $cart = session()->get('cart', []);
 
-        if(isset($cart[$id])){
-            $cart[$id]['qty'] = $request->qty;
+        if (isset($cart[$id])) {
+
+            $qty = (int) $request->qty;
+
+            if ($qty < 1) {
+                $qty = 1;
+            }
+
+            if ($qty > 999) {
+                $qty = 999;
+            }
+
+            $cart[$id]['qty'] = $qty;
+
             session()->put('cart', $cart);
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'cartCount' => count($cart),
+                'message' => 'Quantity berhasil diperbarui!'
+            ]);
         }
 
         return back();
     }
 
     public function increase(Request $request, $id)
-{
     {
         $cart = session()->get('cart', []);
 
@@ -85,27 +117,40 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'cart' => $cart
+            ]);
+        }
+
         return back();
     }
-}
 
-    public function decrease(Request $request,$id)
+    public function decrease(Request $request, $id)
     {
-            $cart = session()->get('cart', []);
+        $cart = session()->get('cart', []);
 
-            if(isset($cart[$id])){
+        if (isset($cart[$id])) {
 
-                if($cart[$id]['qty']>1){
-                    $cart[$id]['qty']--;
-                }else{
-                    unset($cart[$id]);
-                }
-
+            if ($cart[$id]['qty'] > 1) {
+                $cart[$id]['qty']--;
+            } else {
+                unset($cart[$id]);
             }
 
-            session()->put('cart',$cart);
+        }
 
-            return back();
+        session()->put('cart', $cart);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'cart' => $cart
+            ]);
+        }
+
+        return back();
     }
 
     public function checkout(Request $request)

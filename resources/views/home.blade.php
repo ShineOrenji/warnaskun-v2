@@ -24,18 +24,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
-
+  
   <!-- 
     - custom css link
   -->
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
 
   <!-- 
     - preload images
   -->
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
-  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
 
 </head>
 
@@ -195,7 +196,7 @@
 
       <a href="{{ route('cart.index') }}" class="btn btn-secondary">
 
-          <span class="text text-1">
+           <span class="text text-1">
               Pesanan
               @if($cartCount > 0)
                   ({{ $cartCount }})
@@ -208,6 +209,8 @@
                   ({{ $cartCount }})
               @endif
           </span>
+
+      </a>
 
       </a>
 
@@ -254,7 +257,7 @@
               Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
             </p>
 
-            <a href="#" class="btn btn-primary slider-reveal">
+            <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
 
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
@@ -279,7 +282,7 @@
               Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
             </p>
 
-            <a href="#" class="btn btn-primary slider-reveal">
+            <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
 
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
@@ -290,7 +293,7 @@
           <li class="slider-item" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-3.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-1.png" width="1880" height="950" alt="" class="img-cover">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">Lezat & Menggugah Selera</p>
@@ -304,7 +307,7 @@
               Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
             </p>
 
-            <a href="#" class="btn btn-primary slider-reveal">
+            <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
 
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
@@ -581,13 +584,6 @@
                         </span>
                     @endif
 
-                    <div class="menu-overlay">
-                        <a href="#" class="menu-quick-view">
-                            <ion-icon name="eye-outline"></ion-icon>
-                            <span>Lihat Detail</span>
-                        </a>
-                    </div>
-
                 </div>
 
                 <div class="menu-item-content">
@@ -615,13 +611,12 @@
                         </span>
 
                         <form action="{{ route('cart.add', $menu->id) }}" method="POST">
-                            @csrf
-                            <button href="#menu" type="submit" class="btn-order">
-                                <ion-icon name="cart-outline"></ion-icon>
-                                <span>Pesan</span>
-                            </button>
-                        </form>
-
+                        @csrf
+                            <button type="submit" class="btn-order">
+                              <ion-icon name="cart-outline"></ion-icon>
+                              <span>Pesan</span>
+                          </button>
+                      </form>
                     </div>
 
             </div>
@@ -764,29 +759,28 @@
 
               <p class="contact-label">Pemesanan</p>
 
-              <a href="tel:+88123123456" class="body-1 contact-number hover-underline">+62 812 3456 7890</a>
+              <a href="tel:+628555150809" class="body-1 contact-number hover-underline">+62 855 5915 0809</a>
 
               <div class="separator"></div>
 
               <p class="contact-label">Lokasi</p>
 
               <address class="body-4">
-                Jl. Kuliner Nusantara, Kota Delicious, <br>
-                Indonesia
+                Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
               </address>
 
-              <p class="contact-label">Jam Makan Siang</p>
+              <p class="contact-label">JADWAL</p>
 
               <p class="body-4">
-                Senin sampai Minggu <br>
-                11.00 - 14.30
+                Senin sampai Jum'at <br>
+                08.00 - 20.00
               </p>
 
-              <p class="contact-label">Jam Makan Malam</p>
+              <p class="contact-label">JADWAL</p>
 
               <p class="body-4">
-                Senin sampai Minggu <br>
-                17.00 - 22.00
+                Sabtu sampai Minggu <br>
+                7.00 - 23.00
               </p>
 
             </div>
@@ -891,11 +885,11 @@
       <section class="section event bg-black-10" aria-label="acara">
         <div class="container">
 
-          <p class="section-subtitle label-2 text-center">Update Terbaru</p>
+          <p class="section-subtitle label-2 text-center">Acara Mendatang</p>
 
-          <h2 class="section-title headline-1 text-center">Acara Mendatang</h2>
+          <h2 class="section-title headline-1 text-center">Soon Aamiin</h2>
 
-          <ul class="grid-list">
+          {{-- <ul class="grid-list">
 
             <li>
               <div class="event-card has-before hover:shine">
@@ -960,7 +954,7 @@
               </div>
             </li>
 
-          </ul>
+          </ul> --}}
 
           <a href="#" class="btn btn-primary">
             <span class="text text-1">Lihat Blog Kami</span>
@@ -970,7 +964,6 @@
 
         </div>
       </section>
-
     </article>
   </main>
 
@@ -1092,9 +1085,35 @@
     </div>
   </footer>
 
+  <!-- 
+    - #CHECKOUT BUTTON
+  -->
 
 
+  @php
+    $cartCount = collect(session('cart', []))->sum('qty');
+  @endphp
 
+  <a href="{{ route('checkout') }}"
+    class="floating-cart {{ $cartCount > 0 ? 'has-items' : '' }}"
+    id="floatingCart"
+    aria-label="Lihat Pesanan">
+
+      <i class="fas fa-shopping-cart"></i>
+
+      <!-- TOOLTIP -->
+      <span class="cart-tooltip">
+          <i class="fas fa-shopping-cart" style="margin-right: 4px; color: var(--gold-crayola);"></i>
+          Lihat Pesanan
+      </span>
+
+      @if($cartCount > 0)
+          <span class="cart-badge" id="floatingCartBadge">
+              {{ $cartCount }}
+          </span>
+      @endif
+
+  </a>
 
   <!-- 
     - #BACK TO TOP
@@ -1103,10 +1122,6 @@
   <a href="#top" class="back-top-btn active" aria-label="kembali ke atas" data-back-top-btn>
     <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
   </a>
-
-
-
-
 
   <!-- 
     - custom js link
@@ -1120,6 +1135,43 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <!-- ============================================ -->
+  <!-- TOAST NOTIFICATION - DI TENGAH -->
+  <!-- ============================================ -->
+
+  <!-- Overlay -->
+  <div id="toast-overlay" class="cart-toast-overlay"></div>
+
+  <!-- Toast -->
+  <div id="cart-toast" class="cart-toast">
+
+      <!-- Icon Besar -->
+      <div class="cart-toast-icon">
+          <i class="fas fa-check"></i>
+      </div>
+
+      <!-- Content -->
+      <div class="cart-toast-content">
+          <div class="cart-toast-title">
+              Berhasil Ditambahkan!
+          </div>
+
+          <div class="cart-toast-item" id="toast-item-name">
+              Nasi Kuning Komplit
+          </div>
+
+          <div class="cart-toast-message">
+              <i class="fas fa-shopping-cart"></i>
+              Masuk ke keranjang belanja kamu
+          </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="toast-progress">
+          <div class="progress-fill"></div>
+      </div>
+
+  </div>
 </body>
 
 </html>
