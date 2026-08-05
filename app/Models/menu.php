@@ -12,6 +12,8 @@ class Menu extends Model
         'description',
         'price',
         'image',
-        'status',   
+        'status',
+        'menu_code',
+        'stock',   
     ];
 }

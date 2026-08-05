@@ -14,10 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const menuId = document.getElementById('menuId');
     
+    const codeInput = document.getElementById('menuCode');
     const nameInput = document.getElementById('menuName');
     const categoryInput = document.getElementById('menuCategory');
     const priceInput = document.getElementById('menuPrice');
-    const statusInput = document.getElementById('menuStatus');
+    const stockInput = document.getElementById('menuStock');
     const descInput = document.getElementById('menuDescription');
     const imageInput = document.getElementById('menuImage');
     const imagePreview = document.getElementById('imagePreview');
@@ -41,10 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Menu';
             
             menuId.value = data.id;
+            codeInput.value = data.code;
             nameInput.value = data.name;
             categoryInput.value = data.category || 'nasi';
             priceInput.value = data.price;
-            statusInput.value = data.status ? 1 : 0;
+            stockInput.value = data.stock;
             descInput.value = data.description || '';
             
             // Show existing image
@@ -197,11 +199,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Open modal with data
             openModal('edit', {
                 id: id,
-                name: name,
-                description: desc,
-                price: price,
-                category: category,
-                status: status,
+                code: this.dataset.code,
+                name: this.dataset.name,
+                category: this.dataset.category,
+                price: this.dataset.price,
+                stock: this.dataset.stock,
+                description: this.dataset.description,
                 image: image,
                 image_url: image_url
             });
@@ -280,8 +283,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-
-    console.log('🟡 Menu Modal - Warung Nasi Kuning Ibu Opik');
-    console.log('✨ Modal siap digunakan!');
-
 });

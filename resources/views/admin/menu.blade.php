@@ -152,18 +152,46 @@
                     
                     <!-- INFO -->
                     <div class="info">
-                        <h4>{{ $menu->name }}</h4>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <span class="badge badge-warning">
+                            {{ $menu->menu_code }}
+                        </span>
+                        <small style="color:#888;">
+                            ID {{ $menu->id }}
+                        </small>
+                    </div>
+
+                    <h4>{{ $menu->name }}</h4>
                         <div class="desc">{{ $menu->description ?? 'Tidak ada deskripsi' }}</div>
                         <div class="meta">
-                            <span class="price">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
-                            <span class="badge badge-{{ $menu->status == 1 ? 'success' : 'danger' }}">
-                                {{ $menu->status == 1 ? 'Tersedia' : 'Habis' }}
+                            <span class="price">
+                                Rp {{ number_format($menu->price, 0, ',', '.') }}
+                            </span>
+                            <span style="font-size:13px;color:#777;">
+                                📦 Stok : <b>{{ $menu->stock }}</b>
                             </span>
                         </div>
+                        @if($menu->stock > 0)
+                            <span class="badge badge-success">
+                                🟢 Tersedia
+                            </span>
+                        @else
+                            <span class="badge badge-danger">
+                                🔴 Habis
+                            </span>
+                        @endif
                         <div class="action-buttons">
                             <button
                                 class="btn btn-outline btn-sm edit-menu"
-                                data-id="{{ $menu->id }}">
+
+                                data-id="{{ $menu->id }}"
+                                data-code="{{ $menu->menu_code }}"
+                                data-name="{{ $menu->name }}"
+                                data-category="{{ $menu->category }}"
+                                data-price="{{ $menu->price }}"
+                                data-stock="{{ $menu->stock }}"
+                                data-description="{{ $menu->description }}">
+
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <form action="{{ route('menu.destroy', $menu->id) }}"
@@ -178,21 +206,6 @@
                                     <i class="fas fa-trash"></i> Hapus
                                 </button>
 
-                            </form>
-                            <form action="{{ route('menu.toggleStatus', $menu->id) }}"
-                                method="POST"
-                                style="display:inline;">
-
-                                @csrf
-                                @method('PATCH')
-
-                                <button type="submit"
-                                        class="toggle-status badge badge-{{ $menu->status ? 'success' : 'danger' }}"
-                                        style="border:none; cursor:pointer;">
-
-                                    {{ $menu->status ? 'Tersedia' : 'Habis' }}
-
-                                </button>
                             </form>
                         </div>
                     </div>
@@ -223,6 +236,17 @@
                     @csrf
                     @method('POST')
                     <input type="hidden" id="menuId" name="menu_id">
+
+                    <div class="form-group">
+                        <label class="form-label">Kode Menu</label>
+                        <input
+                            type="text"
+                            id="menuCode"
+                            name="menu_code"
+                            class="form-control"
+                            placeholder="Contoh: NK001"
+                            required>
+                    </div>
                     
                     <div class="form-group">
                         <label for="menuName">Nama Menu <span class="required">*</span></label>
@@ -243,14 +267,23 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="menuPrice">Harga <span class="required">*</span></label>
-                            <input type="number" id="menuPrice" name="price" placeholder="Masukkan harga" required>
+                            <input
+                                type="number"
+                                id="menuPrice"
+                                name="price"
+                                placeholder="Masukkan harga"
+                                required>
                         </div>
+
                         <div class="form-group">
-                            <label for="menuStatus">Status</label>
-                            <select id="menuStatus" name="status">
-                                <option value="1">Tersedia</option>
-                                <option value="0">Habis</option>
-                            </select>
+                            <label for="menuStock">Stok <span class="required">*</span></label>
+                            <input
+                                type="number"
+                                id="menuStock"
+                                name="stock"
+                                min="0"
+                                placeholder="Masukkan stok"
+                                required>
                         </div>
                     </div>
                     

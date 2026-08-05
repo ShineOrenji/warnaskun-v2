@@ -34,9 +34,9 @@
   <!-- 
     - preload images
   -->
+  <link rel="preload" as="image" href="./assets/images/hero-slider-1.png">
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
-  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
-  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-3.png">
 
 </head>
 
@@ -163,7 +163,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#kontak" class="navbar-link hover-underline" data-nav-link>
+            <a href="#contact" class="navbar-link hover-underline" data-nav-link>
               <div class="separator"></div>
 
               <span class="span">Kontak</span>
@@ -268,7 +268,7 @@
           <li class="slider-item" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-2.png" width="1880" height="950" alt="" class="img-cover">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">Pengalaman yang Menyenangkan</p>
@@ -293,7 +293,7 @@
           <li class="slider-item" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-1.png" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-3.png" width="1880" height="950" alt="" class="img-cover">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">Lezat & Menggugah Selera</p>
@@ -333,109 +333,57 @@
 
       </section>
 
-
-
-
-
-      <!-- 
-        - #SERVICE
-      -->
-
-      <section class="section service bg-black-10 text-center" aria-label="layanan">
-        <div class="container">
-
-          <p class="section-subtitle label-2">Cita Rasa untuk Keluarga</p>
-
-          <h2 class="headline-1 section-title">Kami Menyajikan yang Terbaik</h2>
-
-          <p class="section-text">
-            Kami menghadirkan cita rasa nasi kuning khas dengan resep turun-temurun dan bahan pilihan terbaik.
-          </p>
-
-          <ul class="grid-list">
-
-            <li>
-              <div class="service-card">
-
-                <a href="#" class="has-before hover:shine">
-                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="https://www.dapurkintamani.com/wp-content/uploads/2023/09/nasi-kuning.webp" width="285" height="336" loading="lazy" alt="Sarapan"
-                      class="img-cover">
-                  </figure>
-                </a>
-
-                <div class="card-content">
-
-                  <h3 class="title-4 card-title">
-                    <a href="#">Sarapan</a>
-                  </h3>
-
-                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
-
-                </div>
-
+      <!-- ============================================ -->
+      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
+      <!-- ============================================ -->
+      <section class="running-text-section">
+          <div class="running-text-wrapper">
+              <div class="running-text-track">
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
               </div>
-            </li>
-
-            <li>
-              <div class="service-card">
-
-                <a href="#" class="has-before hover:shine">
-                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="https://c1.wallpaperflare.com/preview/88/726/522/krupuk-deep-fried-crackers-keropok.jpg" width="285" height="336" loading="lazy" alt="Camilan"
-                      class="img-cover">
-                  </figure>
-                </a>
-
-                <div class="card-content">
-
-                  <h3 class="title-4 card-title">
-                    <a href="#">Camilan</a>
-                  </h3>
-
-                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="service-card">
-
-                <a href="#" class="has-before hover:shine">
-                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt_ic7CUTliN-h8l0M1iJz7zYp1xsq_zzReLl_LGiGBiLw8RDbZplj3Ocs&s=10" width="285" height="336" loading="lazy" alt="Minuman"
-                      class="img-cover">
-                  </figure>
-                </a>
-
-                <div class="card-content">
-
-                  <h3 class="title-4 card-title">
-                    <a href="#">Minuman</a>
-                  </h3>
-
-                  <a href="#menu" class="btn-text hover-underline label-2">Lihat Menu</a>
-
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-          <img src="./assets/images/shape-1.png" width="246" height="412" loading="lazy" alt="bentuk"
-            class="shape shape-1 move-anim">
-          <img src="./assets/images/shape-2.png" width="343" height="345" loading="lazy" alt="bentuk"
-            class="shape shape-2 move-anim">
-
-        </div>
+          </div>
       </section>
-
-
-
-
 
       <!-- 
         - #ABOUT
@@ -451,7 +399,7 @@
             <h2 class="headline-1 section-title">Setiap Rasa Memiliki Cerita</h2>
 
             <p class="section-text">
-              Warung Nasi Kuning Ibu Opik hadir sejak 1995 dengan resep nasi kuning khas yang diwariskan turun-temurun. 
+              Warung Nasi Kuning Ibu Opik hadir sejak 1950 dengan resep nasi kuning khas yang diwariskan turun-temurun. 
               Setiap bumbu dipilih dengan cermat untuk menciptakan cita rasa yang autentik dan menggugah selera.
             </p>
 
@@ -469,11 +417,16 @@
 
           <figure class="about-banner">
 
-            <img src="./assets/images/about-banner.jpg" width="570" height="570" loading="lazy" alt="tentang kami"
+            <img src="./assets/images/logo.png" width="570" height="570" loading="lazy" alt="tentang kami"
               class="w-100" data-parallax-item data-parallax-speed="1">
 
-            <div class="abs-img abs-img-1 has-before" data-parallax-item data-parallax-speed="1.75">
-              <img src="./assets/images/about-abs-image.jpg" width="285" height="285" loading="lazy" alt=""
+            {{-- <div class=" has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt=""
+                class="w-100">
+            </div> BACKUP YG BAWAH --}}
+
+            <div class=" has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt=""
                 class="w-100">
             </div>
 
@@ -488,9 +441,57 @@
         </div>
       </section>
 
-
-
-
+      <!-- ============================================ -->
+      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
+      <!-- ============================================ -->
+      <section class="running-text-section">
+          <div class="running-text-wrapper">
+              <div class="running-text-track">
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+              </div>
+          </div>
+      </section>
 
       <!-- 
         - #SPECIAL DISH
@@ -499,7 +500,7 @@
       <section class="special-dish text-center" aria-labelledby="dish-label">
 
         <div class="special-dish-banner">
-          <img src="./assets/images/special-dish-banner.jpg" width="940" height="900" loading="lazy" alt="menu spesial"
+          <img src="./assets/images/hero-slider-3.png" width="940" height="900" loading="lazy" alt="menu spesial"
             class="img-cover">
         </div>
 
@@ -518,9 +519,9 @@
             </p>
 
             <div class="wrapper">
-              <del class="del body-3">Rp 45.000</del>
+              <del class="del body-3">Rp 15.000</del>
 
-              <span class="span body-1">Rp 35.000</span>
+              <span class="span body-1">Rp 10.000</span>
             </div>
 
             <a href="#" class="btn btn-primary">
@@ -574,7 +575,7 @@
                         height="300"
                         loading="lazy">
 
-                    @if($menu->status)
+                    @if($menu->stock > 0)
                         <span class="menu-badge">
                             Tersedia
                         </span>
@@ -583,7 +584,6 @@
                             Habis
                         </span>
                     @endif
-
                 </div>
 
                 <div class="menu-item-content">
@@ -610,15 +610,27 @@
                             {{ ucfirst($menu->category) }}
                         </span>
 
-                        <form action="{{ route('cart.add', $menu->id) }}" method="POST">
-                        @csrf
-                            <button type="submit" class="btn-order">
-                              <ion-icon name="cart-outline"></ion-icon>
-                              <span>Pesan</span>
-                          </button>
-                      </form>
-                    </div>
+                        @if($menu->stock > 0)
+                          <form action="{{ route('cart.add', $menu->id) }}" method="POST">
+                              @csrf
+                              <button type="submit" class="btn-order">
+                                  <ion-icon name="cart-outline"></ion-icon>
+                                  <span>Pesan</span>
+                              </button>
+                          </form>
 
+                          @else
+
+                          <button
+                              class="btn-order"
+                              disabled
+                              style="opacity:.6;cursor:not-allowed;">
+
+                              <ion-icon name="close-circle-outline"></ion-icon>
+                              <span>Stok Habis</span>
+                          </button>
+                          @endif
+                    </div>
             </div>
 
           </div>
@@ -631,11 +643,6 @@
             Setiap hari mulai <span class="span">08.00</span> sampai <span class="span">23.00</span>
           </p>
 
-          <a href="#" class="btn btn-primary">
-            <span class="text text-1">Lihat Semua Menu</span>
-            <span class="text text-2" aria-hidden="true">Lihat Semua Menu</span>
-          </a>
-
           <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="bentuk"
             class="shape shape-2 move-anim">
           <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="bentuk"
@@ -644,12 +651,64 @@
         </div>
       </section>
 
+      <!-- ============================================ -->
+      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
+      <!-- ============================================ -->
+      <section class="running-text-section">
+          <div class="running-text-wrapper">
+              <div class="running-text-track">
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+              </div>
+          </div>
+      </section>
+
       <!-- 
         - #TESTIMONIALS
       -->
 
       <section class="section testi text-center has-bg-image"
-        style="background-image: url('./assets/images/testimonial-bg.jpg')" aria-label="testimoni">
+        style="background-image: url('./assets/images/quotes-bg.png')" aria-label="testimoni">
         <div class="container">
 
           <div class="quote">”</div>
@@ -790,10 +849,6 @@
         </div>
       </section>
 
-
-
-
-
       <!-- 
         - #FEATURES
       -->
@@ -874,9 +929,57 @@
         </div>
       </section>
 
-
-
-
+      <!-- ============================================ -->
+      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
+      <!-- ============================================ -->
+      <section class="running-text-section">
+          <div class="running-text-wrapper">
+              <div class="running-text-track">
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+              </div>
+          </div>
+      </section>
 
       <!-- 
         - #EVENT
@@ -967,12 +1070,64 @@
     </article>
   </main>
 
+  <!-- ============================================ -->
+      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
+      <!-- ============================================ -->
+      <section class="running-text-section">
+          <div class="running-text-wrapper">
+              <div class="running-text-track">
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
+                  </span>
+                  <span class="running-text-item">
+                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
+                  </span>
+              </div>
+          </div>
+      </section>
+
   <!-- 
     - #FOOTER
   -->
 
-  <footer class="footer section has-bg-image text-center"
-    style="background-image: url('./assets/images/footer-bg.jpg')">
+  <footer id="contact" class="footer section has-bg-image text-center"
+    style="background-image: url('./assets/images/footer-bg.png')">
     <div class="container">
 
       <div class="footer-top grid-list">
@@ -1027,23 +1182,19 @@
         <ul class="footer-list">
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Beranda</a>
+            <a href="#home" class="label-2 footer-link hover-underline">Beranda</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Menu</a>
+            <a href="#menu" class="label-2 footer-link hover-underline">Menu</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Tentang Kami</a>
+            <a href="#about" class="label-2 footer-link hover-underline">Tentang Kami</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Koki Kami</a>
-          </li>
-
-          <li>
-            <a href="#" class="label-2 footer-link hover-underline">Kontak</a>
+            <a href="#contact" class="label-2 footer-link hover-underline">Kontak</a>
           </li>
 
         </ul>

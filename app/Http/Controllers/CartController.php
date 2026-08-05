@@ -13,17 +13,21 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$menu->id])) {
-            $cart[$menu->id]['qty']++;
-        } else {
-            $cart[$menu->id] = [
-                'id' => $menu->id,
-                'name' => $menu->name,
-                'price' => $menu->price,
-                'image' => $menu->image,
-                'qty' => 1,
-            ];
+        if ($menu->stock <= 0) {
+            return back()->with('error', 'Maaf, stok menu ini sudah habis.');
         }
+
+        if (isset($cart[$menu->id])) {
+        if ($cart[$menu->id]['qty'] >= $menu->stock) {
+            return back()->with(
+                'error',
+                "Stok {$menu->name} hanya tersedia {$menu->stock}."
+            );
+        }
+
+        $cart[$menu->id]['qty']++;
+
+    }
 
         session()->put('cart', $cart);
 
@@ -170,6 +174,27 @@ class CartController extends Controller
 
         $total = 0;
 
+        foreach ($cart as $id => $item) {
+
+            $menu = Menu::find($id);
+
+            if (!$menu) {
+
+                return back()->with('error', 'Menu tidak ditemukan.');
+
+            }
+
+            if ($menu->stock < $item['qty']) {
+
+                return back()->with(
+                    'error',
+                    "Stok {$menu->name} tidak mencukupi. Sisa stok: {$menu->stock}"
+                );
+
+            }
+
+        }
+
         foreach ($cart as $item) {
             $total += $item['price'] * $item['qty'];
         }
@@ -202,6 +227,14 @@ class CartController extends Controller
                 'subtotal' => $item['price'] * $item['qty']
 
             ]);
+
+            $menu = Menu::find($id);
+
+                if ($menu) {
+
+                    $menu->decrement('stock', $item['qty']);
+
+                }
 
         }
 
