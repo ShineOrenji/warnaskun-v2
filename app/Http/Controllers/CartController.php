@@ -18,16 +18,27 @@ class CartController extends Controller
         }
 
         if (isset($cart[$menu->id])) {
-        if ($cart[$menu->id]['qty'] >= $menu->stock) {
-            return back()->with(
-                'error',
-                "Stok {$menu->name} hanya tersedia {$menu->stock}."
-            );
+
+            if ($cart[$menu->id]['qty'] >= $menu->stock) {
+                return back()->with(
+                    'error',
+                    "Stok {$menu->name} hanya tersedia {$menu->stock}."
+                );
+            }
+
+            $cart[$menu->id]['qty']++;
+
+        } else {
+
+            $cart[$menu->id] = [
+                'id'  => $menu->id,
+                'name'  => $menu->name,
+                'price' => $menu->price,
+                'image' => $menu->image,
+                'qty'   => 1,
+            ];
+
         }
-
-        $cart[$menu->id]['qty']++;
-
-    }
 
         session()->put('cart', $cart);
 

@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="order-items">
-                                @foreach($cart as $item)
+                                @foreach($cart as $id => $item)
                                     @php
                                         $subtotal = $item['price'] * $item['qty'];
                                         $total += $subtotal;
@@ -108,7 +108,6 @@
                                             <h4>{{ $item['name'] }}</h4>
                                             <div class="item-meta">
                                                 <span class="item-price">Rp {{ number_format($item['price'], 0, ',', '.') }}</span>
-                                                <span class="item-qty">× {{ $item['qty'] }}</span>
                                             </div>
                                         </div>
                                         <div class="item-subtotal">
@@ -116,7 +115,7 @@
                                         </div>
                                         <div class="item-actions">
                                             <!-- TOMBOL - (KURANGI) -->
-                                            <form action="{{ route('cart.decrease', $item['id']) }}" method="POST" class="qty-form">
+                                            <form action="{{ route('cart.decrease', $id) }}" method="POST" class="qty-form">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="qty-btn" title="Kurangi">
@@ -125,29 +124,29 @@
                                             </form>
 
                                             <input
-    type="text"
-    class="qty-number"
-    value="{{ $item['qty'] }}"
-    inputmode="numeric"
-    autocomplete="off"
-    style="
-        width: 35px !important;
-        height: auto !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: 0 !important;
-        outline: 0 !important;
-        box-shadow: none !important;
-        background: transparent !important;
-        color: inherit !important;
-        text-align: center !important;
-        font: inherit !important;
-        border-radius: 0 !important;
-        appearance: none !important;
-    "
->
+                                            type="text"
+                                            class="qty-number"
+                                            value="{{ $item['qty'] }}"
+                                            inputmode="numeric"
+                                            autocomplete="off"
+                                            style="
+                                                width: 35px !important;
+                                                height: auto !important;
+                                                padding: 0 !important;
+                                                margin: 0 !important;
+                                                border: 0 !important;
+                                                outline: 0 !important;
+                                                box-shadow: none !important;
+                                                background: transparent !important;
+                                                color: inherit !important;
+                                                text-align: center !important;
+                                                font: inherit !important;
+                                                border-radius: 0 !important;
+                                                appearance: none !important;
+                                            "
+                                        >
                                             <!-- TOMBOL + (TAMBAH) -->
-                                            <form action="{{ route('cart.increase', $item['id']) }}" method="POST" class="qty-form">
+                                            <form action="{{ route('cart.increase', $id) }}" method="POST" class="qty-form">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="qty-btn" title="Tambah">
@@ -156,7 +155,7 @@
                                             </form>
 
                                             <!-- TOMBOL HAPUS -->
-                                            <form action="{{ route('cart.remove', $item['id']) }}" method="POST" class="qty-form">
+                                            <form action="{{ route('cart.remove', $id) }}" method="POST" class="qty-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="remove-btn" title="Hapus">

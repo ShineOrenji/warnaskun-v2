@@ -156,9 +156,6 @@
                         <span class="badge badge-warning">
                             {{ $menu->menu_code }}
                         </span>
-                        <small style="color:#888;">
-                            ID {{ $menu->id }}
-                        </small>
                     </div>
 
                     <h4>{{ $menu->name }}</h4>
