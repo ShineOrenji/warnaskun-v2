@@ -101,10 +101,10 @@ CREATE TABLE IF NOT EXISTS `menus` (
   UNIQUE KEY `menus_menu_code_unique` (`menu_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table warnaskun.menus: ~2 rows (approximately)
+-- Dumping data for table warnaskun.menus: ~1 rows (approximately)
 INSERT INTO `menus` (`id`, `menu_code`, `name`, `category`, `description`, `price`, `stock`, `image`, `status`, `created_at`, `updated_at`) VALUES
-	(4, 'NK001', 'Nasi Kuning Originale', 'nasi', 'Nasi Kuning ori loh ya', 5999, 5, '1785938475.jpg', 1, '2026-08-05 07:01:15', '2026-08-05 07:01:45'),
-	(5, 'MN001', 'Es Teh Manis', 'minuman', 'Minuman es teh segar', 5000, 3, '1785938561.jpg', 1, '2026-08-05 07:02:41', '2026-08-05 07:02:41');
+	(4, 'NK001', 'Nasi Kuning Originale', 'nasi', 'Nasi Kuning ori loh ya', 6000, 0, '1785938475.jpg', 1, '2026-08-05 07:01:15', '2026-08-07 10:30:14'),
+	(5, 'MN001', 'Es Teh Manis', 'minuman', 'Minuman es teh segar', 5000, 10, '1785938561.jpg', 1, '2026-08-05 07:02:41', '2026-08-09 02:59:26');
 
 -- Dumping structure for table warnaskun.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table warnaskun.migrations: ~13 rows (approximately)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -129,7 +129,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(11, '2026_07_25_190257_add_delivery_type_to_orders_table', 8),
 	(12, '2026_07_25_194052_make_address_nullable_in_orders_table', 9),
 	(13, '2026_07_27_142955_add_status_to_reservations_table', 10),
-	(14, '2026_08_03_183434_add_menu_code_and_stock_to_menus_table', 11);
+	(14, '2026_08_03_183434_add_menu_code_and_stock_to_menus_table', 11),
+	(15, '2026_08_07_153020_create_order_histories_table', 12),
+	(16, '2026_08_07_165805_add_note_and_landmark_to_order_histories_table', 13);
 
 -- Dumping structure for table warnaskun.orders
 CREATE TABLE IF NOT EXISTS `orders` (
@@ -145,9 +147,36 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table warnaskun.orders: ~0 rows (approximately)
+INSERT INTO `orders` (`id`, `customer_name`, `phone`, `delivery_type`, `address`, `landmark`, `note`, `total`, `status`, `created_at`, `updated_at`) VALUES
+	(18, 'tes', '555', 'ambil', NULL, NULL, 'tes 2', 5000, 'Menunggu', '2026-08-09 02:59:26', '2026-08-09 02:59:26');
+
+-- Dumping structure for table warnaskun.order_histories
+CREATE TABLE IF NOT EXISTS `order_histories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `customer_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `landmark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `total` int NOT NULL,
+  `items_detail` json DEFAULT NULL,
+  `order_created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table warnaskun.order_histories: ~5 rows (approximately)
+INSERT INTO `order_histories` (`id`, `customer_name`, `phone`, `delivery_type`, `address`, `landmark`, `note`, `total`, `items_detail`, `order_created_at`, `created_at`, `updated_at`) VALUES
+	(10, 'Fahmi', '123', 'antar', 'TES', 'TES', 'tes', 61000, '[{"id": 24, "qty": 1, "price": 6000, "menu_id": 4, "order_id": 13, "subtotal": 6000, "menu_name": "Nasi Kuning Originale", "created_at": "2026-08-07T17:01:26.000000Z", "updated_at": "2026-08-07T17:01:26.000000Z"}, {"id": 25, "qty": 11, "price": 5000, "menu_id": 5, "order_id": 13, "subtotal": 55000, "menu_name": "Es Teh Manis", "created_at": "2026-08-07T17:01:26.000000Z", "updated_at": "2026-08-07T17:01:26.000000Z"}]', '2026-08-07 10:01:26', '2026-08-07 10:02:11', '2026-08-07 10:02:11'),
+	(12, 'Rusdi', '12345', 'ambil', NULL, NULL, 'sibal', 242000, '[{"id": 26, "qty": 22, "price": 5000, "menu_id": 5, "order_id": 14, "subtotal": 110000, "menu_name": "Es Teh Manis", "created_at": "2026-08-07T17:28:00.000000Z", "updated_at": "2026-08-07T17:28:00.000000Z"}, {"id": 27, "qty": 22, "price": 6000, "menu_id": 4, "order_id": 14, "subtotal": 132000, "menu_name": "Nasi Kuning Originale", "created_at": "2026-08-07T17:28:00.000000Z", "updated_at": "2026-08-07T17:28:00.000000Z"}]', '2026-08-07 10:28:00', '2026-08-07 10:28:31', '2026-08-09 02:24:16'),
+	(13, 'SIBAL', '089123', 'ambil', NULL, NULL, 'Sekya', 259000, '[{"id": 28, "qty": 11, "price": 5000, "menu_id": 5, "order_id": 15, "subtotal": 55000, "menu_name": "Es Teh Manis", "created_at": "2026-08-07T17:30:14.000000Z", "updated_at": "2026-08-07T17:30:14.000000Z"}, {"id": 29, "qty": 34, "price": 6000, "menu_id": 4, "order_id": 15, "subtotal": 204000, "menu_name": "Nasi Kuning Originale", "created_at": "2026-08-07T17:30:14.000000Z", "updated_at": "2026-08-07T17:30:14.000000Z"}]', '2026-08-07 10:30:14', '2026-08-07 10:31:52', '2026-08-09 02:23:02'),
+	(14, 'Rusdi', '12345', 'ambil', NULL, NULL, 'tes', 15000, '[{"id": 30, "qty": 3, "price": 5000, "menu_id": 5, "order_id": 16, "subtotal": 15000, "menu_name": "Es Teh Manis", "created_at": "2026-08-08T10:11:40.000000Z", "updated_at": "2026-08-08T10:11:40.000000Z"}]', '2026-08-08 03:11:40', '2026-08-08 03:12:05', '2026-08-09 02:24:16'),
+	(15, 'Rusdi', '12345', 'ambil', NULL, NULL, 'tes', 5000, '[{"id": 31, "qty": 1, "price": 5000, "menu_id": 5, "order_id": 17, "subtotal": 5000, "menu_name": "Es Teh Manis", "created_at": "2026-08-09T09:04:15.000000Z", "updated_at": "2026-08-09T09:04:15.000000Z"}]', '2026-08-09 02:04:15', '2026-08-09 02:04:36', '2026-08-09 02:24:16');
 
 -- Dumping structure for table warnaskun.order_items
 CREATE TABLE IF NOT EXISTS `order_items` (
@@ -165,9 +194,11 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   KEY `order_items_menu_id_foreign` (`menu_id`),
   CONSTRAINT `order_items_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
   CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table warnaskun.order_items: ~0 rows (approximately)
+INSERT INTO `order_items` (`id`, `order_id`, `menu_id`, `menu_name`, `price`, `qty`, `subtotal`, `created_at`, `updated_at`) VALUES
+	(32, 18, 5, 'Es Teh Manis', 5000, 1, 5000, '2026-08-09 02:59:26', '2026-08-09 02:59:26');
 
 -- Dumping structure for table warnaskun.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
@@ -209,9 +240,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table warnaskun.sessions: ~1 rows (approximately)
+-- Dumping data for table warnaskun.sessions: ~2 rows (approximately)
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('H1ENzgkTslHMRInTk9fHEdtVp6124JHjZtB2sP9Y', 1, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36', 'eyJfdG9rZW4iOiJ0WWxIZEFzYkpEMnpqd2M1RkcxeEZ1elk5OW8zRldHeGZHcG1uakJyIiwiY2FydCI6W10sIl9wcmV2aW91cyI6eyJ1cmwiOiJodHRwOlwvXC93YXJuYXNrdW4udGVzdCIsInJvdXRlIjoiaG9tZSJ9LCJfZmxhc2giOnsib2xkIjpbXSwibmV3IjpbXX0sInVybCI6eyJpbnRlbmRlZCI6Imh0dHA6XC9cL3dhcm5hc2t1bi50ZXN0XC9hZG1pblwvbWVudSJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MX0=', 1785951631);
+	('VsuEO2oJpM8TRlt95AJC7IIhYz06tXLywyBgttck', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', 'eyJfdG9rZW4iOiJiWVdqOEgwZjZWUE9IN2hJM05QYXJnRGVjcmJ0RnE4cVpraUFvWklEIiwiX2ZsYXNoIjp7Im9sZCI6W10sIm5ldyI6W119LCJjYXJ0IjpbXSwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cL3dhcm5hc2t1bi50ZXN0XC9hZG1pblwvb3JkZXJzXC8xOFwvbW9kYWwiLCJyb3V0ZSI6Im9yZGVycy5tb2RhbCJ9LCJ1cmwiOnsiaW50ZW5kZWQiOiJodHRwOlwvXC93YXJuYXNrdW4udGVzdFwvYWRtaW5cL2N1c3RvbWVycyJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MX0=', 1786270951);
 
 -- Dumping structure for table warnaskun.subscribes
 CREATE TABLE IF NOT EXISTS `subscribes` (

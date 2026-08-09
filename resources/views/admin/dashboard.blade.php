@@ -26,12 +26,7 @@
     <!-- ============================================ -->
     <aside class="sidebar">
         <div class="sidebar-brand">
-            <div class="logo-icon">
-                <i class="fas fa-utensils"></i>
-            </div>
-            <div>
-                <h1>Admin Panel</h1>
-                <small>Warung Ibu Opik</small>
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Warung Ibu Opik">
             </div>
         </div>
 
@@ -66,7 +61,6 @@
             <a href="{{ route('customers.index') }}">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
-                <span class="badge">{{ $totalCustomers }}</span>
             </a>
 
             <a href="{{ route('reservations.index') }}">
@@ -564,13 +558,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div id="modalContent"
                     style="padding:25px;">
-
                     Loading...
-
                 </div>
-
             </div>
-
         </div>
 </body>
 </html>

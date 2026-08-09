@@ -163,6 +163,14 @@
           </li>
 
           <li class="navbar-item">
+            <a href="#reservasi" class="navbar-link hover-underline" data-nav-link>
+              <div class="separator"></div>
+
+              <span class="span">Panduan</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
             <a href="#contact" class="navbar-link hover-underline" data-nav-link>
               <div class="separator"></div>
 

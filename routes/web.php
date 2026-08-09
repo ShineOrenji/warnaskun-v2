@@ -11,7 +11,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ReservationAdminController;
 use App\Http\Controllers\LoginController;
 
 /*
@@ -99,19 +98,19 @@ Route::post('/admin/customers/update', [App\Http\Controllers\CustomerController:
 */
 
 Route::get('/admin/reservations',
-    [ReservationAdminController::class, 'index'])
+    [ReservationController::class, 'index'])
     ->name('reservations.index');
 
 Route::get('/admin/reservations/{reservation}',
-    [ReservationAdminController::class, 'show'])
+    [ReservationController::class, 'show'])
     ->name('reservations.show');
 
 Route::patch('/admin/reservations/{reservation}/status',
-    [ReservationAdminController::class, 'updateStatus'])
+    [ReservationController::class, 'updateStatus'])
     ->name('reservations.status');
 
 Route::delete('/admin/reservations/{reservation}',
-    [ReservationAdminController::class, 'destroy'])
+    [ReservationController::class, 'destroy'])
     ->name('reservations.destroy');
 
 /*

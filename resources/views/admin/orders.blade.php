@@ -18,223 +18,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admin-style.css') }}">
 
     <style>
-        /* ---------- OVERRIDE UNTUK ORDERS ---------- */
-        /* Biarkan struktur HTML tetap, hanya styling tambahan */
-
-        /* Perbaiki table agar rapi */
-        .card-body table {
-            width: 100% !important;
-            border-collapse: collapse !important;
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
         }
-
-        .card-body table thead tr {
-            background: var(--bg-hover) !important;
-            border-bottom: 2px solid var(--gold) !important;
-        }
-
-        .card-body table thead th {
-            padding: 12px 16px !important;
-            font-size: 11px !important;
-            text-transform: uppercase !important;
-            color: var(--text-muted) !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.5px !important;
-            text-align: center !important;
-        }
-
-        .card-body table tbody tr {
-            border-bottom: 1px solid var(--border-color) !important;
-            transition: all 0.3s ease !important;
-            text-align: center !important;
-        }
-
-        .card-body table tbody tr:hover {
-            background: var(--bg-hover) !important;
-        }
-
-        .card-body table tbody td {
-            padding: 14px 16px !important;
-            font-size: 13px !important;
-            color: var(--text-secondary) !important;
-            vertical-align: middle !important;
-        }
-
-        .card-body table tbody td:first-child {
-            font-weight: 700 !important;
-            color: var(--gold) !important;
-        }
-
-        .card-body table tbody td:nth-child(2) {
-            color: var(--text-primary) !important;
-            font-weight: 500 !important;
-        }
-
-        .card-body table tbody td:nth-child(4) {
-            color: var(--text-primary) !important;
-            font-weight: 600 !important;
-        }
-
-        /* Badge */
-        .card-body table tbody td .badge {
-            padding: 4px 14px !important;
-            border-radius: 20px !important;
-            font-size: 11px !important;
-            font-weight: 600 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 6px !important;
-        }
-
-        .card-body table tbody td .badge-warning {
-            background: rgba(212, 168, 67, 0.15) !important;
-            color: #d4a843 !important;
-        }
-
-        .card-body table tbody td .badge-info {
-            background: rgba(59, 130, 246, 0.15) !important;
-            color: #3b82f6 !important;
-        }
-
-        .card-body table tbody td .badge-success {
-            background: rgba(34, 197, 94, 0.15) !important;
-            color: #22c55e !important;
-        }
-
-        .card-body table tbody td .bg-yellow-500 {
-            background: rgba(212, 168, 67, 0.15) !important;
-            color: #d4a843 !important;
-        }
-
-        .card-body table tbody td .bg-blue-500 {
-            background: rgba(59, 130, 246, 0.15) !important;
-            color: #3b82f6 !important;
-        }
-
-        .card-body table tbody td .bg-green-500 {
-            background: rgba(34, 197, 94, 0.15) !important;
-            color: #22c55e !important;
-        }
-
-        .card-body table tbody td .text-white {
-            color: inherit !important;
-        }
-
-        /* Flex untuk aksi */
-        .card-body table tbody td .flex {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px !important;
-        }
-
-        /* Button */
-        .card-body table tbody td .btn {
-            padding: 6px 16px !important;
-            border-radius: 8px !important;
-            font-size: 12px !important;
-            font-weight: 600 !important;
-            transition: all 0.3s ease !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 6px !important;
-            text-decoration: none !important;
-            border: none !important;
-            cursor: pointer !important;
-        }
-
-        .card-body table tbody td .btn-primary {
-            background: #d4a843 !important;
-            color: #000 !important;
-        }
-
-        .card-body table tbody td .btn-primary:hover {
-            background: #e8c96e !important;
-            transform: translateY(-1px) !important;
-        }
-
-        .card-body table tbody td .btn-sm {
-            padding: 4px 12px !important;
-            font-size: 11px !important;
-        }
-
-        .card-body table tbody td .text-red-500 {
-            color: #ef4444 !important;
-            background: transparent !important;
-            border: none !important;
-            font-size: 18px !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .card-body table tbody td .text-red-500:hover {
-            color: #dc2626 !important;
-            transform: scale(1.1) !important;
-        }
-
-        .card-body table tbody td .transition {
-            transition: all 0.3s ease !important;
-        }
-
-        /* Total Pesanan */
-        .card-body p {
-            color: var(--text-secondary) !important;
-            font-size: 14px !important;
-            margin-bottom: 16px !important;
-        }
-
-        .card-body p strong {
-            color: var(--text-primary) !important;
-            font-weight: 700 !important;
-        }
-
-        /* Hapus background f5f5f5 */
-        .card-body table thead tr {
-            background: var(--bg-hover) !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .card-body table {
-                font-size: 12px !important;
-                min-width: 500px !important;
-            }
-
-            .card-body table thead th,
-            .card-body table tbody td {
-                padding: 10px 12px !important;
-                font-size: 12px !important;
-            }
-
-            .card-body table tbody td .btn-sm {
-                font-size: 10px !important;
-                padding: 3px 10px !important;
-            }
-
-            .card-body table tbody td .text-red-500 {
-                font-size: 16px !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-body table {
-                min-width: 400px !important;
-                font-size: 11px !important;
-            }
-
-            .card-body table thead th,
-            .card-body table tbody td {
-                padding: 8px 10px !important;
-                font-size: 11px !important;
-            }
-
-            .card-body table tbody td .btn-sm {
-                font-size: 9px !important;
-                padding: 2px 8px !important;
-            }
-
-            .card-body table tbody td .text-red-500 {
-                font-size: 14px !important;
-            }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
         }
     </style>
 </head>
@@ -246,12 +38,7 @@
     <aside class="sidebar">
 
         <div class="sidebar-brand">
-            <div class="logo-icon">
-                <i class="fas fa-utensils"></i>
-            </div>
-            <div>
-                <h1>Admin Panel</h1>
-                <small>Warung Ibu Opik</small>
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Warung Ibu Opik">
             </div>
         </div>
 
@@ -281,13 +68,12 @@
             <a href="{{ route('orders.index') }}" class="active">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Pesanan</span>
-                <span class="badge warning">{{ $pendingOrders ?? 0 }}</span>
+                <span id="sidebarPendingOrders" class="badge warning">{{ $pendingOrders ?? 0 }}</span>
             </a>
 
             <a href="{{ route('customers.index') }}">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
-                <span class="badge">{{ $totalCustomers ?? 0 }}</span>
             </a>
 
             <a href="{{ route('reservations.index') }}">
@@ -346,13 +132,14 @@
                 <!-- ============================================ -->
                 <!-- HEADER CARD -->
                 <!-- ============================================ -->
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div class="card-header">
                     <h3>
-                        <i class="fas fa-clipboard-list" style="color: var(--gold);"></i>
+                        <i class="fas fa-shopping-cart" style="color: var(--gold);"></i>
                         Daftar Pesanan
                     </h3>
                     
-                    <div style="background: var(--gold-bg); color: var(--gold); padding: 6px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid rgba(212, 168, 67, 0.2);">
+                    <!-- Tambah ID disini biar angkanya bisa diubah Javascript -->
+                    <div id="totalOrdersBadge" class="badge badge-warning" style="font-size: 13px; padding: 6px 14px;">
                         Total: {{ $orders->count() }} Pesanan
                     </div>
                 </div>
@@ -367,91 +154,92 @@
                     </div>
                     @endif
 
-                    <div class="table-wrapper" style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
+                    <div class="table-wrapper">
+                        <table>
                             <thead>
                                 <tr>
-                                    <th style="padding: 12px; text-align: left;">Order ID</th>
-                                    <th style="text-align: left;">Nama Pelanggan</th>
-                                    <th style="text-align: left;">No HP</th>
-                                    <th style="text-align: center;">Metode</th>
-                                    <th style="text-align: right;">Total Harga</th>
-                                    <th style="text-align: center;">Status</th>
-                                    <th style="text-align: center;">Aksi</th>
+                                    <th class="text-center">No</th>
+                                    <th>Order ID</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>No HP</th>
+                                    <th class="text-center">Metode</th>
+                                    <th class="text-center">Total Harga</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
-
-                            <tbody>
-                                @forelse($orders as $order)
-                                <tr style="border-bottom: 1px solid var(--border-color);">
+                            <tbody id="orderTableBody">
+                                @forelse($orders as $index => $order)
+                                <tr id="order-row-{{ $order->id }}" class="order-row">
                                     
-                                    <!-- ID & Nama -->
+                                    <!-- Nomor Urut Otomatis -->
+                                    <td style="font-weight: 600; color: var(--text-secondary);">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    
                                     <td style="font-weight: bold; color: var(--gold);">#{{ $order->id }}</td>
                                     
                                     <td>
-                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($order->customer_name) }}&background=d4a843&color=000&size=30" alt="Avatar" style="border-radius: 50%; border: 2px solid var(--gold);">
-                                            <span style="font-weight: 500; color: var(--text-primary);">{{ $order->customer_name }}</span>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($order->customer_name) }}&background=d4a843&color=000&size=30" alt="Avatar">
+                                            <span>{{ $order->customer_name }}</span>
                                         </div>
                                     </td>
                                     
-                                    <td style="color: var(--text-secondary);">{{ $order->phone }}</td>
+                                    <td>{{ $order->phone }}</td>
 
-                                    <!-- Metode Pengiriman dengan Icon -->
-                                    <td style="text-align: center;">
+                                    <td class="text-center">
                                         @if($order->delivery_type == 'antar')
-                                            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                                                <i class="fas fa-motorcycle"></i> Antar
-                                            </span>
+                                            <span class="badge badge-warning"><i class="fas fa-motorcycle"></i> Antar</span>
                                         @else
-                                            <span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
-                                                <i class="fas fa-store"></i> Ambil
-                                            </span>
+                                            <span class="badge badge-info"><i class="fas fa-store"></i> Ambil</span>
                                         @endif
                                     </td>
 
-                                    <!-- Harga -->
-                                    <td style="text-align: center; color: var(--text-primary); font-weight: 600;">Rp {{ number_format($order->total, 0, ',', '.') }}
+                                    <td class="text-center">
+                                        <strong class="total-spent">Rp {{ number_format($order->total, 0, ',', '.') }}</strong>
                                     </td>
 
-                                    <!-- Status Pesanan (Animasi Mutar untuk Diproses) -->
-                                    <td style="text-align: center;">
+                                    <td class="text-center status-cell">
                                         @if($order->status == 'Menunggu')
-                                            <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
-                                                <i class="fas fa-clock"></i> Menunggu
-                                            </span>
+                                            <span class="badge badge-danger"><i class="fas fa-clock"></i> Menunggu</span>
                                         @elseif($order->status == 'Diproses')
-                                            <span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
-                                                <i class="fas fa-spinner fa-spin"></i> Diproses
-                                            </span>
+                                            <span class="badge badge-info"><i class="fas fa-spinner fa-spin"></i> Diproses</span>
                                         @else
-                                            <span class="badge" style="background: rgba(34, 197, 94, 0.15); color: #22c55e;">
-                                                <i class="fas fa-check-circle"></i> Selesai
-                                            </span>
+                                            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Selesai</span>
                                         @endif
                                     </td>
 
-                                    <!-- Tombol Aksi (Mata & Tempat Sampah) -->
-                                    <td style="text-align: center;">
-                                        <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
-                                            <button type="button" class="btn btn-sm btn-outline" style="color: #3b82f6; border-color: rgba(59,130,246,0.3);" onclick="openOrderModal({{ $order->id }})" title="Lihat Detail Pesanan">
-                                                <i class="fas fa-eye"></i>
+                                    <td class="text-center action-cell" style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+                                        
+                                        @if($order->status == 'Menunggu')
+                                            <button type="button" class="btn btn-sm btn-primary quick-btn" onclick="updateOrderStatus({{ $order->id }}, 'Menunggu', '{{ addslashes($order->customer_name) }}')" title="Langsung Proses">
+                                                <i class="fas fa-fire"></i> Proses
                                             </button>
+                                        @elseif($order->status == 'Diproses')
+                                            <button type="button" class="btn btn-sm btn-success quick-btn" onclick="updateOrderStatus({{ $order->id }}, 'Diproses', '{{ addslashes($order->customer_name) }}')" title="Langsung Selesaikan">
+                                                <i class="fas fa-check-circle"></i> Selesai
+                                            </button>
+                                        @endif
 
-                                            <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Yakin ingin menghapus pesanan ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Hapus Pesanan">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline" onclick="openOrderModal({{ $order->id }})" title="Lihat Detail Pesanan">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+
+                                        <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Yakin ingin menghapus pesanan ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeleteOrder({{ $order->id }})" title="Hapus Pesanan">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+
                                     </td>
-
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                    <!-- Sesuaikan colspan jadi 8 karena ada tambahan kolom No -->
+                                    <td colspan="8" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
                                         <i class="fas fa-clipboard" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5; display: block;"></i>
                                         Belum ada pesanan yang masuk.
                                     </td>
@@ -553,18 +341,22 @@
         }, 3000);
     }
 
-    function updateOrderStatus(orderId, currentStatus) {
-        const modalBody = document.getElementById('orderModalBody');
-        // Ambil nama pelanggan dari atribut di dalam konten modal
-        const container = modalBody.querySelector('[data-customer-name]');
-        const customerName = container ? container.getAttribute('data-customer-name') : 'Pelanggan';
+    function updateOrderStatus(orderId, currentStatus, customerNameTarget = null) {
+        let customerName = 'Pelanggan';
 
-        modalBody.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                <i class="fas fa-spinner fa-spin" style="font-size: 28px; color: var(--gold); margin-bottom: 10px;"></i>
-                <p>Memproses status pesanan...</p>
-            </div>
-        `;
+        if (customerNameTarget) {
+            customerName = customerNameTarget;
+        } else {
+            const modalBody = document.getElementById('orderModalBody');
+            const container = modalBody.querySelector('[data-customer-name]');
+            if (container) customerName = container.getAttribute('data-customer-name');
+        }
+
+        const toast = document.getElementById('toastNotification');
+        document.getElementById('toastTitle').textContent = 'Loading...';
+        document.getElementById('toastMessage').textContent = 'Memproses pesanan...';
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
 
         fetch(`/admin/orders/${orderId}/status`, {
             method: 'PATCH',
@@ -578,24 +370,134 @@
         .then(data => {
             closeOrderModal();
             
-            // Tentukan teks notifikasi berdasarkan status sebelumnya
+            const row = document.getElementById(`order-row-${orderId}`);
+            
             if (currentStatus === 'Menunggu') {
                 showToast('Status Diperbarui', `Pesanan atas nama ${customerName} kini sedang Diproses.`);
+                
+                // Update UI (Menunggu -> Diproses)
+                if (row) {
+                    const statusTd = row.querySelector('.status-cell');
+                    if(statusTd) {
+                        statusTd.innerHTML = '<span class="badge badge-info"><i class="fas fa-spinner fa-spin"></i> Diproses</span>';
+                    }
+                    
+                    const actionTd = row.querySelector('.action-cell');
+                    if(actionTd) {
+                        const quickBtn = actionTd.querySelector('.quick-btn');
+                        if(quickBtn) {
+                            quickBtn.className = 'btn btn-sm btn-success quick-btn';
+                            quickBtn.setAttribute('onclick', `updateOrderStatus(${orderId}, 'Diproses', '${customerName.replace(/'/g, "\\'")}')`);
+                            quickBtn.title = 'Langsung Selesaikan';
+                            quickBtn.innerHTML = '<i class="fas fa-check-circle"></i> Selesai';
+                        }
+                    }
+                }
+
             } else {
                 showToast('Pesanan Selesai!', `Pesanan atas nama ${customerName} telah selesai dan masuk ke Riwayat.`);
-            }
+                
+                // Animasi Hapus Baris
+                if (row) {
+                    row.style.transition = 'all 0.5s ease';
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(-30px)';
+                    
+                    setTimeout(() => {
+                        row.remove(); 
+                        
+                        // 1. KURANGI TOTAL PESANAN DI ATAS TABEL
+                        const totalBadge = document.getElementById('totalOrdersBadge');
+                        if (totalBadge) {
+                            let currentTotal = parseInt(totalBadge.textContent.replace(/[^0-9]/g, ''));
+                            if (!isNaN(currentTotal) && currentTotal > 0) {
+                                totalBadge.textContent = `Total: ${currentTotal - 1} Pesanan`;
+                            }
+                            
+                            if (currentTotal - 1 === 0) {
+                                document.getElementById('orderTableBody').innerHTML = `
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                        <i class="fas fa-clipboard" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5; display: block;"></i>
+                                        Belum ada pesanan yang masuk.
+                                    </td>
+                                </tr>`;
+                            }
+                        }
 
-            // Refresh halaman setelah 1.5 detik agar animasi toast sempat terlihat
-            setTimeout(() => {
-                location.reload();
-            }, 1500);
+                        // 2. KURANGI BADGE NOTIFIKASI DI SIDEBAR KIRI
+                        const sidebarBadge = document.getElementById('sidebarPendingOrders');
+                        if (sidebarBadge) {
+                            let pendingCount = parseInt(sidebarBadge.textContent.trim());
+                            if (!isNaN(pendingCount) && pendingCount > 0) {
+                                sidebarBadge.textContent = pendingCount - 1;
+                                
+                                // (Opsional) Kalau pesanan habis (0), sembunyikan badgenya biar rapi
+                                if (pendingCount - 1 === 0) {
+                                    sidebarBadge.style.display = 'none';
+                                }
+                            }
+                        }
+                    }, 500); 
+                }
+            }
         })
         .catch(error => {
             alert('Gagal memperbarui status pesanan.');
             console.error(error);
-            openOrderModal(orderId);
         });
     }
+</script>
+
+<!-- ============================================ -->
+<!-- MODAL KONFIRMASI HAPUS PESANAN -->
+<!-- ============================================ -->
+<div id="deleteOrderModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; text-align: center; padding: 32px 24px;">
+        <div style="width: 64px; height: 64px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 16px;">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">Yakin Mau Dihapus?</h2>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
+            Data pesanan ini akan dihapus permanen dari sistem dan tidak bisa dikembalikan.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button type="button" class="btn btn-outline" onclick="closeDeleteOrderModal()" style="flex: 1; justify-content: center;">Batal</button>
+            <button type="button" class="btn btn-danger" onclick="submitDeleteOrder()" style="flex: 1; justify-content: center;">Ya, Hapus!</button>
+        </div>
+    </div>
+</div>
+
+<!-- FORM HAPUS TERSEMBUNYI -->
+<form id="globalDeleteOrderForm" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+    // Fungsi memunculkan modal hapus pesanan
+    function confirmDeleteOrder(orderId) {
+        document.getElementById('globalDeleteOrderForm').action = `/admin/orders/${orderId}`;
+        document.getElementById('deleteOrderModal').classList.add('show');
+    }
+
+    // Fungsi menutup modal
+    function closeDeleteOrderModal() {
+        document.getElementById('deleteOrderModal').classList.remove('show');
+    }
+
+    // Eksekusi hapus
+    function submitDeleteOrder() {
+        document.getElementById('globalDeleteOrderForm').submit();
+    }
+
+    // Tutup modal jika klik di luar kotak
+    window.addEventListener('click', function(event) {
+        const deleteOrderModal = document.getElementById('deleteOrderModal');
+        if (event.target === deleteOrderModal) {
+            closeDeleteOrderModal();
+        }
+    });
 </script>
 
 <!-- ============================================ -->

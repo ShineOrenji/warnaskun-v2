@@ -135,7 +135,6 @@
             <a href="{{ route('customers.index') }}" class="active">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
-                <span class="badge">{{ $totalCustomers }}</span>
             </a>
 
             <a href="{{ route('reservations.index') }}">
@@ -214,49 +213,68 @@
             </div>
 
             <!-- ============================================ -->
-            <!-- STATS CARDS -->
+            <!-- STATS CARDS (DENGAN ID UNTUK AJAX) -->
             <!-- ============================================ -->
             <div class="stats-grid">
 
+                <!-- KARTU 1: Pelanggan Aktif -->
                 <div class="stat-card">
                     <div class="stat-header">
-                        <span class="label">Total Pelanggan</span>
-                        <div class="icon gold">
+                        <span class="label">Pelanggan Aktif</span>
+                        <div class="icon blue">
                             <i class="fas fa-users"></i>
                         </div>
                     </div>
-                    <div class="stat-value">{{ $customers->count() }}</div>
-                    <div class="stat-change up">
-                        <i class="fas fa-check-circle"></i>
-                        Pada periode ini
+                    <div class="stat-value" id="statActiveCustomers">{{ $totalCustomersCount ?? 0 }}</div>
+                    <div class="stat-change info">
+                        <i class="fas fa-user-check"></i>
+                        Pada periode terpilih
                     </div>
                 </div>
 
+                <!-- KARTU 2: Total Pesanan Selesai (Bukan Jumlah Pelanggan) -->
                 <div class="stat-card">
                     <div class="stat-header">
-                        <span class="label">Total Pesanan Selesai</span>
+                        <span class="label">Pesanan Selesai</span>
                         <div class="icon blue">
                             <i class="fas fa-shopping-bag"></i>
                         </div>
                     </div>
-                    <div class="stat-value">{{ $customers->sum('total_orders') }}</div>
+                    <div class="stat-value" id="statTotalOrders">{{ $customers->sum('total_orders') }}</div>
                     <div class="stat-change info">
                         <i class="fas fa-clipboard-check"></i>
-                        Pesanan berhasil
+                        Total transaksi periode ini
                     </div>
                 </div>
 
+                <!-- KARTU 3: Pendapatan Sesuai Bulan -->
                 <div class="stat-card">
                     <div class="stat-header">
-                        <span class="label">Total Pendapatan</span>
+                        <span class="label" id="revenueLabel">Pemasukan Periode Ini</span>
                         <div class="icon green">
                             <i class="fas fa-wallet"></i>
                         </div>
                     </div>
-                    <div class="stat-value">Rp {{ number_format($customers->sum('total_spent'), 0, ',', '.') }}</div>
+                    <div class="stat-value" id="statRevenuePeriode">Rp {{ number_format($revenuePeriode ?? 0, 0, ',', '.') }}</div>
                     <div class="stat-change up">
-                        <i class="fas fa-money-bill-wave"></i>
-                        Pemasukan periode ini
+                        <i class="fas fa-calendar-alt"></i>
+                        Total di periode terpilih
+                    </div>
+                </div>
+
+                <!-- KARTU 4: Grand Total (Sepanjang Masa) -->
+                <div class="stat-card" style="border: 1px solid var(--gold); background: rgba(212, 168, 67, 0.05);">
+                    <div class="stat-header">
+                        <span class="label" style="color: var(--gold); font-weight: 700;">Pendapatan Keseluruhan</span>
+                        <div class="icon gold">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    <!-- TAMBAHKAN ID DISINI -->
+                    <div class="stat-value" id="statRevenueAllTime" style="color: var(--gold);">Rp {{ number_format($revenueAllTime ?? 0, 0, ',', '.') }}</div>
+                    <div class="stat-change" style="color: var(--gold-dark);">
+                        <i class="fas fa-chart-line"></i>
+                        Sejak web pertama dibuat
                     </div>
                 </div>
 
@@ -276,7 +294,7 @@
                         
                         <!-- FILTER BULAN -->
                         <form action="{{ route('customers.index') }}" method="GET" style="display: flex; gap: 8px; margin-right: 10px;">
-                            <select name="month" id="filterBulan" style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary);">
+                            <select name="month" id="filterBulan" onchange="this.form.submit()" style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary);">
                                 <option value="all" {{ ($selectedMonth ?? 'all') == 'all' ? 'selected' : '' }}>Semua Waktu</option>
                                 <option value="01" {{ ($selectedMonth ?? '') == '01' ? 'selected' : '' }}>Januari</option>
                                 <option value="02" {{ ($selectedMonth ?? '') == '02' ? 'selected' : '' }}>Februari</option>
@@ -645,6 +663,61 @@
             if (event.target === deleteItemModal) closeDeleteItemModal();
         }
 
+        // ---------- FILTER BULAN TANPA RELOAD (AJAX SUPER CEPAT) ----------
+        let filterBulan = document.getElementById('filterBulan');
+        if (filterBulan) {
+            // Hilangkan fungsi submit form bawaan
+            if (filterBulan.form) filterBulan.form.onsubmit = e => e.preventDefault();
+
+            filterBulan.addEventListener('change', function() {
+                let month = this.value;
+                let url = `/admin/customers?month=${month}`;
+                let tbody = document.getElementById('customerTableBody');
+                
+                // Tampilkan loading di tabel
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 50px;"><i class="fas fa-spinner fa-spin" style="font-size:28px; color:var(--gold);"></i><p style="margin-top:12px; color:var(--text-muted);">Memuat rekap bulan ini...</p></td></tr>`;
+
+                fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(res => res.text())
+                .then(html => {
+                    // Ambil kembali elemen dari hasil fetch HTML halaman tersebut
+                    let doc = new DOMParser().parseFromString(html, 'text/html');
+                    
+                    // 1. Update Tabel Bawah
+                    let newTbody = doc.getElementById('customerTableBody');
+                    if (newTbody) {
+                        tbody.innerHTML = newTbody.innerHTML;
+                    }
+
+                    // 2. Update Kotak Statistik di Atas secara Instan
+                    let newActive = doc.getElementById('statActiveCustomers')?.textContent;
+                    let newOrders = doc.getElementById('statTotalOrders')?.textContent;
+                    let newRevenue = doc.getElementById('statRevenuePeriode')?.textContent;
+                    let newAllTime = doc.getElementById('statRevenueAllTime')?.textContent;
+
+                    if (newActive) document.getElementById('statActiveCustomers').textContent = newActive;
+                    if (newOrders) document.getElementById('statTotalOrders').textContent = newOrders;
+                    if (newRevenue) document.getElementById('statRevenuePeriode').textContent = newRevenue;
+                    if (newAllTime) document.getElementById('statRevenueAllTime').textContent = newAllTime;
+
+                    // Jalankan ulang kotak pencarian jika sedang aktif
+                    let searchInput = document.getElementById('customerSearch');
+                    if (searchInput && searchInput.value) {
+                        // Trigger pencarian ulang
+                        searchInput.dispatchEvent(new Event('input'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Gagal memperbarui data.');
+                });
+            });
+        }
+
         // ==========================================
         //      FITUR MODAL EDIT PELANGGAN
         // ==========================================
@@ -698,100 +771,7 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // ====================================================================
-        //              SCRIPT PENCARIAN & FILTER BULAN V2
-        // ====================================================================
-        document.addEventListener("DOMContentLoaded", function() {
-            
-            let oldSearchInput = document.getElementById('customerSearch');
-            if (!oldSearchInput) return; // Kalau kotak pencarian nggak ada, stop.
-
-            // 1. KLONING INPUT UNTUK MEMBUNUH SCRIPT LAMA YANG NYANGKUT
-            let searchInput = oldSearchInput.cloneNode(true);
-            oldSearchInput.parentNode.replaceChild(searchInput, oldSearchInput);
-
-            // 2. FUNGSI UTAMA PENYARINGAN (REAL-TIME)
-            function performSearch(query) {
-                // Ambil langsung dari <tbody> biar selalu dapat data terbaru
-                let rows = document.querySelectorAll('#customerTableBody tr');
-                
-                rows.forEach(row => {
-                    // Abaikan baris "Memuat..." atau baris kosong
-                    if (row.cells.length < 3) return;
-
-                    let name = row.cells[1].textContent.toLowerCase().trim();
-                    let phone = row.cells[2].textContent.toLowerCase().trim();
-                    phone = phone.replace(/[^0-9+]/g, ''); // Bersihkan karakter aneh di No HP
-
-                    if (query === '') {
-                        row.style.display = '';
-                        return;
-                    }
-
-                    // Logika Sakti: Nama boleh dicari dari tengah, No HP WAJIB dari awal!
-                    if (name.includes(query) || phone.startsWith(query)) {
-                        row.style.display = ''; 
-                    } else {
-                        row.style.display = 'none'; 
-                    }
-                });
-            }
-
-            // 3. JALANKAN PENCARIAN SAAT MENGETIK
-            searchInput.addEventListener('input', function() {
-                let query = this.value.toLowerCase().trim();
-                sessionStorage.setItem('savedCustomerSearch', query);
-                performSearch(query);
-            });
-
-            // 4. KEMBALIKAN PENCARIAN SAAT REFRESH/GANTI HALAMAN
-            let savedSearch = sessionStorage.getItem('savedCustomerSearch');
-            if (savedSearch) {
-                searchInput.value = savedSearch;
-                performSearch(savedSearch.toLowerCase().trim());
-            }
-
-            // 5. FILTER BULAN TANPA RELOAD
-            let oldFilterBulan = document.getElementById('filterBulan');
-            if (oldFilterBulan) {
-                if (oldFilterBulan.form) oldFilterBulan.form.onsubmit = e => e.preventDefault();
-                
-                // Kloning juga filter bulannya biar bersih dari script nyangkut
-                let filterBulan = oldFilterBulan.cloneNode(true);
-                oldFilterBulan.parentNode.replaceChild(filterBulan, oldFilterBulan);
-
-                filterBulan.addEventListener('change', function() {
-                    let url = `/admin/customers?month=${this.value}`;
-                    let tbody = document.getElementById('customerTableBody');
-                    let originalHtml = tbody.innerHTML;
-
-                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 50px;"><i class="fas fa-spinner fa-spin" style="font-size:28px; color:var(--gold);"></i><p style="margin-top:12px; color:var(--text-muted);">Memuat riwayat bulan ini...</p></td></tr>`;
-
-                    fetch(url)
-                        .then(res => res.text())
-                        .then(html => {
-                            let doc = new DOMParser().parseFromString(html, 'text/html');
-                            let newTbody = doc.getElementById('customerTableBody');
-                            
-                            if (newTbody) {
-                                tbody.innerHTML = newTbody.innerHTML; 
-                                
-                                // Setel ulang pencarian kalau kotak search masih ada teksnya
-                                if (searchInput.value) {
-                                    performSearch(searchInput.value.toLowerCase().trim());
-                                }
-                            } else {
-                                tbody.innerHTML = originalHtml;
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching data:', error);
-                            tbody.innerHTML = originalHtml;
-                            alert('Gagal memuat data baru. Pastikan koneksi aman.');
-                        });
-                });
-            }
-        });
+        
 
         // ---------- EXPORT DATA KE CSV YANG BERSIH & RAPI ----------
         window.exportData = function() {
