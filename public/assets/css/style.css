@@ -1168,6 +1168,10 @@ body.preload-active { overflow: hidden; }
   flex-shrink: 0;
 }
 
+.btn-order-2 {
+  padding: 8px 60px !important;
+}
+
 .btn-order:hover {
   background: var(--white);
   transform: scale(1.05);

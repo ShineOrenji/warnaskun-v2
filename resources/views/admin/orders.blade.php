@@ -343,98 +343,125 @@
 
             <div class="card">
 
-                <div class="card-header">
-                    <h3>Daftar Pesanan</h3>
+                <!-- ============================================ -->
+                <!-- HEADER CARD -->
+                <!-- ============================================ -->
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <h3>
+                        <i class="fas fa-clipboard-list" style="color: var(--gold);"></i>
+                        Daftar Pesanan
+                    </h3>
+                    
+                    <div style="background: var(--gold-bg); color: var(--gold); padding: 6px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid rgba(212, 168, 67, 0.2);">
+                        Total: {{ $orders->count() }} Pesanan
+                    </div>
                 </div>
 
                 <div class="card-body">
 
-                    <p style="margin-bottom: 20px;">
-                        Total Pesanan :
-                        <strong>{{ $orders->count() }}</strong>
-                    </p>
+                    <!-- NOTIFIKASI SUKSES -->
+                    @if(session('success'))
+                    <div style="background: rgba(34, 197, 94, 0.1); border-left: 4px solid #22c55e; color: #166534; padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 500;">
+                        <i class="fas fa-check-circle" style="font-size: 20px; color: #22c55e;"></i>
+                        {{ session('success') }}
+                    </div>
+                    @endif
 
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <div class="table-wrapper" style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 12px; text-align: left;">Order ID</th>
+                                    <th style="text-align: left;">Nama Pelanggan</th>
+                                    <th style="text-align: left;">No HP</th>
+                                    <th style="text-align: center;">Metode</th>
+                                    <th style="text-align: right;">Total Harga</th>
+                                    <th style="text-align: center;">Status</th>
+                                    <th style="text-align: center;">Aksi</th>
+                                </tr>
+                            </thead>
 
-                        <thead>
-                            <tr style="background: #f5f5f5;">
-                                <th style="padding: 12px;">ID</th>
-                                <th>Nama</th>
-                                <th>No HP</th>
-                                <th>Metode</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+                            <tbody>
+                                @forelse($orders as $order)
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    
+                                    <!-- ID & Nama -->
+                                    <td style="font-weight: bold; color: var(--gold);">#{{ $order->id }}</td>
+                                    
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($order->customer_name) }}&background=d4a843&color=000&size=30" alt="Avatar" style="border-radius: 50%; border: 2px solid var(--gold);">
+                                            <span style="font-weight: 500; color: var(--text-primary);">{{ $order->customer_name }}</span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td style="color: var(--text-secondary);">{{ $order->phone }}</td>
 
-                        <tbody>
+                                    <!-- Metode Pengiriman dengan Icon -->
+                                    <td style="text-align: center;">
+                                        @if($order->delivery_type == 'antar')
+                                            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                                                <i class="fas fa-motorcycle"></i> Antar
+                                            </span>
+                                        @else
+                                            <span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                                                <i class="fas fa-store"></i> Ambil
+                                            </span>
+                                        @endif
+                                    </td>
 
-                            @forelse($orders as $order)
+                                    <!-- Harga -->
+                                    <td style="text-align: center; color: var(--text-primary); font-weight: 600;">Rp {{ number_format($order->total, 0, ',', '.') }}
+                                    </td>
 
-                            <tr style="text-align: center; border-top: 1px solid #ddd;">
+                                    <!-- Status Pesanan (Animasi Mutar untuk Diproses) -->
+                                    <td style="text-align: center;">
+                                        @if($order->status == 'Menunggu')
+                                            <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                                                <i class="fas fa-clock"></i> Menunggu
+                                            </span>
+                                        @elseif($order->status == 'Diproses')
+                                            <span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                                                <i class="fas fa-spinner fa-spin"></i> Diproses
+                                            </span>
+                                        @else
+                                            <span class="badge" style="background: rgba(34, 197, 94, 0.15); color: #22c55e;">
+                                                <i class="fas fa-check-circle"></i> Selesai
+                                            </span>
+                                        @endif
+                                    </td>
 
-                                <td>#{{ $order->id }}</td>
+                                    <!-- Tombol Aksi (Mata & Tempat Sampah) -->
+                                    <td style="text-align: center;">
+                                        <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                                            <button type="button" class="btn btn-sm btn-outline" style="color: #3b82f6; border-color: rgba(59,130,246,0.3);" onclick="openOrderModal({{ $order->id }})" title="Lihat Detail Pesanan">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
 
-                                <td>{{ $order->customer_name }}</td>
+                                            <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Yakin ingin menghapus pesanan ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Hapus Pesanan">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
 
-                                <td>{{ $order->phone }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                        <i class="fas fa-clipboard" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5; display: block;"></i>
+                                        Belum ada pesanan yang masuk.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
-                                <td>
-                                    @if($order->delivery_type == 'antar')
-                                        <span class="badge badge-warning">🚚 Antar</span>
-                                    @else
-                                        <span class="badge badge-info">🏪 Ambil</span>
-                                    @endif
-                                </td>
-
-                                <td>
-                                    Rp {{ number_format($order->total, 0, ',', '.') }}
-                                </td>
-
-                                <td>
-
-                                    @if($order->status == 'Menunggu')
-                                        <span class="badge bg-yellow-500 text-white">🟡 Menunggu</span>
-                                    @elseif($order->status == 'Diproses')
-                                        <span class="badge bg-blue-500 text-white">🔵 Diproses</span>
-                                    @else
-                                        <span class="badge bg-green-500 text-white">🟢 Selesai</span>
-                                    @endif
-
-                                </td>
-
-                                <td class="flex items-center gap-2">
-
-                                    <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary btn-sm">
-                                        Detail
-                                    </a>
-
-                                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pesanan ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700 transition text-xl" title="Hapus Pesanan">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-
-                                </td>
-
-                            </tr>
-
-                            @empty
-
-                            <tr>
-                                <td colspan="7" style="text-align: center; padding: 20px;">
-                                    Belum ada pesanan.
-                                </td>
-                            </tr>
-
-                            @endforelse
-
-                        </tbody>
-
-                    </table>
+                </div>
 
                 </div>
 
@@ -448,6 +475,139 @@
     <!-- SCRIPTS -->
     <!-- ============================================ -->
     <script src="{{ asset('assets/js/admin-script.js') }}"></script>
+
+    <!-- ============================================ -->
+<!-- MODAL DETAIL PESANAN -->
+<!-- ============================================ -->
+<div id="orderDetailModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h2>
+                <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                Informasi Pesanan
+            </h2>
+            <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="orderModalBody">
+            <!-- Konten akan dimuat secara otomatis lewat AJAX -->
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 28px; color: var(--gold); margin-bottom: 10px;"></i>
+                <p>Memuat detail pesanan...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openOrderModal(orderId) {
+        const modal = document.getElementById('orderDetailModal');
+        const modalBody = document.getElementById('orderModalBody');
+
+        // Tampilkan modal dan beri loading
+        modal.classList.add('show');
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 28px; color: var(--gold); margin-bottom: 10px;"></i>
+                <p>Memuat detail pesanan...</p>
+            </div>
+        `;
+
+        // Ambil data HTML dari server menggunakan fetch (tanpa reload)
+        fetch(`/admin/orders/${orderId}/modal`)
+            .then(response => response.text())
+            .then(html => {
+                modalBody.innerHTML = html;
+            })
+            .catch(error => {
+                modalBody.innerHTML = `<p style="text-align: center; color: #ef4444;">Gagal memuat data pesanan.</p>`;
+                console.error(error);
+            });
+    }
+
+    function closeOrderModal() {
+        document.getElementById('orderDetailModal').classList.remove('show');
+    }
+
+    // Tutup modal jika klik di luar kotak modal
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('orderDetailModal');
+        if (event.target === modal) {
+            closeOrderModal();
+        }
+    });
+
+    // Fungsi menampilkan Toast Notifikasi yang keren
+    function showToast(title, message) {
+        const toast = document.getElementById('toastNotification');
+        document.getElementById('toastTitle').textContent = title;
+        document.getElementById('toastMessage').textContent = message;
+
+        // Munculkan toast
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+
+        // Sembunyikan otomatis setelah 3 detik
+        setTimeout(() => {
+            toast.style.transform = 'translateY(100px)';
+            toast.style.opacity = '0';
+        }, 3000);
+    }
+
+    function updateOrderStatus(orderId, currentStatus) {
+        const modalBody = document.getElementById('orderModalBody');
+        // Ambil nama pelanggan dari atribut di dalam konten modal
+        const container = modalBody.querySelector('[data-customer-name]');
+        const customerName = container ? container.getAttribute('data-customer-name') : 'Pelanggan';
+
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 28px; color: var(--gold); margin-bottom: 10px;"></i>
+                <p>Memproses status pesanan...</p>
+            </div>
+        `;
+
+        fetch(`/admin/orders/${orderId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            closeOrderModal();
+            
+            // Tentukan teks notifikasi berdasarkan status sebelumnya
+            if (currentStatus === 'Menunggu') {
+                showToast('Status Diperbarui', `Pesanan atas nama ${customerName} kini sedang Diproses.`);
+            } else {
+                showToast('Pesanan Selesai!', `Pesanan atas nama ${customerName} telah selesai dan masuk ke Riwayat.`);
+            }
+
+            // Refresh halaman setelah 1.5 detik agar animasi toast sempat terlihat
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        })
+        .catch(error => {
+            alert('Gagal memperbarui status pesanan.');
+            console.error(error);
+            openOrderModal(orderId);
+        });
+    }
+</script>
+
+<!-- ============================================ -->
+<!-- TOAST NOTIFIKASI MELAYANG -->
+<!-- ============================================ -->
+<div id="toastNotification" style="position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; border-left: 4px solid #22c55e; color: #fff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; z-index: 9999; transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);">
+    <i class="fas fa-check-circle" style="color: #22c55e; font-size: 24px;"></i>
+    <div>
+        <h4 style="font-size: 14px; font-weight: 600; margin: 0; color: #fff;" id="toastTitle">Berhasil!</h4>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 2px 0 0 0;" id="toastMessage">Pesan notifikasi di sini</p>
+    </div>
+</div>
 
 </body>
 </html>

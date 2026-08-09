@@ -622,7 +622,7 @@
                           @else
 
                           <button
-                              class="btn-order"
+                              class="btn-order btn-order-2"
                               disabled
                               style="opacity:.6;cursor:not-allowed;">
 

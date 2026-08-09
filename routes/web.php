@@ -49,6 +49,24 @@ Route::post('/reservation', [ReservationController::class, 'store'])
 Route::post('/subscribe', [SubscribeController::class, 'store'])
     ->name('subscribe.store');
 
+Route::get('/admin/customers',
+    [CustomerController::class, 'index'])
+    ->name('customers.index');
+
+Route::get('/admin/customers/detail', 
+    [CustomerController::class, 'detail'])
+    ->name('customers.detail');
+
+// Hapus SEMUA riwayat berdasarkan Nomor HP
+Route::delete('/admin/customers/delete/{phone}', 
+    [CustomerController::class, 'destroy'])
+    ->name('customers.destroy');
+
+// Hapus SATU transaksi saja berdasarkan ID Order History
+Route::delete('/admin/customers/delete-item/{id}', 
+    [CustomerController::class, 'destroyItem'])
+    ->name('customers.destroyItem');
+
 /*
 |--------------------------------------------------------------------------
 | MENU ADMIN
@@ -71,6 +89,8 @@ Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])
 Route::patch('/menu/{menu}/toggle-status',
     [MenuController::class, 'toggleStatus'])
     ->name('menu.toggleStatus');
+
+Route::post('/admin/customers/update', [App\Http\Controllers\CustomerController::class, 'updateCustomer'])->name('admin.customers.update');
 
 /*
 |--------------------------------------------------------------------------
