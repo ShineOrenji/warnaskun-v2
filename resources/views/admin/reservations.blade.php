@@ -347,7 +347,7 @@
                                 <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-phone" style="margin-right: 6px;"></i> No HP:</strong> ${phone}
                             </div>
                             <div style="font-size: 14px; color: var(--text-primary);">
-                                <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-users" style="margin-right: 6px;"></i> Jumlah:</strong> ${person} Orang
+                                <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-users" style="margin-right: 6px;"></i> Jumlah:</strong> ${person}
                             </div>
                         </div>
 
@@ -356,7 +356,7 @@
                                 <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-calendar-alt" style="margin-right: 6px;"></i> Tanggal:</strong> ${date}
                             </div>
                             <div style="font-size: 14px; color: var(--text-primary); border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 8px;">
-                                <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-clock" style="margin-right: 6px;"></i> Jam:</strong> ${time} WIB
+                                <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-clock" style="margin-right: 6px;"></i> Jam:</strong> ${time}
                             </div>
                             <div style="font-size: 14px; color: var(--text-primary); display: flex; align-items: center;">
                                 <strong style="color: var(--gold); display: inline-block; width: 130px;"><i class="fas fa-info-circle" style="margin-right: 6px;"></i> Status:</strong> 

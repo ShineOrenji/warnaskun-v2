@@ -312,11 +312,12 @@
                             <input type="hidden" name="year" value="{{ $selectedYear ?? date('Y') }}">
                         </form>
 
-                        <button class="btn btn-outline btn-sm" onclick="exportData()">
-                            <i class="fas fa-download"></i> Export
+                        <!-- TOMBOL EXPORT & PRINT GLOBAL -->
+                        <button type="button" class="btn btn-outline btn-sm" onclick="exportData()">
+                            <i class="fas fa-file-excel"></i> Export CSV
                         </button>
-                        <button class="btn btn-outline btn-sm" onclick="window.print()">
-                            <i class="fas fa-print"></i> Print
+                        <button type="button" class="btn btn-outline btn-sm" onclick="printGlobalCustomers()">
+                            <i class="fas fa-print"></i> Print Rekap
                         </button>
                     </div>
                 </div>
@@ -331,15 +332,29 @@
 
                 <div class="table-wrapper">
                     <table>
+                        <div class="table-wrapper">
+                    <table id="mainCustomerTable">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama</th>
+                                <th onclick="sortTable(0, 'number')" style="cursor: pointer; white-space: nowrap;" title="Urutkan Nomor">
+                                    No <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
+                                <th onclick="sortTable(1, 'string')" style="cursor: pointer; white-space: nowrap;" title="Urutkan Nama">
+                                    Nama <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
                                 <th>No HP</th>
-                                <th class="text-center">Total Order</th>
-                                <th class="text-center">Total Belanja</th>
-                                <th class="text-center">Order Terakhir</th>
-                                <th class="text-center">Status</th>
+                                <th onclick="sortTable(3, 'number')" class="text-center" style="cursor: pointer; white-space: nowrap;" title="Urutkan Transaksi">
+                                    Total Order <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
+                                <th onclick="sortTable(4, 'number')" class="text-center" style="cursor: pointer; white-space: nowrap;" title="Urutkan Belanja">
+                                    Total Belanja <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
+                                <th onclick="sortTable(5, 'date')" class="text-center" style="cursor: pointer; white-space: nowrap;" title="Urutkan Tanggal">
+                                    Order Terakhir <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
+                                <th onclick="sortTable(6, 'string')" class="text-center" style="cursor: pointer; white-space: nowrap;" title="Urutkan Status">
+                                    Status <i class="fas fa-sort" style="color: var(--gold); margin-left: 4px;"></i>
+                                </th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -540,37 +555,47 @@
                         return;
                     }
 
-                    // Tambahkan tombol Print di atas riwayat dalam modal
+                    window.currentCustomerOrders = data; 
+                    window.currentCustomerName = name;
+                    window.currentCustomerPhone = phone;
+
+                    // Tombol Print & Export Khusus 1 Pelanggan Ini
                     let html = `
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
-                            <button type="button" class="btn btn-outline btn-sm" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;">
-                                <i class="fas fa-print"></i> Cetak Riwayat Ini
+                        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 16px;">
+                            <button type="button" class="btn btn-outline btn-sm" onclick="exportSingleHistory()" style="display: flex; align-items: center; gap: 6px; color: #22c55e; border-color: rgba(34,197,94,0.3);">
+                                <i class="fas fa-file-excel"></i> Export CSV
+                            </button>
+                            <button type="button" class="btn btn-outline btn-sm" onclick="printFullHistory()" style="display: flex; align-items: center; gap: 6px;">
+                                <i class="fas fa-print"></i> Cetak Semua Riwayat
                             </button>
                         </div>
                     `;
 
                     data.forEach((order, index) => {
-                        const date = new Date(order.order_created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit' });
+                        const date = new Date(order.order_created_at || order.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit' });
                         
-                        let deliveryBadge = '';
-                        if (order.delivery_type === 'antar') {
-                            deliveryBadge = '<span style="color: #fbbf24; font-weight: 600;"><i class="fas fa-motorcycle"></i> Antar ke Alamat</span>';
-                        } else {
-                            deliveryBadge = '<span style="color: #3b82f6; font-weight: 600;"><i class="fas fa-store"></i> Ambil Sendiri</span>';
-                        }
+                        let deliveryBadge = order.delivery_type === 'antar' 
+                            ? '<span style="color: #fbbf24; font-weight: 600;"><i class="fas fa-motorcycle"></i> Antar ke Alamat</span>' 
+                            : '<span style="color: #3b82f6; font-weight: 600;"><i class="fas fa-store"></i> Ambil Sendiri</span>';
 
                         html += `
-                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 16px; padding: 16px; position: relative;">
+                        <div id="history-order-${order.id}" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 16px; padding: 16px; position: relative;">
                             
-                            <!-- Tombol Hapus 1 Transaksi Ini -->
-                            <button type="button" onclick="confirmDeleteItem(${order.id})" title="Hapus transaksi ini saja" style="position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 14px; padding: 4px;">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 12px;">
+                                <button type="button" onclick="printHistoryReceipt(${order.id})" title="Cetak ulang struk ini" style="background: transparent; border: none; color: #3b82f6; cursor: pointer; font-size: 15px; padding: 4px;">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                                <button type="button" onclick="confirmDeleteItem(${order.id})" title="Hapus transaksi ini saja" style="background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 15px; padding: 4px;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
 
-                            <!-- Header Transaksi -->
-                            <div style="display:flex; justify-content:space-between; border-bottom: 1px dashed var(--border-color); padding-bottom: 12px; margin-bottom: 12px; padding-right: 28px;">
+                            <!-- HEADER DENGAN ORDER ID -->
+                            <div style="display:flex; justify-content:space-between; border-bottom: 1px dashed var(--border-color); padding-bottom: 12px; margin-bottom: 12px; padding-right: 65px;">
                                 <div>
-                                    <span class="badge badge-success" style="margin-bottom: 6px;">Transaksi #${data.length - index}</span>
+                                    <span class="badge badge-success" style="margin-bottom: 6px;">
+                                        Transaksi ke-${data.length - index} <span style="color: #fff; margin-left: 6px; padding-left: 6px; border-left: 1px solid rgba(255,255,255,0.3);">Order ID: #${order.id}</span>
+                                    </span>
                                     <div style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-clock"></i> ${date} WIB</div>
                                 </div>
                                 <div style="text-align: right;">
@@ -719,6 +744,222 @@
         }
 
         // ==========================================
+        // FUNGSI CETAK SALINAN STRUK DARI RIWAYAT 
+        // (100% KEMBAR IDENTIK PLEK KETIPLEK DENGAN ORDERS BLADE)
+        // ==========================================
+        function printHistoryReceipt(orderId) {
+            // Ambil data mentah pesanan dari memori yang sudah kita simpan tadi
+            if (!window.currentCustomerOrders) return alert('Data tidak ditemukan, muat ulang halaman.');
+            const order = window.currentCustomerOrders.find(o => o.id === orderId);
+            if (!order) return alert('Pesanan tidak ditemukan.');
+
+            // Format Tanggal persis seperti format Carbon di Orders (ex: 10 Aug 2026, 23:30 WIB)
+            const d = new Date(order.order_created_at || order.created_at);
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const formattedDate = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} WIB`;
+
+            // Format Metode Pengiriman dan Alamat
+            let deliveryMethod = order.delivery_type === 'antar' 
+                ? '<span style="color: #fbbf24; font-weight: 600;"><i class="fas fa-motorcycle"></i> Antar ke Alamat</span>'
+                : '<span style="color: #3b82f6; font-weight: 600;"><i class="fas fa-store"></i> Ambil Sendiri</span>';
+                
+            let addressHtml = '';
+            if (order.delivery_type === 'antar') {
+                addressHtml = `
+                <p style="grid-column: 1 / -1; margin: 0; color: var(--text-secondary);">
+                    <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-map-marker-alt" style="color: var(--gold); width: 16px;"></i> Alamat Lengkap</strong> 
+                    ${order.address || '-'}
+                </p>`;
+                if (order.landmark) {
+                    addressHtml += `
+                    <p style="grid-column: 1 / -1; margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-flag" style="color: var(--gold); width: 16px;"></i> Patokan Lokasi</strong> 
+                        ${order.landmark}
+                    </p>`;
+                }
+            }
+
+            // Bangun Tabel Item persis seperti di Orders
+            let itemsHtml = '';
+            if (order.items_detail && order.items_detail.length > 0) {
+                order.items_detail.forEach(item => {
+                    let menuName = item.menu_name || item.name || 'Menu';
+                    let qty = parseInt(item.quantity || item.qty || 1);
+                    let subtotal = parseInt(item.subtotal || 0);
+                    let price = parseInt(item.price || (subtotal / qty) || 0); // Hitung harga satuan jika tidak ada
+                    
+                    itemsHtml += `
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 10px 12px; color: var(--text-primary); font-weight: 500;">${menuName}</td>
+                        <td style="padding: 10px 12px; text-align: center; color: var(--text-secondary);">Rp ${price.toLocaleString('id-ID')}</td>
+                        <td style="padding: 10px 12px; text-align: center; font-weight: 600; color: var(--text-primary);">${qty}</td>
+                        <td style="padding: 10px 12px; text-align: right; color: var(--gold); font-weight: 600;">Rp ${subtotal.toLocaleString('id-ID')}</td>
+                    </tr>`;
+                });
+            }
+
+            // HTML IDENTIK dengan isi dari `order-modal-content.blade.php` (tanpa tombol)
+            const exactModalHtml = `
+            <div style="color: var(--text-primary);">
+                <!-- Title -->
+                <div style="font-size: 22px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-receipt" style="color: var(--gold); font-size: 24px;"></i>
+                        <span>Detail Pesanan <span style="color: var(--gold);">#${order.id}</span></span>
+                    </div>
+                </div>
+
+                <!-- Info Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; margin-bottom: 24px; font-size: 13px; background: var(--bg-primary); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-user" style="color: var(--gold); width: 16px;"></i> Nama Pelanggan</strong> 
+                        ${order.customer_name}
+                    </p>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-phone" style="color: var(--gold); width: 16px;"></i> Nomor HP</strong> 
+                        ${order.phone}
+                    </p>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-truck" style="color: var(--gold); width: 16px;"></i> Metode Pengiriman</strong> 
+                        ${deliveryMethod}
+                    </p>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-clock" style="color: var(--gold); width: 16px;"></i> Waktu Pesan</strong> 
+                        ${formattedDate}
+                    </p>
+                    ${addressHtml}
+                    <p style="grid-column: 1 / -1; margin: 0; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-sticky-note" style="color: var(--gold); width: 16px;"></i> Catatan Pesanan</strong> 
+                        ${order.note || '-'}
+                    </p>
+                </div>
+
+                <!-- Table Items -->
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-utensils" style="color: var(--gold);"></i> Daftar Menu yang Dipesan
+                </h3>
+                <div style="overflow-x: auto; margin-bottom: 16px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="background: var(--bg-hover); border-bottom: 2px solid var(--gold);">
+                                <th style="padding: 10px 12px; text-align: left; color: var(--text-muted);">Menu</th>
+                                <th style="padding: 10px 12px; text-align: center; color: var(--text-muted);">Harga</th>
+                                <th style="padding: 10px 12px; text-align: center; color: var(--text-muted);">Qty</th>
+                                <th style="padding: 10px 12px; text-align: right; color: var(--text-muted);">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHtml}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Total -->
+                <div style="text-align: right; padding: 12px 0; border-top: 2px solid var(--gold); border-bottom: 1px solid var(--border-color); margin-bottom: 20px;">
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">
+                        Total Pembayaran : <span style="color: var(--gold);">Rp ${parseInt(order.total).toLocaleString('id-ID')}</span>
+                    </h3>
+                </div>
+            </div>`;
+
+            // Bikin iframe tersembunyi untuk mencetak
+            let iframe = document.getElementById('printIframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'printIframe';
+                iframe.style.position = 'absolute';
+                iframe.style.width = '0px';
+                iframe.style.height = '0px';
+                iframe.style.border = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                    <head>
+                        <title>Struk Pesanan #${orderId}</title>
+                        <style>
+                            @page {
+                                size: A4;
+                                margin: 15mm;
+                            }
+                            body {
+                                background: #ffffff;
+                                color: #000000;
+                                font-family: 'Courier New', Courier, monospace;
+                                font-size: 14px;
+                                margin: 0;
+                                padding: 0;
+                                display: flex;
+                                justify-content: center;
+                                align-items: flex-start;
+                            }
+                            .receipt-box {
+                                width: 100%;
+                                max-width: 180mm;
+                                margin: 20mm auto;
+                                border: 2px solid #000;
+                                padding: 30px;
+                                box-sizing: border-box;
+                                background: #fff;
+                            }
+                            .text-center { text-align: center; }
+                            .dashed-line { border-bottom: 2px dashed #000; margin: 15px 0; }
+                            
+                            /* PAKSA SEMUA ELEMEN JADI HITAM PUTIH BERSIH ALA STRUK KASIR */
+                            #injectedContent * {
+                                color: #000 !important;
+                                background: transparent !important;
+                                border-color: #000 !important;
+                                box-shadow: none !important;
+                            }
+                            
+                            #injectedContent img, #injectedContent svg, #injectedContent i { 
+                                display: none !important; 
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="receipt-box">
+                            <div class="text-center" style="border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 20px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0;">WARUNG NASI KUNING IBU OPIK</h2>
+                                <p style="font-size: 14px; margin: 5px 0;">Bukti Pembayaran / Struk Pesanan</p>
+                                <p style="font-size: 12px; margin: 0;">Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani, Kec. Sukatani, Kab. Purwakarta | Telp: 0855-5915-0809</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px; font-size: 14px; display: flex; justify-content: space-between;">
+                                <div><strong>Order ID:</strong> #${orderId}</div>
+                                <div><strong>Waktu Cetak:</strong> ${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID')}</div>
+                            </div>
+
+                            <div class="dashed-line"></div>
+
+                            <!-- ISI DETAIL IDENTIK DENGAN ORDERS BLADE -->
+                            <div id="injectedContent" style="margin: 15px 0;">
+                                ${exactModalHtml}
+                            </div>
+
+                            <div class="dashed-line"></div>
+
+                            <div class="text-center" style="font-size: 12px; margin-top: 20px; color: #333;">
+                                <p style="margin: 0; font-weight: bold; font-size: 14px;">*** TERIMA KASIH ***</p>
+                                <p style="margin: 5px 0 0 0;">Harap simpan struk ini sebagai bukti pembayaran yang sah.</p>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            `);
+            doc.close();
+
+            setTimeout(() => {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            }, 300);
+        }
+
+        // ==========================================
         //      FITUR MODAL EDIT PELANGGAN
         // ==========================================
         const editModal = document.getElementById('editCustomerModal');
@@ -813,6 +1054,509 @@
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         };
+    </script>
+
+    <!-- ============================================ -->
+    <!-- SCRIPT FITUR TAMBAHAN (PRINT, EXPORT, SORT)  -->
+    <!-- ============================================ -->
+    <script>
+        // --- 1. FITUR SORTING TABEL ---
+        function sortTable(n, type) {
+            let table = document.getElementById("mainCustomerTable");
+            let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            switching = true;
+            dir = "asc"; 
+            
+            const parseDate = (str) => {
+                const months = { 'jan':1, 'feb':2, 'mar':3, 'apr':4, 'mei':5, 'may':5, 'jun':6, 'jul':7, 'agu':8, 'aug':8, 'sep':9, 'okt':10, 'oct':10, 'nov':11, 'des':12, 'dec':12 };
+                let parts = str.toLowerCase().split(' ');
+                if (parts.length >= 3) {
+                    let d = parts[0].padStart(2, '0');
+                    let m = String(months[parts[1]] || 0).padStart(2, '0');
+                    let y = parts[2];
+                    return parseInt(y + m + d);
+                }
+                return 0;
+            };
+
+            while (switching) {
+                switching = false;
+                rows = table.querySelectorAll("tbody tr.customer-row");
+                for (i = 0; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].querySelectorAll("td")[n];
+                    y = rows[i + 1].querySelectorAll("td")[n];
+                    
+                    let valX = x.textContent.trim().toLowerCase();
+                    let valY = y.textContent.trim().toLowerCase();
+                    
+                    if (type === 'number') {
+                        valX = parseFloat(valX.replace(/[^0-9]/g, '')) || 0;
+                        valY = parseFloat(valY.replace(/[^0-9]/g, '')) || 0;
+                    } else if (type === 'date') {
+                        valX = parseDate(valX);
+                        valY = parseDate(valY);
+                    }
+                    
+                    if (dir == "asc") {
+                        if (valX > valY) { shouldSwitch = true; break; }
+                    } else if (dir == "desc") {
+                        if (valX < valY) { shouldSwitch = true; break; }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        // --- 2. EXPORT CSV GLOBAL (REKAP SEMUA PELANGGAN) ---
+        window.exportData = function() {
+            const rows = document.querySelectorAll('.customer-row');
+            if (rows.length === 0) return alert('Tidak ada data untuk diexport!');
+
+            let csv = '\uFEFF';
+            csv += 'LAPORAN REKAP RIWAYAT PELANGGAN\n';
+            csv += 'WARUNG NASI KUNING IBU OPIK\n';
+            csv += `Tanggal Dicetak: ;${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID')}\n\n`;
+            csv += 'No;Nama Pelanggan;Nomor HP;Total Transaksi;Total Belanja (Rp);Order Terakhir;Status\n';
+
+            rows.forEach(function(row) {
+                const cells = row.querySelectorAll('td');
+                const no = cells[0]?.textContent?.trim() || '';
+                const name = cells[1]?.querySelector('span')?.textContent?.trim() || '';
+                const phone = cells[2]?.textContent?.trim() || '';
+                const orders = cells[3]?.textContent?.trim().replace(' Transaksi', '') || '';
+                let spent = cells[4]?.textContent?.trim() || '0';
+                spent = spent.replace('Rp', '').replace(/\./g, '').trim();
+                const lastOrder = cells[5]?.textContent?.trim() || '';
+                const status = cells[6]?.querySelector('.badge')?.textContent?.trim() || '';
+
+                csv += `"${no}";"${name}";"${phone}";"${orders}";"${spent}";"${lastOrder}";"${status}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = `Rekap-Global-Pelanggan-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        };
+
+        // --- 3. PRINT GLOBAL (REKAP TABEL SEMUA PELANGGAN) ---
+        window.printGlobalCustomers = function() {
+            const rows = document.querySelectorAll('.customer-row');
+            if (rows.length === 0) return alert('Tidak ada data untuk diprint!');
+            
+            let tableHtml = '';
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                tableHtml += `
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${cells[0].textContent.trim()}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight:bold;">${cells[1].textContent.trim()}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${cells[2].textContent.trim()}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:center;">${cells[3].textContent.trim()}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:right;">${cells[4].textContent.trim()}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:center;">${cells[5].textContent.trim()}</td>
+                    </tr>
+                `;
+            });
+
+            openIframeAndPrint(`
+                <h2 style="text-align: center; margin: 0;">REKAP PELANGGAN WARUNG IBU OPIK</h2>
+                <p style="text-align: center; margin: 5px 0 20px 0;">Dicetak pada: ${new Date().toLocaleString('id-ID')}</p>
+                <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 12px;">
+                    <thead>
+                        <tr style="background: #f4f4f4; border-bottom: 2px solid #000;">
+                            <th style="padding: 10px 8px; text-align: left;">No</th>
+                            <th style="padding: 10px 8px; text-align: left;">Nama</th>
+                            <th style="padding: 10px 8px; text-align: left;">No HP</th>
+                            <th style="padding: 10px 8px; text-align: center;">Transaksi</th>
+                            <th style="padding: 10px 8px; text-align: right;">Total Belanja</th>
+                            <th style="padding: 10px 8px; text-align: center;">Order Terakhir</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tableHtml}</tbody>
+                </table>
+            `, `Rekap_Global`);
+        };
+
+        // --- 4. EXPORT CSV 1 PELANGGAN (RIWAYAT DETAIL) ---
+        function exportSingleHistory() {
+            const data = window.currentCustomerOrders;
+            const name = window.currentCustomerName;
+            if (!data || data.length === 0) return alert('Tidak ada data untuk diexport!');
+
+            let csv = '\uFEFF';
+            csv += `LAPORAN DETAIL RIWAYAT TRANSAKSI PELANGGAN\n`;
+            csv += `Nama Pelanggan : ;${name}\n`;
+            csv += `Nomor HP       : ;${window.currentCustomerPhone}\n`;
+            csv += `Total Transaksi: ;${data.length} Kali\n`;
+            csv += `Tanggal Dicetak: ;${new Date().toLocaleString('id-ID')}\n\n`;
+            
+            csv += 'Order ID;Waktu Pesan;Metode;Alamat (Jika Antar);Catatan;Rincian Pesanan;Total Pembayaran (Rp)\n';
+
+            data.forEach(order => {
+                const date = new Date(order.order_created_at || order.created_at).toLocaleString('id-ID');
+                let menus = [];
+                if(order.items_detail) order.items_detail.forEach(i => menus.push(`${i.qty || 1}x ${i.menu_name || i.name}`));
+                let menuText = menus.join(', ');
+
+                let method = order.delivery_type === 'antar' ? 'Antar ke Alamat' : 'Ambil Sendiri';
+                let address = (order.delivery_type === 'antar' && order.address) ? order.address.replace(/"/g, '""') : '-';
+                let note = order.note ? order.note.replace(/"/g, '""') : '-';
+                
+                csv += `"${order.id}";"${date}";"${method}";"${address}";"${note}";"${menuText}";"${order.total}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = `Riwayat-Detail-${name.replace(/\s+/g, '-')}.csv`;
+            a.click();
+        }
+
+        // --- 5. PRINT SEMUA RIWAYAT 1 PELANGGAN (KEMBAR IDENTIK DGN ORDERS) ---
+        function printFullHistory() {
+            const data = window.currentCustomerOrders;
+            const name = window.currentCustomerName;
+            const phone = window.currentCustomerPhone;
+            if (!data || data.length === 0) return;
+
+            // Bagian Kop Surat & Header Global Laporan
+            let reportHtml = `
+                <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px;">
+                    <h2 style="margin: 0; font-size: 24px;">LAPORAN RIWAYAT PELANGGAN</h2>
+                    <h3 style="margin: 5px 0;">WARUNG NASI KUNING IBU OPIK</h3>
+                </div>
+                <div style="margin-bottom: 20px; font-size: 14px; line-height: 1.6;">
+                    <table style="width: 100%;">
+                        <tr><td style="width: 150px;"><strong>Nama Pelanggan</strong></td><td>: ${name}</td></tr>
+                        <tr><td><strong>No WhatsApp/HP</strong></td><td>: ${phone}</td></tr>
+                        <tr><td><strong>Total Transaksi</strong></td><td>: ${data.length} Kali Pesan</td></tr>
+                        <tr><td><strong>Dicetak Pada</strong></td><td>: ${new Date().toLocaleString('id-ID')}</td></tr>
+                    </table>
+                </div>
+            `;
+
+            // Looping isi pesanannya (Sekarang formatnya KEMBAR dengan Orders)
+            data.forEach((order, index) => {
+                const date = new Date(order.order_created_at || order.created_at).toLocaleString('id-ID');
+                
+                let deliveryMethod = order.delivery_type === 'antar' ? 'Antar ke Alamat' : 'Ambil Sendiri';
+                let addressHtml = order.delivery_type === 'antar' ? `<div><strong>Alamat Antar:</strong> ${order.address || '-'}</div>` : '';
+                let noteHtml = order.note ? order.note : '-';
+                let totalFormat = parseInt(order.total).toLocaleString('id-ID');
+
+                // Bikin Tabel Menu Persis Kayak Struk Kasir
+                let itemsTableRows = '';
+                if (order.items_detail && order.items_detail.length > 0) {
+                    order.items_detail.forEach(item => {
+                        let qty = item.qty || item.quantity || 1;
+                        let menuName = item.menu_name || item.name || 'Menu';
+                        let price = parseInt(item.price || 0).toLocaleString('id-ID');
+                        let subtotal = parseInt(item.subtotal || 0).toLocaleString('id-ID');
+                        
+                        itemsTableRows += `
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 8px 0; text-align: left;">${menuName}</td>
+                                <td style="padding: 8px 0; text-align: center;">Rp ${price}</td>
+                                <td style="padding: 8px 0; text-align: center;">${qty}</td>
+                                <td style="padding: 8px 0; text-align: right; font-weight: bold;">Rp ${subtotal}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    itemsTableRows = '<tr><td colspan="4">Detail menu tidak tersedia</td></tr>';
+                }
+
+                // Desain Kotak per Transaksi (Udah ditambahin Nama, No HP, dan Tabel Detail)
+                reportHtml += `
+                    <div style="border: 2px solid #000; padding: 15px; margin-bottom: 20px; border-radius: 8px; page-break-inside: avoid;">
+                        
+                        <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed #000; padding-bottom: 10px; margin-bottom: 15px;">
+                            <strong style="font-size: 16px;">Transaksi #${data.length - index} <span style="color: #666; font-weight: normal;">(Order ID: #${order.id})</span></strong>
+                            <span>${date}</span>
+                        </div>
+
+                        <!-- Informasi Pelanggan & Metode -->
+                        <div style="margin-bottom: 15px; font-size: 14px; line-height: 1.6;">
+                            <div><strong>Nama Pelanggan:</strong> ${order.customer_name || name}</div>
+                            <div><strong>Nomor HP      :</strong> ${order.phone || phone}</div>
+                            <div><strong>Metode        :</strong> ${deliveryMethod}</div>
+                            ${addressHtml}
+                            <div><strong>Catatan       :</strong> ${noteHtml}</div>
+                        </div>
+
+                        <div style="border-bottom: 2px dashed #000; margin: 15px 0;"></div>
+
+                        <!-- Tabel Daftar Menu (Menu, Harga, Qty, Subtotal) -->
+                        <div style="margin: 15px 0;">
+                            <strong style="display: block; margin-bottom: 8px; font-size: 15px;">Daftar Menu yang Dipesan:</strong>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #000;">
+                                        <th style="padding: 8px 0; text-align: left;">Menu</th>
+                                        <th style="padding: 8px 0; text-align: center;">Harga</th>
+                                        <th style="padding: 8px 0; text-align: center;">Qty</th>
+                                        <th style="padding: 8px 0; text-align: right;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${itemsTableRows}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="border-bottom: 2px dashed #000; margin: 15px 0;"></div>
+
+                        <!-- Total Harga -->
+                        <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; padding: 10px 0;">
+                            <span>TOTAL PEMBAYARAN:</span>
+                            <span>Rp ${totalFormat}</span>
+                        </div>
+                        
+                    </div>
+                `;
+            });
+
+            openIframeAndPrint(reportHtml, `Riwayat_${name}`);
+        }
+
+        // --- 6. CETAK STRUK 1 TRANSAKSI (SUPER DETAIL & KEMBAR 100% DGN ORDERS) ---
+        function printHistoryReceipt(orderId) {
+            if (!window.currentCustomerOrders) return alert('Data tidak ditemukan, muat ulang halaman.');
+            const order = window.currentCustomerOrders.find(o => o.id === orderId);
+            if (!order) return alert('Pesanan tidak ditemukan.');
+
+            const d = new Date(order.order_created_at || order.created_at);
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const formattedDate = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} WIB`;
+
+            let deliveryMethodHtml = order.delivery_type === 'antar' ? 'Antar ke Alamat' : 'Ambil Sendiri';
+
+            let addressHtml = '';
+            if (order.delivery_type === 'antar') {
+                addressHtml = `
+                    <p style="grid-column: 1 / -1; margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Alamat Lengkap</strong> 
+                        ${order.address || '-'}
+                    </p>`;
+                if (order.landmark) {
+                    addressHtml += `
+                    <p style="grid-column: 1 / -1; margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Patokan Lokasi</strong> 
+                        ${order.landmark}
+                    </p>`;
+                }
+            }
+
+            let itemsTableRows = '';
+            if (order.items_detail && order.items_detail.length > 0) {
+                order.items_detail.forEach(item => {
+                    let qty = item.qty || item.quantity || 1;
+                    let menuName = item.menu_name || item.name || 'Menu';
+                    let price = parseInt(item.price || (item.subtotal / qty) || 0).toLocaleString('id-ID');
+                    let subtotal = parseInt(item.subtotal || 0).toLocaleString('id-ID');
+                    
+                    itemsTableRows += `
+                        <tr style="border-bottom: 1px solid #000;">
+                            <td style="padding: 10px 12px; color: #000; font-weight: 500;">${menuName}</td>
+                            <td style="padding: 10px 12px; text-align: center; color: #000;">Rp ${price}</td>
+                            <td style="padding: 10px 12px; text-align: center; font-weight: 600; color: #000;">${qty}</td>
+                            <td style="padding: 10px 12px; text-align: right; color: #000; font-weight: 600;">Rp ${subtotal}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // HTML Injected Content (Murni gaya Orders)
+            const exactModalHtml = `
+                <div style="font-size: 22px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px;">
+                    <span>Detail Pesanan <span style="color: #000;">#${order.id}</span></span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; margin-bottom: 24px; font-size: 13px;">
+                    <p style="margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Nama Pelanggan</strong> 
+                        ${order.customer_name}
+                    </p>
+                    <p style="margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Nomor HP</strong> 
+                        ${order.phone}
+                    </p>
+                    <p style="margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Metode Pengiriman</strong> 
+                        ${deliveryMethodHtml}
+                    </p>
+                    <p style="margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Waktu Pesan</strong> 
+                        ${formattedDate}
+                    </p>
+                    ${addressHtml}
+                    <p style="grid-column: 1 / -1; margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Catatan Pesanan</strong> 
+                        ${order.note || '-'}
+                    </p>
+                </div>
+
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #000;">
+                    Daftar Menu yang Dipesan
+                </h3>
+                <div style="overflow-x: auto; margin-bottom: 16px;">
+                    <table style="width: 100%; font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 10px 12px; text-align: left; color: #000;">Menu</th>
+                                <th style="padding: 10px 12px; text-align: center; color: #000;">Harga</th>
+                                <th style="padding: 10px 12px; text-align: center; color: #000;">Qty</th>
+                                <th style="padding: 10px 12px; text-align: right; color: #000;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsTableRows}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: right; padding: 12px 0; margin-bottom: 20px;">
+                    <h3 style="font-size: 18px; font-weight: 700; color: #000; margin: 0;">
+                        Total Pembayaran : <span>Rp ${parseInt(order.total).toLocaleString('id-ID')}</span>
+                    </h3>
+                </div>
+            `;
+
+            // Proses Print TANPA pakai openIframeAndPrint(), melainkan murni pakai CSS Orders!
+            let iframe = document.getElementById('printIframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'printIframe';
+                iframe.style.position = 'absolute';
+                iframe.style.width = '0px';
+                iframe.style.height = '0px';
+                iframe.style.border = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                    <head>
+                        <title>Struk Pesanan #${orderId}</title>
+                        <style>
+                            @page {
+                                size: A4;
+                                margin: 15mm;
+                            }
+                            body {
+                                background: #ffffff;
+                                color: #000000;
+                                font-family: 'Courier New', Courier, monospace;
+                                font-size: 14px;
+                                margin: 0;
+                                padding: 0;
+                                display: flex;
+                                justify-content: center;
+                                align-items: flex-start;
+                            }
+                            .receipt-box {
+                                width: 100%;
+                                max-width: 180mm;
+                                margin: 20mm auto;
+                                padding: 30px;
+                                box-sizing: border-box;
+                                background: #fff;
+                            }
+                            .text-center { text-align: center; }
+                            .dashed-line { border-bottom: 2px dashed #000; margin: 15px 0; }
+                            
+                            #injectedContent * {
+                                color: #000 !important;
+                                background: transparent !important;
+                                border-color: #000 !important;
+                                box-shadow: none !important;
+                            }
+                            
+                            #injectedContent div:empty {
+                                display: none !important;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="receipt-box">
+                            <div class="text-center" style="border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 20px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0;">WARUNG NASI KUNING IBU OPIK</h2>
+                                <p style="font-size: 14px; margin: 5px 0;">Bukti Pembayaran / Struk Pesanan</p>
+                                <!-- Telp dihapus biar kop suratnya 100% kembar kaya di orders -->
+                                <p style="font-size: 12px; margin: 0;">Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani, Kec. Sukatani, Kab. Purwakarta</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px; font-size: 14px; display: flex; justify-content: space-between;">
+                                <div><strong>Order ID:</strong> #${orderId}</div>
+                                <div><strong>Waktu Cetak:</strong> ${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID').replace(/\./g, ':')}</div>
+                            </div>
+
+                            <div class="dashed-line"></div>
+
+                            <div id="injectedContent" style="margin: 15px 0;">
+                                ${exactModalHtml}
+                            </div>
+
+                            <div class="dashed-line"></div>
+
+                            <div class="text-center" style="font-size: 12px; margin-top: 20px; color: #333;">
+                                <p style="margin: 0; font-weight: bold; font-size: 14px;">*** TERIMA KASIH ***</p>
+                                <p style="margin: 5px 0 0 0;">Harap simpan struk ini sebagai bukti pembayaran yang sah.</p>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            `);
+            doc.close();
+
+            setTimeout(() => {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            }, 300);
+        }
+
+        // --- 7. FUNGSI BANTUAN UNTUK IFRAME PRINT (JANTUNGNYA PRINT) ---
+        function openIframeAndPrint(htmlContent, title) {
+            let iframe = document.getElementById('globalPrintIframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'globalPrintIframe';
+                iframe.style.position = 'absolute';
+                iframe.style.width = '0px';
+                iframe.style.height = '0px';
+                iframe.style.border = 'none';
+                document.body.appendChild(iframe);
+            }
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                    <head>
+                        <title>${title}</title>
+                        <style>
+                            @page { size: A4; margin: 15mm; }
+                            body { font-family: 'Courier New', Courier, sans-serif; color: #000; background: #fff; margin:0; padding:0; }
+                        </style>
+                    </head>
+                    <body>${htmlContent}</body>
+                </html>
+            `);
+            doc.close();
+            setTimeout(() => { iframe.contentWindow.focus(); iframe.contentWindow.print(); }, 300);
+        }
     </script>
 
     <script src="{{ asset('assets/js/admin-script.js') }}"></script>

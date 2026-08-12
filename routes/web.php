@@ -150,6 +150,10 @@ Route::delete('/admin/orders/{order}',
     [OrdersController::class, 'destroy'])
     ->name('orders.destroy');
 
+Route::get('/admin/orders/{order}/modal', 
+    [OrdersController::class, 'modal'])
+    ->name('orders.modal');
+
 /*
 |--------------------------------------------------------------------------
 | CUSTOMERS

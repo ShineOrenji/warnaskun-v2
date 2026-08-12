@@ -16,6 +16,44 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/checkout.css') }}">
+
+    <style>
+        .qris-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
+            display: none; align-items: center; justify-content: center; z-index: 999999;
+        }
+        .qris-modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        .qris-modal-box {
+            background: #ffffff; width: 90%; max-width: 400px; 
+            border-radius: 12px; padding: 24px; text-align: center; 
+            color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid #eee;
+        }
+        .qris-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 16px; border-bottom: 1px solid #eee; 
+            padding-bottom: 12px;
+        }
+        .qris-header h3 { font-size: 18px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 8px;}
+        .qris-header button { background: none; border: none; font-size: 20px; cursor: pointer; color: #888; transition: 0.3s;}
+        .qris-header button:hover { color: #ef4444; }
+        .qris-img-container {
+            background: #fff; padding: 15px; border-radius: 8px; border: 2px dashed #ccc;
+            margin: 15px auto; display: inline-block;
+        }
+        .qris-img { width: 100%; max-width: 200px; height: auto; display: block; }
+        .qris-timer { font-size: 16px; font-weight: bold; margin: 15px 0; color: #d4a843; background: rgba(212, 168, 67, 0.1); padding: 8px 16px; border-radius: 20px; display: inline-block;}
+        .qris-expired { display: none; color: #ef4444; font-weight: bold; margin: 15px 0; background: rgba(239, 68, 68, 0.1); padding: 12px; border-radius: 8px;}
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
@@ -198,7 +236,7 @@
                                 </h3>
                             </div>
 
-                            <form action="{{ route('cart.checkout') }}" method="POST" id="checkoutForm">
+                            <form action="{{ route('cart.checkout') }}" method="POST" id="checkoutForm" onsubmit="return handleCheckoutSubmit(event)">
                                 @csrf
 
                                 <!-- Nama -->
@@ -272,6 +310,34 @@
                                            class="form-control">
                                 </div>
 
+                                <!-- Metode Pembayaran Baru -->
+                                <div class="form-group">
+                                    <label>Metode Pembayaran <span class="required">*</span></label>
+                                    <div class="delivery-options">
+                                        <label class="delivery-option payment-option active">
+                                            <input type="radio"
+                                                   name="payment_method"
+                                                   value="tunai"
+                                                   onchange="changePaymentMethod()"
+                                                   checked>
+                                            <span class="option-content">
+                                                <i class="fas fa-money-bill-wave"></i>
+                                                <span>Tunai / COD</span>
+                                            </span>
+                                        </label>
+                                        <label class="delivery-option payment-option">
+                                            <input type="radio"
+                                                   name="payment_method"
+                                                   value="qris"
+                                                   onchange="changePaymentMethod()">
+                                            <span class="option-content">
+                                                <i class="fas fa-qrcode"></i>
+                                                <span>QRIS (Gopay, dll)</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <!-- Catatan -->
                                 <div class="form-group">
                                     <label for="note">Catatan</label>
@@ -298,6 +364,39 @@
             @endif
 
         </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL QRIS PEMBAYARAN -->
+    <!-- ============================================ -->
+    <div id="qrisModal" class="qris-modal-overlay">
+        <div class="qris-modal-box">
+            <div class="qris-header">
+                <h3><i class="fas fa-qrcode" style="color: #d4a843;"></i> Pembayaran QRIS</h3>
+                <button type="button" onclick="closeQrisModal()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="qris-body">
+                <p style="font-size: 14px; margin-bottom: 10px;">Scan barcode di bawah ini menggunakan aplikasi m-Banking atau e-Wallet Anda.</p>
+                
+                <div class="qris-img-container" id="qrisImageWrap">
+                    <!-- Ganti path gambar ini dengan gambar asli barcode QRIS Ibu Opik kamu -->
+                    <img src="{{ asset('assets/images/qris-dummy.png') }}" alt="QRIS Warung Ibu Opik" class="qris-img">
+                </div>
+
+                <div id="qrisExpiredMessage" class="qris-expired">
+                    <i class="fas fa-exclamation-triangle"></i> Waktu pembayaran habis. Silakan tutup dan buat pesanan ulang!
+                </div>
+
+                <div class="qris-timer">
+                    Sisa Waktu: <span id="timerText">10:00</span>
+                </div>
+
+                <button type="button" id="btnConfirmQris" class="btn-checkout" style="margin-top: 15px;" onclick="submitCheckoutForm()">
+                    <i class="fas fa-check-circle"></i> Saya Sudah Bayar
+                </button>
+            </div>
+        </div>
+    </div>
 
     </main>
 
@@ -550,6 +649,100 @@
             });
 
         });
+
+        // ================================
+        // LOGIKA METODE PEMBAYARAN & QRIS (ANTI GAGAL)
+        // ================================
+        let qrisTimerInterval;
+
+        // Mengubah warna tombol radio saat diklik
+        window.changePaymentMethod = function() {
+            document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+                const label = radio.closest('.payment-option');
+                if (radio.checked) {
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            });
+        };
+
+        // Fungsi yang dipanggil SAAT TOMBOL BUAT PESANAN DIKLIK
+        window.handleCheckoutSubmit = function(e) {
+            const paymentQris = document.querySelector('input[name="payment_method"][value="qris"]');
+            const qrisModal = document.getElementById('qrisModal');
+            
+            // Cek apakah milih QRIS
+            if (paymentQris && paymentQris.checked) {
+                // Kalau pop-up belum kebuka, tahan formnya & buka pop-up!
+                if (!qrisModal.classList.contains('show')) {
+                    e.preventDefault(); 
+                    openQrisModal();
+                    return false; // Stop form submit
+                }
+            }
+            return true; // Kalau milih tunai, form bablas submit langsung
+        };
+
+        // Buka Pop-up QRIS
+        window.openQrisModal = function() {
+            document.getElementById('qrisModal').classList.add('show');
+            
+            // Reset Tampilan
+            document.getElementById('qrisImageWrap').style.display = 'inline-block';
+            document.getElementById('qrisExpiredMessage').style.display = 'none';
+            
+            const btnConfirm = document.getElementById('btnConfirmQris');
+            btnConfirm.disabled = false;
+            btnConfirm.style.opacity = '1';
+            btnConfirm.style.cursor = 'pointer';
+            
+            startQrisTimer(600); // 600 detik = 10 menit
+        };
+
+        // Tutup Pop-up QRIS
+        window.closeQrisModal = function() {
+            document.getElementById('qrisModal').classList.remove('show');
+            clearInterval(qrisTimerInterval); // Matikan timer biar gak dobel
+        };
+
+        // Fungsi tombol "Saya Sudah Bayar"
+        window.submitCheckoutForm = function() {
+            // Paksa submit form mengabaikan penahan onsubmit
+            document.getElementById('checkoutForm').submit();
+        };
+
+        // Mesin Hitung Mundur 10 Menit
+        window.startQrisTimer = function(duration) {
+            clearInterval(qrisTimerInterval); 
+            let timer = duration, minutes, seconds;
+            const timerText = document.getElementById('timerText');
+
+            qrisTimerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timerText.textContent = minutes + ":" + seconds;
+
+                // KALAU WAKTU HABIS
+                if (--timer < 0) {
+                    clearInterval(qrisTimerInterval); 
+                    
+                    document.getElementById('qrisImageWrap').style.display = 'none';
+                    document.getElementById('qrisExpiredMessage').style.display = 'block';
+                    
+                    const btnConfirm = document.getElementById('btnConfirmQris');
+                    btnConfirm.disabled = true;
+                    btnConfirm.style.opacity = '0.5';
+                    btnConfirm.style.cursor = 'not-allowed';
+                    
+                    timerText.textContent = "00:00";
+                }
+            }, 1000);
+        };
         </script>
 
 </body>

@@ -300,16 +300,167 @@
             </div>
         `;
 
-        // Ambil data HTML dari server menggunakan fetch (tanpa reload)
+        // Ambil data HTML dari server menggunakan fetch
         fetch(`/admin/orders/${orderId}/modal`)
             .then(response => response.text())
             .then(html => {
+                // Masukkan detail pesanan ke dalam modal
                 modalBody.innerHTML = html;
+
+                // TAMBAHKAN TOMBOL CETAK STRUK DI BAWAHNYA
+                modalBody.innerHTML += `
+                    <div style="margin-top: 20px; display: flex; justify-content: flex-end; border-top: 1px dashed var(--border-color); padding-top: 16px;">
+                        <button type="button" class="btn btn-outline btn-sm" onclick="printOrderReceipt('${orderId}')" style="display: flex; align-items: center; gap: 6px;">
+                            <i class="fas fa-print"></i> Cetak Struk Pesanan
+                        </button>
+                    </div>
+                `;
             })
             .catch(error => {
                 modalBody.innerHTML = `<p style="text-align: center; color: #ef4444;">Gagal memuat data pesanan.</p>`;
                 console.error(error);
             });
+    }
+
+    function closeOrderModal() {
+        document.getElementById('orderDetailModal').classList.remove('show');
+    }
+
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('orderDetailModal');
+        if (event.target === modal) {
+            closeOrderModal();
+        }
+    });
+
+    // ==========================================
+    // FUNGSI CETAK STRUK PESANAN (BERSIH TOTAL ALA CUSTOMERS)
+    // ==========================================
+    function printOrderReceipt(orderId) {
+        // 1. Ambil isi konten modal
+        const modalContentRaw = document.getElementById('orderModalBody').cloneNode(true);
+        
+        // 2. Hapus area tombol cetak
+        const printBtnArea = modalContentRaw.lastElementChild; 
+        if (printBtnArea) printBtnArea.remove();
+
+        // 3. SAPU BERSIH: Hapus tombol aksi, form, dan badge status
+        const elementsToHide = modalContentRaw.querySelectorAll('button, .btn, form, a, .badge, [class*="status"]');
+        elementsToHide.forEach(el => el.remove());
+
+        // 4. HAPUS SEMUA IKON & GAMBAR (Biar nggak muncul font kotak-kotak aneh   di kertas)
+        const iconsAndMedia = modalContentRaw.querySelectorAll('i, svg, img');
+        iconsAndMedia.forEach(el => el.remove());
+
+        // 5. HAPUS BORDER KOTAK KANAN-KIRI DI BIODATA PELANGGAN
+        const gridBox = modalContentRaw.querySelector('div[style*="display: grid"]');
+        if (gridBox) {
+            gridBox.style.border = 'none';
+            gridBox.style.padding = '0';
+            gridBox.style.background = 'transparent';
+        }
+
+        // Ambil HTML yang sudah bersih mengkilap
+        const modalHtml = modalContentRaw.innerHTML;
+
+        // Bikin Iframe untuk Print
+        let iframe = document.getElementById('printIframe');
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.id = 'printIframe';
+            iframe.style.position = 'absolute';
+            iframe.style.width = '0px';
+            iframe.style.height = '0px';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+        }
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(`
+            <html>
+                <head>
+                    <title>Struk Pesanan #${orderId}</title>
+                    <style>
+                        @page {
+                            size: A4;
+                            margin: 15mm;
+                        }
+                        body {
+                            background: #ffffff;
+                            color: #000000;
+                            font-family: 'Courier New', Courier, monospace;
+                            font-size: 14px;
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: flex-start;
+                        }
+                        .receipt-box {
+                            width: 100%;
+                            max-width: 180mm;
+                            margin: 20mm auto;
+                            padding: 30px;
+                            box-sizing: border-box;
+                            background: #fff;
+                            /* BORDER LUAR SUDAH DIHAPUS BIAR SAMA PERSIS CUSTOMERS */
+                        }
+                        .text-center { text-align: center; }
+                        .dashed-line { border-bottom: 2px dashed #000; margin: 15px 0; }
+                        
+                        /* PAKSA SEMUA ELEMEN JADI HITAM PUTIH BERSIH */
+                        #injectedContent * {
+                            color: #000 !important;
+                            background: transparent !important;
+                            border-color: #000 !important;
+                            box-shadow: none !important;
+                        }
+                        
+                        /* Hapus sela kosong peninggalan ikon */
+                        #injectedContent div:empty {
+                            display: none !important;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="receipt-box">
+                        <div class="text-center" style="border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 20px;">
+                            <h2 style="font-size: 24px; font-weight: bold; margin: 0;">WARUNG NASI KUNING IBU OPIK</h2>
+                            <p style="font-size: 14px; margin: 5px 0;">Bukti Pembayaran / Struk Pesanan</p>
+                            <!-- Telp dihapus biar kop suratnya 100% kembar -->
+                            <p style="font-size: 12px; margin: 0;">Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani, Kec. Sukatani, Kab. Purwakarta</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; font-size: 14px; display: flex; justify-content: space-between;">
+                            <div><strong>Order ID:</strong> #${orderId}</div>
+                            <div><strong>Waktu Cetak:</strong> ${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID')}</div>
+                        </div>
+
+                        <div class="dashed-line"></div>
+
+                        <!-- ISI DETAIL PESANAN DIMASUKKAN KE SINI -->
+                        <div id="injectedContent" style="margin: 15px 0;">
+                            ${modalHtml}
+                        </div>
+
+                        <div class="dashed-line"></div>
+
+                        <div class="text-center" style="font-size: 12px; margin-top: 20px; color: #333;">
+                            <p style="margin: 0; font-weight: bold; font-size: 14px;">*** TERIMA KASIH ***</p>
+                            <p style="margin: 5px 0 0 0;">Harap simpan struk ini sebagai bukti pembayaran yang sah.</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `);
+        doc.close();
+
+        // Eksekusi print langsung
+        setTimeout(() => {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        }, 300);
     }
 
     function closeOrderModal() {
