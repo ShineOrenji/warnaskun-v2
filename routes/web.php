@@ -9,9 +9,11 @@ use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,12 @@ Route::post('/login', [LoginController::class, 'authenticate'])
 
 Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout');
+
+// Panduan Pelanggan
+Route::get('/panduan', function () {
+    $cartCount = session()->has('cart') ? count(session('cart')) : 0;
+    return view('customer-guide', compact('cartCount'));
+})->name('customer.guide');
 
 /*
 |--------------------------------------------------------------------------
@@ -154,6 +162,9 @@ Route::get('/admin/orders/{order}/modal',
     [OrdersController::class, 'modal'])
     ->name('orders.modal');
 
+// RUTE RIWAYAT PELANGGAN
+Route::get('/riwayat-pesanan', [CustomerOrderController::class, 'index'])->name('customer.orders');
+
 /*
 |--------------------------------------------------------------------------
 | CUSTOMERS
@@ -214,6 +225,40 @@ Route::post('/checkout',
 Route::get('/checkout/success/{order}',
     [CartController::class, 'success'])
     ->name('cart.success');
+
+Route::post('/cart/payment-success/{order}', [App\Http\Controllers\CartController::class, 'paymentSuccess'])->name('cart.payment_success');
+
+Route::get('/payment-finish', [App\Http\Controllers\CartController::class, 'paymentFinish'])->name('payment.finish');
+
+/*
+|--------------------------------------------------------------------------
+| RUTE AUTENTIKASI PELANGGAN
+|--------------------------------------------------------------------------
+*/
+Route::post('/pelanggan/register', [AuthController::class, 'register'])->name('pelanggan.register');
+Route::post('/pelanggan/login', [AuthController::class, 'login'])->name('pelanggan.login');
+Route::post('/pelanggan/logout', [AuthController::class, 'logout'])->name('pelanggan.logout');
+
+// Rute untuk menghilangkan badge notifikasi (is_read = true)
+Route::post('/pelanggan/notif/read', function() {
+    if(auth()->check()){
+        \App\Models\UserNotification::where('user_id', auth()->id())->update(['is_read' => true]);
+    }
+    return response()->json(['success' => true]);
+})->name('pelanggan.notif.read');
+
+// Rute untuk meload data riwayat pesanan via Modal di beranda
+Route::get('/pelanggan/api-orders', function() {
+    if(!auth()->check()) return response()->json([]);
+    
+    $orders = \App\Models\Order::where('user_id', auth()->id())
+                ->with('items')
+                ->latest()
+                ->take(10)
+                ->get();
+                
+    return response()->json($orders);
+})->name('pelanggan.api.orders');
 
 
 //KAMPRET

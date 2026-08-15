@@ -3,389 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesanan Berhasil - Warung Nasi Kuning Ibu Opik</title>
-
-    <!-- TailwindCSS -->
+    <title>
+        @if($order->payment_method == 'qris' && $order->payment_status == 'pending')
+            Menunggu Pembayaran - Warung Ibu Opik
+        @else
+            Pesanan Berhasil - Warung Ibu Opik
+        @endif
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Forum&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Admin CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/admin-style.css') }}">
-
     <style>
-        /* ---------- OVERRIDE BODY ---------- */
-        body {
-            overflow: auto !important;
-            height: auto !important;
-            min-height: 100vh;
-            background: var(--bg-primary);
-            font-family: 'DM Sans', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        /* ---------- SUCCESS CARD ---------- */
-        .success-container {
-            max-width: 500px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .success-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 40px 32px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ---------- ICON ---------- */
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(34, 197, 94, 0.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            border: 3px solid #22c55e;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .success-icon i {
-            font-size: 36px;
-            color: #22c55e;
-        }
-
-        /* ---------- TITLE ---------- */
-        .success-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .success-title i {
-            color: #22c55e;
-            margin-right: 8px;
-        }
-
-        .success-subtitle {
-            color: var(--text-secondary);
-            font-size: 15px;
-            margin-bottom: 24px;
-        }
-
-        .success-subtitle strong {
-            color: var(--gold);
-        }
-
-        /* ---------- ORDER SUMMARY ---------- */
-        .order-summary {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .order-summary .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        .order-summary .summary-row:last-child {
-            border-bottom: none;
-        }
-
-        .order-summary .summary-row .label {
-            color: var(--text-muted);
-        }
-
-        .order-summary .summary-row .value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .order-summary .summary-row .value.gold {
-            color: var(--gold);
-        }
-
-        .order-summary .summary-row .value.green {
-            color: #22c55e;
-        }
-
-        /* ---------- BADGE STATUS ---------- */
-        .badge-status {
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .badge-status.pending {
-            background: rgba(212, 168, 67, 0.15);
-            color: var(--gold);
-        }
-
-        /* ---------- INFO TEXT ---------- */
-        .info-text {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* ---------- BUTTONS ---------- */
-        .btn-success {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-order-again {
-            background: var(--gold);
-            color: #000;
-        }
-
-        .btn-order-again:hover {
-            background: var(--gold-light);
-            box-shadow: 0 8px 30px rgba(212, 168, 67, 0.3);
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: #fff;
-        }
-
-        .btn-whatsapp:hover {
-            background: #1da851;
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-whatsapp i {
-            font-size: 20px;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* ---------- RESPONSIVE ---------- */
-        @media (max-width: 768px) {
-            .success-card {
-                padding: 28px 20px;
-            }
-
-            .success-title {
-                font-size: 24px;
-            }
-
-            .success-icon {
-                width: 64px;
-                height: 64px;
-            }
-
-            .success-icon i {
-                font-size: 28px;
-            }
-
-            .order-summary {
-                padding: 16px 18px;
-            }
-
-            .order-summary .summary-row {
-                font-size: 13px;
-                padding: 6px 0;
-            }
-
-            .btn-success {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .success-card {
-                padding: 20px 16px;
-            }
-
-            .success-title {
-                font-size: 20px;
-            }
-
-            .success-subtitle {
-                font-size: 13px;
-            }
-
-            .order-summary .summary-row {
-                font-size: 12px;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-
-            .btn-success {
-                font-size: 13px;
-                padding: 8px 16px;
-            }
-
-            .badge-status {
-                font-size: 11px;
-                padding: 2px 12px;
-            }
-        }
+        body { background: var(--bg-primary); font-family: 'DM Sans', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .success-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px 32px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); }
+        .success-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; border: 3px solid; }
+        .icon-pending { background: rgba(212, 168, 67, 0.15); border-color: var(--gold); color: var(--gold); }
+        .icon-success { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #22c55e; }
+        .summary-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .btn-success { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; width: 100%; justify-content: center; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
-    <div class="success-container">
-
-        <div class="success-card">
-
-            <!-- Icon -->
-            <div class="success-icon">
-                <i class="fas fa-check"></i>
-            </div>
-
-            <!-- Title -->
-            <h1 class="success-title">
-                <i class="fas fa-check-circle"></i>
-                Pesanan Berhasil!
+    <div class="success-card">
+        
+        <!-- BAGIAN HEADER STATUS -->
+        @if($order->payment_method == 'qris' && $order->payment_status == 'pending')
+            <div class="success-icon icon-pending"><i class="fas fa-clock"></i></div>
+            <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Menunggu Pembayaran</h1>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Silakan klik tombol di bawah untuk membayar pesanan QRIS Anda (Batas Waktu: 10 Menit).</p>
+        @else
+            <div class="success-icon icon-success"><i class="fas fa-check"></i></div>
+            <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">
+                <i class="fas fa-check-circle" style="color: #22c55e;"></i> {{ $order->payment_method == 'qris' ? 'Pembayaran Berhasil!' : 'Pesanan Berhasil!' }}
             </h1>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Terima kasih telah memesan di <strong>Warung Ibu Opik</strong>.</p>
+        @endif
 
-            <p class="success-subtitle">
-                Terima kasih telah memesan di
-                <strong>Warung Nasi Kuning Ibu Opik</strong>.
-            </p>
-
-            <!-- Order Summary -->
-            <div class="order-summary">
-
-                <div class="summary-row">
-                    <span class="label">No Pesanan</span>
-                    <span class="value gold">#{{ $order->id }}</span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="label">Nama</span>
-                    <span class="value">{{ $order->customer_name }}</span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="label">WhatsApp</span>
-                    <span class="value">{{ $order->phone }}</span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="label">Metode</span>
-                    <span class="value">
-                        {{ $order->delivery_type == 'antar' ? '🚚 Antar' : '🏪 Ambil Sendiri' }}
-                    </span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="label">Status</span>
-                    <span class="badge-status pending">{{ $order->status }}</span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="label">Total</span>
-                    <span class="value green">
-                        Rp {{ number_format($order->total, 0, ',', '.') }}
-                    </span>
-                </div>
-
+        <!-- BAGIAN INFO PESANAN & RINCIAN MENU (STRUK) -->
+        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; text-align: left; margin-bottom: 20px;">
+            <div class="summary-row">
+                <span style="color: var(--text-muted);">No Pesanan</span>
+                <span style="color: var(--gold); font-weight: bold;">#{{ $order->id }}</span>
+            </div>
+            <div class="summary-row">
+                <span style="color: var(--text-muted);">Nama Pemesan</span>
+                <span style="color: var(--text-primary); font-weight: 600;">{{ $order->customer_name }}</span>
+            </div>
+            <div class="summary-row">
+                <span style="color: var(--text-muted);">Metode Pengiriman</span>
+                <span style="color: var(--text-primary); font-weight: 600;">{{ $order->delivery_type == 'antar' ? '🚚 Antar ke Alamat' : '🏪 Ambil Sendiri' }}</span>
+            </div>
+            <div class="summary-row">
+                <span style="color: var(--text-muted);">Pembayaran</span>
+                <span style="color: var(--text-primary); font-weight: 600;">{{ strtoupper($order->payment_method) }}</span>
             </div>
 
-            <!-- Info -->
-            <p class="info-text">
-                <i class="fas fa-clock" style="color: var(--gold);"></i>
-                Admin akan segera memproses pesanan Anda.
-            </p>
-
-            <!-- Buttons -->
-            <div class="button-group">
-
-                <a href="{{ url('/') }}#menu" class="btn-success btn-order-again">
-                    <i class="fas fa-utensils"></i>
-                    Pesan Lagi
-                </a>
-
-                <a href="https://wa.me/6289522053961?text={{ urlencode(
-                    'Halo Bu Opik 👋
-
-Saya sudah melakukan pemesanan.
-
-📋 No Pesanan : #'.$order->id.'
-
-👤 Nama : '.$order->customer_name.'
-📞 No HP : '.$order->phone.'
-
-🚚 Metode : '.($order->delivery_type == 'antar' ? 'Antar' : 'Ambil Sendiri').'
-
-💰 Total : Rp '.number_format($order->total,0,',','.').'
-
-Terima kasih 🙏'
-                ) }}" target="_blank" class="btn-success btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                    Kirim ke WhatsApp
-                </a>
-
+            <!-- RINCIAN DAFTAR MENU -->
+            <div style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 12px;">
+                <div style="font-size: 13px; color: var(--gold); font-weight: bold; margin-bottom: 8px;"><i class="fas fa-utensils"></i> Rincian Menu:</div>
+                @foreach($order->items as $item)
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">
+                        <span>{{ $item->qty }}x {{ $item->menu_name }}</span>
+                        <span style="color: var(--text-primary);">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                    </div>
+                @endforeach
             </div>
 
+            <div class="summary-row" style="margin-top: 10px; border-top: 2px solid var(--border-color); padding-top: 10px;">
+                <span style="color: var(--text-primary); font-weight: bold;">Total Tagihan</span>
+                <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Rp {{ number_format($order->total, 0, ',', '.') }}</span>
+            </div>
         </div>
 
+        <!-- BAGIAN TOMBOL AKSI -->
+        <div>
+            @if($order->payment_method == 'qris' && $order->payment_status == 'pending')
+                <button id="pay-button" class="btn-success" style="background: var(--gold); color: #000;">
+                    <i class="fas fa-qrcode"></i> Bayar Sekarang (QRIS)
+                </button>
+            @endif
+
+            <a href="{{ route('customer.orders') }}" class="btn-success" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+                <i class="fas fa-list"></i> Lihat Riwayat Pesanan
+            </a>
+            <a href="{{ url('/') }}#menu" class="btn-success" style="background: transparent; color: var(--gold); border: 1px solid var(--gold);">
+                <i class="fas fa-utensils"></i> Pesan Lagi
+            </a>
+        </div>
     </div>
 
+    <!-- SCRIPT MIDTRANS (TIDAK ADA AUTO POPUP) -->
+    @if($order->payment_method == 'qris' && $order->payment_status == 'pending')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script>
+        const payButton = document.getElementById('pay-button');
+        if(payButton) {
+            payButton.addEventListener('click', function() {
+                window.snap.pay('{{ session('snap_token') }}', {
+                    onSuccess: function(result){
+                        // Tembak halaman finish untuk verifikasi Lunas & Reload!
+                        window.location.href = "/payment-finish?order_id=OPIK-{{ $order->id }}-" + Date.now() + "&transaction_status=settlement";
+                    },
+                    onPending: function(result){ alert("Silakan selesaikan pembayaran QRIS Anda!"); },
+                    onError: function(result){ alert("Pembayaran gagal!"); }
+                });
+            });
+        }
+    </script>
+    @endif
 </body>
 </html>

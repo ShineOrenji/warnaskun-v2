@@ -66,6 +66,21 @@
                     @endif
                 </span>
             </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fas fa-wallet"></i> Pembayaran
+                </span>
+                <span class="info-value">
+                    {{ strtoupper($order->payment_method) }} 
+                    @if($order->payment_status == 'paid')
+                        <span class="badge badge-success" style="font-size: 11px;">LUNAS</span>
+                    @else
+                        <span class="badge badge-warning" style="font-size: 11px;">PENDING</span>
+                    @endif
+                </span>
+            </div>
+
             @if($order->delivery_type == 'antar' && $order->address)
             <div class="info-item full-width">
                 <span class="info-label">

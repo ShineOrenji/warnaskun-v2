@@ -170,94 +170,147 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
+        // 1. WAJIB LOGIN DULU
+        if (!auth()->check()) {
+            return redirect('/login')->with('error', 'Kamu harus login dulu sebelum membuat pesanan!');
+        }
+
         $cart = session()->get('cart', []);
 
         $request->validate([
-        'customer_name' => 'required',
-        'phone' => 'required',
-        'delivery_type' => 'required',
-        'address' => 'required_if:delivery_type,antar',
-    ]);
+            'customer_name' => 'required',
+            'phone' => 'required',
+            'delivery_type' => 'required',
+            'address' => 'required_if:delivery_type,antar',
+            'payment_method' => 'required'
+        ]);
 
         if (empty($cart)) {
             return back()->with('error', 'Keranjang masih kosong.');
         }
 
         $total = 0;
-
         foreach ($cart as $id => $item) {
-
             $menu = Menu::find($id);
-
-            if (!$menu) {
-
-                return back()->with('error', 'Menu tidak ditemukan.');
-
-            }
-
+            if (!$menu) return back()->with('error', 'Menu tidak ditemukan.');
             if ($menu->stock < $item['qty']) {
-
-                return back()->with(
-                    'error',
-                    "Stok {$menu->name} tidak mencukupi. Sisa stok: {$menu->stock}"
-                );
-
+                return back()->with('error', "Stok {$menu->name} tidak mencukupi.");
             }
-
-        }
-
-        foreach ($cart as $item) {
             $total += $item['price'] * $item['qty'];
         }
 
+        // 2. SIMPAN PESANAN
         $order = Order::create([
-        'customer_name' => $request->customer_name,
-        'phone'         => $request->phone,
-        'delivery_type' => $request->delivery_type,
-        'address'       => $request->address,
-        'landmark'      => $request->landmark,
-        'note'          => $request->note,
-        'total'         => $total,
-        'status'        => 'Menunggu',
-    ]);
+            'user_id'       => auth()->id(),
+            'customer_name' => $request->customer_name,
+            'phone'         => $request->phone,
+            'delivery_type' => $request->delivery_type,
+            'address'       => $request->address,
+            'landmark'      => $request->landmark,
+            'note'          => $request->note,
+            'payment_method'=> $request->payment_method,
+            'payment_status'=> 'pending',
+            'total'         => $total,
+            'status'        => 'Menunggu',
+        ]);
 
+        // 3. PANGGIL MIDTRANS HANYA JIKA PILIH QRIS
+        if ($request->payment_method == 'qris') {
+            \Midtrans\Config::$serverKey = config('services.midtrans.server_key') ?: env('MIDTRANS_SERVER_KEY');
+            \Midtrans\Config::$isProduction = false; 
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+
+            $params = [
+                'transaction_details' => [
+                    'order_id' => 'OPIK-' . $order->id . '-' . time(),
+                    'gross_amount' => (int) $total,
+                ],
+                'customer_details' => [
+                    'first_name' => $request->customer_name,
+                    'phone' => $request->phone,
+                ],
+                'enabled_payments' => ['gopay', 'other_qris'],
+                'expiry' => [
+                    'start_time' => date("Y-m-d H:i:s O", time()),
+                    'unit' => 'minutes',
+                    'duration' => 10
+                ]
+            ];
+
+            try {
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                session(['snap_token' => $snapToken]);
+            } catch (\Exception $e) {
+                $order->delete();
+                return back()->with('error', 'Gagal terhubung ke Midtrans: ' . $e->getMessage());
+            }
+        }
+
+        // 4. SIMPAN ITEM MENU
         foreach ($cart as $id => $item) {
-
             OrderItem::create([
-
                 'order_id' => $order->id,
-
                 'menu_id' => $id,
-
                 'menu_name' => $item['name'],
-
                 'price' => $item['price'],
-
                 'qty' => $item['qty'],
-
                 'subtotal' => $item['price'] * $item['qty']
-
             ]);
 
             $menu = Menu::find($id);
-
-                if ($menu) {
-
-                    $menu->decrement('stock', $item['qty']);
-
-                }
-
+            if ($menu) $menu->decrement('stock', $item['qty']);
         }
 
         session()->forget('cart');
 
-        return redirect()->route('cart.success', [
-            'order' => $order->id
-        ]);
+        return redirect()->route('cart.success', ['order' => $order->id]);
     }
 
     public function success(Order $order)
     {
         return view('checkout-success', compact('order'));
+    }
+
+    public function paymentSuccess(Order $order)
+    {
+        $order->update([
+            'payment_status' => 'paid',
+            'status' => 'Diproses' // Otomatis masuk ke dapur admin!
+        ]);
+        
+        return response()->json(['success' => true]);
+    }
+
+    public function paymentFinish(Request $request)
+    {
+        // Midtrans akan mengembalikan URL seperti: 
+        // /payment-finish?order_id=OPIK-37-123456&transaction_status=settlement
+        $order_id_midtrans = $request->order_id;
+        $status = $request->transaction_status;
+
+        // Cek apakah ada order ID dan statusnya settlement (lunas) atau capture
+        if ($order_id_midtrans && ($status == 'settlement' || $status == 'capture')) {
+            
+            // Ekstrak ID asli dari format "OPIK-37-123456" (kita ambil angka 37 nya saja)
+            $parts = explode('-', $order_id_midtrans);
+            
+            if (isset($parts[1])) {
+                $id_asli = $parts[1];
+                $order = Order::find($id_asli);
+                
+                // Kalau order ditemukan, langsung hajar statusnya jadi Lunas & Diproses!
+                if ($order && $order->payment_status != 'paid') {
+                    $order->update([
+                        'payment_status' => 'paid',
+                        'status' => 'Diproses'
+                    ]);
+                }
+            }
+        }
+
+        // Arahkan kembali ke halaman Riwayat Pesanan pelanggan
+        // Arahkan kembali ke halaman Success (bukan ke riwayat)
+        return redirect()->route('cart.success', ['order' => $id_asli])->with('success', 'Pembayaran Berhasil!');
     }
 }

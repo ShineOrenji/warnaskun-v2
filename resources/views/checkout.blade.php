@@ -87,6 +87,12 @@
 
         <div class="checkout-container">
 
+        @if(session('error'))
+                <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; color: #ef4444; padding: 16px; margin-bottom: 20px; border-radius: 8px;">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>Gagal!</strong> {{ session('error') }}
+                </div>
+            @endif
+
             @php
                 $total = 0;
             @endphp
@@ -236,7 +242,7 @@
                                 </h3>
                             </div>
 
-                            <form action="{{ route('cart.checkout') }}" method="POST" id="checkoutForm" onsubmit="return handleCheckoutSubmit(event)">
+                            <form action="{{ route('cart.checkout') }}" method="POST" id="checkoutForm">
                                 @csrf
 
                                 <!-- Nama -->
@@ -263,6 +269,16 @@
                                            placeholder="08xxxxxxxxxx"
                                            class="form-control"
                                            required>
+                                </div>
+
+                                <!-- Catatan -->
+                                <div class="form-group">
+                                    <label for="note">Catatan</label>
+                                    <textarea id="note"
+                                              name="note"
+                                              rows="2"
+                                              class="form-control"
+                                              placeholder="Contoh: sambal dipisah, tidak pakai telur, dll"></textarea>
                                 </div>
 
                                 <!-- Metode Pesanan -->
@@ -310,42 +326,28 @@
                                            class="form-control">
                                 </div>
 
-                                <!-- Metode Pembayaran Baru -->
+                                <!-- Metode Pembayaran Baru (Anti Macet) -->
                                 <div class="form-group">
                                     <label>Metode Pembayaran <span class="required">*</span></label>
                                     <div class="delivery-options">
-                                        <label class="delivery-option payment-option active">
-                                            <input type="radio"
-                                                   name="payment_method"
-                                                   value="tunai"
-                                                   onchange="changePaymentMethod()"
-                                                   checked>
+                                        <!-- OPSI TUNAI -->
+                                        <label class="delivery-option payment-option active" onclick="pilihPembayaran('tunai')" id="labelTunai">
+                                            <input type="radio" name="payment_method" value="tunai" id="radioTunai" checked style="display:none;">
                                             <span class="option-content">
                                                 <i class="fas fa-money-bill-wave"></i>
                                                 <span>Tunai / COD</span>
                                             </span>
                                         </label>
-                                        <label class="delivery-option payment-option">
-                                            <input type="radio"
-                                                   name="payment_method"
-                                                   value="qris"
-                                                   onchange="changePaymentMethod()">
+                                        
+                                        <!-- OPSI QRIS -->
+                                        <label class="delivery-option payment-option" onclick="pilihPembayaran('qris')" id="labelQris">
+                                            <input type="radio" name="payment_method" value="qris" id="radioQris" style="display:none;">
                                             <span class="option-content">
                                                 <i class="fas fa-qrcode"></i>
                                                 <span>QRIS (Gopay, dll)</span>
                                             </span>
                                         </label>
                                     </div>
-                                </div>
-
-                                <!-- Catatan -->
-                                <div class="form-group">
-                                    <label for="note">Catatan</label>
-                                    <textarea id="note"
-                                              name="note"
-                                              rows="2"
-                                              class="form-control"
-                                              placeholder="Contoh: sambal dipisah, tidak pakai telur, dll"></textarea>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -364,40 +366,6 @@
             @endif
 
         </div>
-
-    <!-- ============================================ -->
-    <!-- MODAL QRIS PEMBAYARAN -->
-    <!-- ============================================ -->
-    <div id="qrisModal" class="qris-modal-overlay">
-        <div class="qris-modal-box">
-            <div class="qris-header">
-                <h3><i class="fas fa-qrcode" style="color: #d4a843;"></i> Pembayaran QRIS</h3>
-                <button type="button" onclick="closeQrisModal()"><i class="fas fa-times"></i></button>
-            </div>
-            
-            <div class="qris-body">
-                <p style="font-size: 14px; margin-bottom: 10px;">Scan barcode di bawah ini menggunakan aplikasi m-Banking atau e-Wallet Anda.</p>
-                
-                <div class="qris-img-container" id="qrisImageWrap">
-                    <!-- Ganti path gambar ini dengan gambar asli barcode QRIS Ibu Opik kamu -->
-                    <img src="{{ asset('assets/images/qris-dummy.png') }}" alt="QRIS Warung Ibu Opik" class="qris-img">
-                </div>
-
-                <div id="qrisExpiredMessage" class="qris-expired">
-                    <i class="fas fa-exclamation-triangle"></i> Waktu pembayaran habis. Silakan tutup dan buat pesanan ulang!
-                </div>
-
-                <div class="qris-timer">
-                    Sisa Waktu: <span id="timerText">10:00</span>
-                </div>
-
-                <button type="button" id="btnConfirmQris" class="btn-checkout" style="margin-top: 15px;" onclick="submitCheckoutForm()">
-                    <i class="fas fa-check-circle"></i> Saya Sudah Bayar
-                </button>
-            </div>
-        </div>
-    </div>
-
     </main>
 
     <!-- ============================================ -->
@@ -651,98 +619,20 @@
         });
 
         // ================================
-        // LOGIKA METODE PEMBAYARAN & QRIS (ANTI GAGAL)
+        // LOGIKA METODE PEMBAYARAN
         // ================================
-        let qrisTimerInterval;
-
-        // Mengubah warna tombol radio saat diklik
-        window.changePaymentMethod = function() {
-            document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
-                const label = radio.closest('.payment-option');
-                if (radio.checked) {
-                    label.classList.add('active');
+            function pilihPembayaran(metode) {
+                document.getElementById('labelTunai').classList.remove('active');
+                document.getElementById('labelQris').classList.remove('active');
+                
+                if(metode === 'tunai') {
+                    document.getElementById('radioTunai').checked = true;
+                    document.getElementById('labelTunai').classList.add('active');
                 } else {
-                    label.classList.remove('active');
-                }
-            });
-        };
-
-        // Fungsi yang dipanggil SAAT TOMBOL BUAT PESANAN DIKLIK
-        window.handleCheckoutSubmit = function(e) {
-            const paymentQris = document.querySelector('input[name="payment_method"][value="qris"]');
-            const qrisModal = document.getElementById('qrisModal');
-            
-            // Cek apakah milih QRIS
-            if (paymentQris && paymentQris.checked) {
-                // Kalau pop-up belum kebuka, tahan formnya & buka pop-up!
-                if (!qrisModal.classList.contains('show')) {
-                    e.preventDefault(); 
-                    openQrisModal();
-                    return false; // Stop form submit
+                    document.getElementById('radioQris').checked = true;
+                    document.getElementById('labelQris').classList.add('active');
                 }
             }
-            return true; // Kalau milih tunai, form bablas submit langsung
-        };
-
-        // Buka Pop-up QRIS
-        window.openQrisModal = function() {
-            document.getElementById('qrisModal').classList.add('show');
-            
-            // Reset Tampilan
-            document.getElementById('qrisImageWrap').style.display = 'inline-block';
-            document.getElementById('qrisExpiredMessage').style.display = 'none';
-            
-            const btnConfirm = document.getElementById('btnConfirmQris');
-            btnConfirm.disabled = false;
-            btnConfirm.style.opacity = '1';
-            btnConfirm.style.cursor = 'pointer';
-            
-            startQrisTimer(600); // 600 detik = 10 menit
-        };
-
-        // Tutup Pop-up QRIS
-        window.closeQrisModal = function() {
-            document.getElementById('qrisModal').classList.remove('show');
-            clearInterval(qrisTimerInterval); // Matikan timer biar gak dobel
-        };
-
-        // Fungsi tombol "Saya Sudah Bayar"
-        window.submitCheckoutForm = function() {
-            // Paksa submit form mengabaikan penahan onsubmit
-            document.getElementById('checkoutForm').submit();
-        };
-
-        // Mesin Hitung Mundur 10 Menit
-        window.startQrisTimer = function(duration) {
-            clearInterval(qrisTimerInterval); 
-            let timer = duration, minutes, seconds;
-            const timerText = document.getElementById('timerText');
-
-            qrisTimerInterval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                timerText.textContent = minutes + ":" + seconds;
-
-                // KALAU WAKTU HABIS
-                if (--timer < 0) {
-                    clearInterval(qrisTimerInterval); 
-                    
-                    document.getElementById('qrisImageWrap').style.display = 'none';
-                    document.getElementById('qrisExpiredMessage').style.display = 'block';
-                    
-                    const btnConfirm = document.getElementById('btnConfirmQris');
-                    btnConfirm.disabled = true;
-                    btnConfirm.style.opacity = '0.5';
-                    btnConfirm.style.cursor = 'not-allowed';
-                    
-                    timerText.textContent = "00:00";
-                }
-            }, 1000);
-        };
         </script>
 
 </body>

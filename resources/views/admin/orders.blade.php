@@ -164,6 +164,7 @@
                                     <th>No HP</th>
                                     <th class="text-center">Metode</th>
                                     <th class="text-center">Total Harga</th>
+                                    <th class="text-center">Pembayaran</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -198,6 +199,15 @@
 
                                     <td class="text-center">
                                         <strong class="total-spent">Rp {{ number_format($order->total, 0, ',', '.') }}</strong>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div style="font-size: 12px; font-weight: bold; text-transform: uppercase;">{{ $order->payment_method }}</div>
+                                        @if($order->payment_status == 'paid')
+                                            <span class="badge badge-success" style="font-size: 10px;">LUNAS</span>
+                                        @else
+                                            <span class="badge badge-danger" style="font-size: 10px;">BELUM BAYAR</span>
+                                        @endif
                                     </td>
 
                                     <td class="text-center status-cell">

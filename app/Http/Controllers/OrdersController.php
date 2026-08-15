@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Menu;
 use App\Models\OrderHistory;
+use App\Models\UserNotification;
 
 class OrdersController extends Controller
 {
@@ -43,12 +44,20 @@ class OrdersController extends Controller
             
             $order->status = 'Diproses';
             $order->save();
+
+            // KIRIM NOTIF PESANAN DIPROSES KE PELANGGAN
+            if ($order->user_id) {
+                UserNotification::create([
+                    'user_id' => $order->user_id,
+                    'title'   => 'Pesanan Diproses 🍳',
+                    'message' => "Hore! Pesanan #" . $order->id . " kamu sedang disiapkan oleh Ibu Opik."
+                ]);
+            }
             
         } elseif ($order->status == 'Diproses') {
 
             $order->load('items');
             $itemsDetail = [];
-            
             foreach ($order->items as $item) {
                 $itemsDetail[] = $item->toArray();
             }
@@ -65,8 +74,22 @@ class OrdersController extends Controller
                 'order_created_at' => $order->created_at,
             ]);
 
-            $order->items()->delete();
-            $order->delete();
+            $order->status = 'Selesai';
+            $order->payment_status = 'paid';
+            $order->save();
+
+            // KIRIM NOTIF PESANAN SELESAI / SIAP ANTAR KE PELANGGAN
+            if ($order->user_id) {
+                $pesan_selesai = $order->delivery_type == 'antar' 
+                    ? "Pesanan #" . $order->id . " sudah jadi dan siap diantar ke tempatmu! 🛵" 
+                    : "Pesanan #" . $order->id . " sudah siap! Silakan datang dan ambil di Warung Ibu Opik ya. 🏪";
+
+                UserNotification::create([
+                    'user_id' => $order->user_id,
+                    'title'   => 'Pesanan Selesai! 🎉',
+                    'message' => $pesan_selesai
+                ]);
+            }
         }
 
         // Cek jika request dari AJAX/Modal, berikan respon JSON
