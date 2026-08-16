@@ -3,73 +3,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Fungsi untuk Daftar Akun
+    // ==========================================
+    // FUNGSI LOGIN PELANGGAN
+    // ==========================================
+    public function login(Request $request)
+{
+    $request->validate([
+        'login_id' => 'required',
+        'password' => 'required'
+    ]);
+
+    // Cek apakah yang diketik user itu format email atau bukan
+    $login_type = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+    // Coba login pakai email ATAU phone sesuai deteksi di atas
+    if (\Illuminate\Support\Facades\Auth::attempt([
+        $login_type => $request->login_id, 
+        'password'  => $request->password
+    ])) {
+        return redirect()->intended('/'); // Sukses login
+    }
+
+    // Gagal login
+    return back()->withErrors(['Email/No HP atau Password salah!']);
+}
+
+    // ==========================================
+    // FUNGSI REGISTER PELANGGAN
+    // ==========================================
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:20',
-            'password' => 'required|string|min:6',
+            'name'     => 'required|string|max:255',
+            'phone'    => 'required|string|unique:users,phone',
+            'email'    => 'nullable|email|unique:users,email',
+            'password' => 'required|min:6',
         ]);
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => $request->email, // Email dibiarkan opsional (bisa null)
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'role' => 'customer', // Otomatis jadi customer
+            'role' => 'customer' // BERIKAN ROLE CUSTOMER SECARA OTOMATIS
         ]);
 
-        // Langsung otomatis login setelah daftar
-        Auth::login($user);
+        // Langsung login otomatis (pakai fitur Remember Me)
+        Auth::login($user, true);
 
-        return redirect()->back()->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name);
+        return back()->with('success', 'Pendaftaran berhasil!');
     }
 
-    // Fungsi untuk Login
-    public function login(Request $request)
-    {
-        $request->validate([
-            'login_id' => 'required', // Kita ganti namanya dari email jadi login_id (bisa email/hp)
-            'password' => 'required'
-        ]);
-
-        $login_type = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-
-        $credentials = [
-            $login_type => $request->login_id,
-            'password'  => $request->password
-        ];
-
-        // Parameter 'true' di bawah ini adalah "Remember Me" (Biar nggak perlu login terus tiap hari)
-        if (auth()->attempt($credentials, true)) {
-            
-            // Cek apakah yang login ini Admin? Kalau iya, TENDANG!
-            if (auth()->user()->role == 'admin') {
-                auth()->logout();
-                return back()->withErrors(['Maaf, Admin tidak boleh login lewat jalur pelanggan! wkwk'])->withInput();
-            }
-
-            return back()->with('success', 'Berhasil login!');
-        }
-
-        return back()->withErrors(['Email/No HP atau password salah!'])->withInput();
-    }
-
-    // Fungsi untuk Logout
+    // ==========================================
+    // FUNGSI LOGOUT PELANGGAN
+    // ==========================================
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect('/')->with('success', 'Berhasil logout.');
+        return redirect('/')->with('success', 'Berhasil keluar dari akun.');
     }
 }

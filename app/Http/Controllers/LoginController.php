@@ -17,19 +17,23 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            
+            // SATPAM ADMIN: Cek apakah jabatannya beneran admin?
+            if (Auth::user()->role !== 'admin') {
+                Auth::logout(); // Kalau bukan admin, tendang keluar!
+                return back()->with('error', 'Akses ditolak! Kamu bukan admin.');
+            }
 
-            return redirect()->route('dashboard.index');
+            $request->session()->regenerate();
+            return redirect()->intended('/admin/dashboard');
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        return back()->with('error', 'Email atau password salah!');
     }
 
     // Logout

@@ -120,4 +120,22 @@ class CustomerController extends Controller
         // 3. Kembali ke halaman sebelumnya dengan pesan sukses
         return redirect()->back()->with('success', 'Data pelanggan berhasil diperbarui!');
     }
+
+    // Fungsi untuk menghapus riwayat pesanan
+    public function destroyOrder($id)
+    {
+        $order = \App\Models\Order::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $order->delete();
+        
+        return back()->with('success', 'Riwayat pesanan berhasil dihapus.');
+    }
+
+    // Fungsi untuk menghapus notifikasi
+    public function destroyNotif($id)
+    {
+        $notif = \App\Models\UserNotification::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $notif->delete();
+        
+        return back()->with('success', 'Notifikasi berhasil dihapus.');
+    }
 }

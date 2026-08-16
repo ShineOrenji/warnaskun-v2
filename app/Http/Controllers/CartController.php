@@ -55,18 +55,12 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = session()->get('cart', []);
-
-        foreach ($cart as $id => $item) {
-
-            if (!Menu::find($id)) {
-                unset($cart[$id]);
-            }
-
+        if (!auth()->check()) {
+            // Arahkan ke beranda ('/') sambil ngirim pesan error biar modal loginnya pop-up otomatis!
+            return redirect('/')->withErrors(['Silakan login terlebih dahulu untuk melihat pesanan.']);
         }
-
-        session()->put('cart', $cart);
-
+        
+        $cart = session()->get('cart', []);
         return view('checkout', compact('cart'));
     }
 
@@ -170,9 +164,8 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        // 1. WAJIB LOGIN DULU
         if (!auth()->check()) {
-            return redirect('/login')->with('error', 'Kamu harus login dulu sebelum membuat pesanan!');
+            return redirect('/')->withErrors(['Kamu harus login dulu sebelum membuat pesanan!']);
         }
 
         $cart = session()->get('cart', []);
@@ -276,7 +269,7 @@ class CartController extends Controller
     {
         $order->update([
             'payment_status' => 'paid',
-            'status' => 'Diproses' // Otomatis masuk ke dapur admin!
+            'status' => 'Menunggu' //
         ]);
         
         return response()->json(['success' => true]);
@@ -299,11 +292,10 @@ class CartController extends Controller
                 $id_asli = $parts[1];
                 $order = Order::find($id_asli);
                 
-                // Kalau order ditemukan, langsung hajar statusnya jadi Lunas & Diproses!
                 if ($order && $order->payment_status != 'paid') {
                     $order->update([
                         'payment_status' => 'paid',
-                        'status' => 'Diproses'
+                        'status' => 'Menunggu'
                     ]);
                 }
             }

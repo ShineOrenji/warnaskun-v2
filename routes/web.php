@@ -162,6 +162,9 @@ Route::get('/admin/orders/{order}/modal',
     [OrdersController::class, 'modal'])
     ->name('orders.modal');
 
+// Rute khusus pesanan siap / halaman kurir
+Route::get('/admin/pesanan-siap', [App\Http\Controllers\OrdersController::class, 'readyOrders'])->name('admin.ready_orders');
+
 // RUTE RIWAYAT PELANGGAN
 Route::get('/riwayat-pesanan', [CustomerOrderController::class, 'index'])->name('customer.orders');
 
@@ -174,7 +177,6 @@ Route::get('/riwayat-pesanan', [CustomerOrderController::class, 'index'])->name(
 Route::get('/admin/customers',
     [CustomerController::class, 'index'])
     ->name('customers.index');
-
 
 });
 
@@ -239,6 +241,12 @@ Route::post('/pelanggan/register', [AuthController::class, 'register'])->name('p
 Route::post('/pelanggan/login', [AuthController::class, 'login'])->name('pelanggan.login');
 Route::post('/pelanggan/logout', [AuthController::class, 'logout'])->name('pelanggan.logout');
 
+/*
+|--------------------------------------------------------------------------
+| CUSTOMERS NOTFI DAN RIWAYAT
+|--------------------------------------------------------------------------
+*/
+
 // Rute untuk menghilangkan badge notifikasi (is_read = true)
 Route::post('/pelanggan/notif/read', function() {
     if(auth()->check()){
@@ -259,6 +267,12 @@ Route::get('/pelanggan/api-orders', function() {
                 
     return response()->json($orders);
 })->name('pelanggan.api.orders');
+
+// Route untuk hapus riwayat pesanan pelanggan
+Route::delete('/pelanggan/pesanan/{id}', [App\Http\Controllers\CustomerController::class, 'destroyOrder'])->name('pelanggan.order.destroy');
+
+// Route untuk hapus notifikasi pelanggan
+Route::delete('/pelanggan/notif/{id}', [App\Http\Controllers\CustomerController::class, 'destroyNotif'])->name('pelanggan.notif.destroy');
 
 
 //KAMPRET

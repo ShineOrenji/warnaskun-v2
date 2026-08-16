@@ -132,6 +132,11 @@
                 <span class="badge warning">{{ $pendingOrders ?? 0 }}</span>
             </a>
 
+            <a href="{{ route('admin.ready_orders') }}">
+                <i class="fas fa-motorcycle"></i>
+                <span>Antrean Kurir</span>
+            </a>
+
             <a href="{{ route('customers.index') }}" class="active">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
@@ -605,6 +610,7 @@
 
                             <!-- Informasi Pelanggan (Nama & No HP), Pengiriman & Catatan -->
                             <div style="background: var(--bg-primary); padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; color: var(--text-secondary);">
+                                <div style="margin-bottom: 4px;"><strong>Pembayaran:</strong> <span style="color: var(--text-primary); font-weight: 600;">${(order.payment_method || 'TUNAI').toUpperCase()} - <span style="color:#22c55e;">LUNAS</span></span></div>
                                 <div style="margin-bottom: 4px;"><strong>Nama:</strong> <span style="color: var(--text-primary); font-weight: 600;">${order.customer_name}</span></div>
                                 <div style="margin-bottom: 4px;"><strong>No WhatsApp/HP:</strong> <span style="color: var(--text-primary); font-weight: 600;">${order.phone}</span></div>
                                 <div style="margin-bottom: 4px;"><strong>Metode:</strong> ${deliveryBadge}</div>
@@ -822,6 +828,10 @@
                     <p style="margin: 0; color: var(--text-secondary);">
                         <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-truck" style="color: var(--gold); width: 16px;"></i> Metode Pengiriman</strong> 
                         ${deliveryMethod}
+                    </p>
+                    <p style="margin: 0; color: #000;">
+                        <strong style="color: #000; display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Metode Pembayaran</strong> 
+                        ${(order.payment_method || 'TUNAI').toUpperCase()} - LUNAS
                     </p>
                     <p style="margin: 0; color: var(--text-secondary);">
                         <strong style="color: var(--text-primary); display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;"><i class="fas fa-clock" style="color: var(--gold); width: 16px;"></i> Waktu Pesan</strong> 

@@ -6,35 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 
-    - primary meta tags
-  -->
   <title>Warung Nasi Kuning Ibu Opik</title>
   <meta name="title" content="Warung Nasi Kuning Ibu Opik - Nikmat & Khas">
   <meta name="description" content="Warung Nasi Kuning Ibu Opik - Cita rasa tradisional yang menggugah selera">
 
-  <!-- 
-    - favicon
-  -->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
-  <!-- 
-    - google font link
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
   
-  <!-- 
-    - custom css link
-  -->
   <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/login-pelanggan.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- 
-    - preload images
-  -->
   <link rel="preload" as="image" href="./assets/images/hero-slider-1.png">
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-slider-3.png">
@@ -43,67 +27,37 @@
 
 <body id="top">
 
-  <!-- 
-    - #PRELOADER
-  -->
-
+  <!-- PRELOADER -->
   <div class="preload" data-preaload>
     <div class="circle"></div>
     <p class="text">Ibu Opik</p>
   </div>
 
-  <!-- 
-    - #TOP BAR
-  -->
-
+  <!-- TOP BAR -->
   <div class="topbar">
     <div class="container">
-
       <address class="topbar-item">
-        <div class="icon">
-          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
-        </div>
-
-        <span class="span">
-          Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
-        </span>
+        <div class="icon"><ion-icon name="location-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani</span>
       </address>
-
       <div class="separator"></div>
-
       <div class="topbar-item item-2">
-        <div class="icon">
-          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-        </div>
-
+        <div class="icon"><ion-icon name="time-outline" aria-hidden="true"></ion-icon></div>
         <span class="span">Setiap Hari : 08.00 - 23.00</span>
       </div>
-
       <a href="tel:+6285559150809" class="topbar-item link">
-        <div class="icon">
-          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
-        </div>
-
+        <div class="icon"><ion-icon name="call-outline" aria-hidden="true"></ion-icon></div>
         <span class="span">+62 855 915 0809</span>
       </a>
-
       <div class="separator"></div>
-
       <a href="mailto:fahmirhamadan5@gmail.com" class="topbar-item link">
-        <div class="icon">
-          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-        </div>
-
+        <div class="icon"><ion-icon name="mail-outline" aria-hidden="true"></ion-icon></div>
         <span class="span">fahmirhamadan5@gmail.com</span>
       </a>
-
     </div>
   </div>
 
-  <!-- 
-    - #HEADER
-  -->
-
+  <!-- HEADER -->
   <header class="header" data-header>
     <div class="container">
 
@@ -111,8 +65,8 @@
         <img src="./assets/images/logo.png" width="160" height="50" alt="Warung Nasi Kuning Ibu Opik - Beranda">
       </a>
 
+      <!-- NAVBAR MENU -->
       <nav class="navbar" data-navbar>
-
         <button class="close-btn" aria-label="tutup menu" data-nav-toggler>
           <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
         </button>
@@ -122,49 +76,22 @@
         </a>
 
         <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html" class="navbar-link hover-underline active" data-nav-link><div class="separator"></div><span class="span">Beranda</span></a></li>
+          <li class="navbar-item"><a href="#menu" class="navbar-link hover-underline" data-nav-link><div class="separator"></div><span class="span">Menu</span></a></li>
+          <li class="navbar-item"><a href="#about" class="navbar-link hover-underline" data-nav-link><div class="separator"></div><span class="span">Tentang Kami</span></a></li>
+          <li class="navbar-item"><a href="#reservasi" class="navbar-link hover-underline" data-nav-link><div class="separator"></div><span class="span">Reservasi</span></a></li>
+          <li class="navbar-item"><a href="{{ route('customer.guide') }}" class="navbar-link hover-underline" data-nav-link><div class="separator"></div><span class="span">Panduan</span></a></li>
+          <li class="navbar-item"><a href="#contact" class="navbar-link hover-underline" data-nav-link><div class="separator"></div><span class="span">Kontak</span></a></li>
 
-          <li class="navbar-item">
-            <a href="index.html" class="navbar-link hover-underline active" data-nav-link>
-              <div class="separator"></div>
-              <span class="span">Beranda</span>
-            </a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#menu" class="navbar-link hover-underline" data-nav-link>
-              <div class="separator"></div>
-              <span class="span">Menu</span>
-            </a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#about" class="navbar-link hover-underline" data-nav-link>
-              <div class="separator"></div>
-              <span class="span">Tentang Kami</span>
-            </a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#reservasi" class="navbar-link hover-underline" data-nav-link>
-              <div class="separator"></div>
-              <span class="span">Reservasi</span>
-            </a>
-          </li>
-
-          <li class="navbar-item">
-              <a href="{{ route('customer.guide') }}" class="navbar-link hover-underline" data-nav-link>
-                  <div class="separator"></div>
-                  <span class="span">Panduan</span>
+          <!-- KHUSUS MENU MOBILE (HANYA MUNCUL JIKA BELUM LOGIN) -->
+          @guest
+          <li class="navbar-item mobile-login-menu" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+              <a href="javascript:void(0)" onclick="openAuthModal(); closeNavbar();" class="navbar-link hover-underline" style="color: var(--gold-crayola);">
+                <div class="separator"></div>
+                <span class="span"><i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Login / Daftar</span>
               </a>
           </li>
-
-          <li class="navbar-item">
-            <a href="#contact" class="navbar-link hover-underline" data-nav-link>
-              <div class="separator"></div>
-              <span class="span">Kontak</span>
-            </a>
-          </li>
-
+          @endguest
         </ul>
 
         <div class="text-center">
@@ -176,277 +103,101 @@
           <p class="contact-label">Pemesanan</p>
           <a href="tel:+6285559150809" class="body-1 contact-number hover-underline">+62 855 5915 0809</a>
         </div>
-
       </nav>
 
-      <!-- ============================================ -->
-      <!-- TOMBOL LOGIN / DROPDOWN PROFIL (BERSIH & AKURAT) -->
-      <!-- ============================================ -->
+      <!-- CSS PROFIL DROPDOWN & LOGIKA RESPONSIVE AUTH -->
       <style>
-          .profile-dropdown {
-              position: relative; display: flex; align-items: center; margin-right: 15px; font-family: 'DM Sans', sans-serif;
-              z-index: 99999;
-          }
-          .profile-trigger {
-              display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px 12px 4px 4px;
-              border-radius: 30px; transition: all 0.3s ease; background: rgba(212, 168, 67, 0.1);
-              border: 1px solid rgba(212, 168, 67, 0.3);
-          }
-          .profile-trigger:hover { background: rgba(212, 168, 67, 0.2); }
-          .profile-avatar {
-              width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
-              border: 2px solid var(--gold-crayola, #d4a843);
-          }
-          .profile-name { color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap; }
-          
-          .profile-menu {
-              position: absolute; top: calc(100% + 8px); right: 0; background: #1e1e1e; min-width: 220px;
-              border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-              border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; z-index: 999999;
-              opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease;
-          }
-          
-          /* Jembatan tipis akurat: hanya aktif kalau kursor beneran nyentuh area antara tombol & menu */
-          .profile-menu::before {
-              content: ''; position: absolute; top: -8px; left: 0; width: 100%; height: 8px;
-          }
-          
-          /* Hover & Tap Aktif */
-          .profile-dropdown:hover .profile-menu { 
-              opacity: 1; visibility: visible; transform: translateY(0); 
-          }
-          
-          .profile-menu-item {
-              display: flex; align-items: center; gap: 12px; padding: 12px 20px;
-              color: #ccc; text-decoration: none; transition: 0.3s; font-size: 14px;
-          }
-          .profile-menu-item:hover { background: rgba(255,255,255,0.05); color: var(--gold-crayola, #d4a843); }
-          .profile-menu-item i { width: 20px; text-align: center; font-size: 16px; }
-          .profile-menu-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; }
-          .btn-logout-dropdown {
-              width: 100%; text-align: left; background: transparent; border: none;
-              color: #ef4444; font-family: inherit; cursor: pointer;
-          }
-          .btn-logout-dropdown:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .profile-dropdown { position: relative; display: flex; align-items: center; font-family: 'DM Sans', sans-serif; z-index: 10; }
+        .profile-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: 30px; transition: all 0.3s ease; background: rgba(212, 168, 67, 0.1); border: 1px solid rgba(212, 168, 67, 0.3); }
+        .profile-trigger:hover { background: rgba(212, 168, 67, 0.2); }
+        .profile-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-crayola, #d4a843); }
+        .profile-name { color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap; }
+        
+        .profile-menu { position: absolute; top: calc(100% + 8px); right: 0; background: #1e1e1e; min-width: 220px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; z-index: 50; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; }
+        .profile-menu::before { content: ''; position: absolute; top: -8px; left: 0; width: 100%; height: 8px; }
+        .profile-dropdown:hover .profile-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .profile-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #ccc; text-decoration: none; transition: 0.3s; font-size: 14px; }
+        .profile-menu-item:hover { background: rgba(255,255,255,0.05); color: var(--gold-crayola, #d4a843); }
+        .profile-menu-item i { width: 20px; text-align: center; font-size: 16px; }
+        .profile-menu-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0; }
+        .btn-logout-dropdown { width: 100%; text-align: left; background: transparent; border: none; color: #ef4444; font-family: inherit; cursor: pointer; }
+        .btn-logout-dropdown:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
-          /* DI HP: Sembunyikan nama, sisa foto aja biar ringkas */
-          @media (max-width: 768px) {
-              .profile-name, .profile-trigger .fa-chevron-down { display: none; } 
-              .profile-trigger { padding: 2px; } 
-              .profile-dropdown { margin-left: auto; margin-right: 1px; }
-              .profile-menu { right: -20px; }
-              .navbar.active { z-index: 9999999 !important; }
-              .overlay.active { z-index: 9999998 !important; }
-          }
+        /* LAYOUT NAVBAR GROUP */
+        .header-action-group { display: flex; align-items: center; gap: 20px; }
+
+        /* LOGIKA RESPONSIVE */
+        @media (max-width: 1199px) { 
+          .desktop-login-btn { display: none !important; } 
+          .btn-header-pesanan { display: none !important; } 
+          /* Margin-left: auto hanya dipanggil pas mode HP biar nabrak hamburger menu */
+          .header-action-group { gap: 10px !important; margin-left: auto; margin-right: 15px; }
+        }
+        @media (min-width: 1200px) { 
+          .mobile-login-menu { display: none !important; } 
+          /* Memaksa menu navbar tepat berada di tengah secara imbang */
+          .navbar { margin-inline: auto !important; }
+        }
+        @media (max-width: 768px) {
+          .profile-name, .profile-trigger .fa-chevron-down { display: none; }
+          .profile-trigger { padding: 2px; }
+          .header-action-group { margin-right: 10px; }
+        }
       </style>
 
-      <!-- ============================================ -->
-      <!-- TOMBOL LOGIN / DROPDOWN PROFIL & NOTIFIKASI -->
-      <!-- ============================================ -->
-      @auth
-          @php
+      <!-- GRUP KANAN: LOGIN/PROFIL + PESANAN -->
+      <div class="header-action-group">
+        
+        <div class="outer-auth-container" style="display: flex; align-items: center;">
+          @auth
+            @php
               $unread_notifs = \App\Models\UserNotification::where('user_id', auth()->id())->where('is_read', false)->count();
-              $semua_notif = \App\Models\UserNotification::where('user_id', auth()->id())->latest()->take(5)->get();
-          @endphp
-
-          <div class="profile-dropdown">
-              <!-- TRIGGER FOTO PROFIL -->
+            @endphp
+            
+            <div class="profile-dropdown">
               <div class="profile-trigger">
-                  <div style="position: relative; display: inline-block;">
-                      <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=d4a843&color=000&bold=true" alt="Avatar" class="profile-avatar">
-                      
-                      @if($unread_notifs > 0)
-                          <span id="badgeNotifHijau" style="position: absolute; top: -4px; right: -4px; background: #22c55e; color: white; font-size: 10px; font-weight: bold; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border-radius: 10px; border: 2px solid #1e1e1e; box-sizing: content-box;">
-                              {{ $unread_notifs > 99 ? '99+' : $unread_notifs }}
-                          </span>
-                      @endif
-                  </div>
-                  <span class="profile-name">{{ explode(' ', Auth::user()->name)[0] }}</span>
-                  <i class="fas fa-chevron-down" style="color: var(--gold-crayola, #d4a843); font-size: 12px;"></i>
+                <div style="position: relative; display: inline-block;">
+                  <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=d4a843&color=000&bold=true" alt="Avatar" class="profile-avatar">
+                  @if($unread_notifs > 0)
+                    <span id="badgeNotifHijau" style="position: absolute; top: -4px; right: -4px; background: #22c55e; color: white; font-size: 10px; font-weight: bold; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border-radius: 10px; border: 2px solid #1e1e1e; box-sizing: content-box;">{{ $unread_notifs > 99 ? '99+' : $unread_notifs }}</span>
+                  @endif
+                </div>
+                <span class="profile-name">{{ explode(' ', Auth::user()->name)[0] }}</span>
+                <i class="fas fa-chevron-down" style="color: var(--gold-crayola, #d4a843); font-size: 12px;"></i>
               </div>
               
-              <!-- DROPDOWN MENU -->
               <div class="profile-menu">
-                  <div style="padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;">
-                      <div style="font-size: 12px; color: #888;">Masuk sebagai</div>
-                      <div style="font-size: 14px; color: #fff; font-weight: 600;">{{ Auth::user()->email ?? Auth::user()->phone }}</div>
-                  </div>
-                  
-                  <!-- 1. Menu Riwayat (Buka Modal) -->
-                  <a href="javascript:void(0)" onclick="bukaModalRiwayat()" class="profile-menu-item">
-                      <i class="fas fa-history"></i> Riwayat Pesanan
-                  </a>
-                  
-                  <!-- 2. Menu Notifikasi (Buka Modal) -->
-                  <a href="javascript:void(0)" onclick="bukaModalNotif()" class="profile-menu-item">
-                      <i class="fas fa-bell"></i> Notifikasi
-                  </a>
-                  
-                  <div class="profile-menu-divider"></div>
-                  
-                  <!-- 3. Menu Keluar -->
-                  <form action="{{ route('pelanggan.logout') }}" method="POST" style="margin: 0;">
-                      @csrf
-                      <button type="submit" class="profile-menu-item btn-logout-dropdown">
-                          <i class="fas fa-sign-out-alt"></i> Keluar
-                      </button>
-                  </form>
+                <div style="padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;">
+                  <div style="font-size: 12px; color: #888;">Masuk sebagai</div>
+                  <div style="font-size: 14px; color: #fff; font-weight: 600;">{{ Auth::user()->email ?? Auth::user()->phone }}</div>
+                </div>
+                @if(auth()->user()->role == 'customer')
+                  <a href="javascript:void(0)" onclick="bukaModalRiwayat()" class="profile-menu-item"><i class="fas fa-history"></i> Riwayat Pesanan</a>
+                  <a href="javascript:void(0)" onclick="bukaModalNotif()" class="profile-menu-item"><i class="fas fa-bell"></i> Notifikasi</a>
+                @elseif(auth()->user()->role == 'admin')
+                  <a href="{{ route('dashboard.index') }}" class="profile-menu-item"><i class="fas fa-tachometer-alt"></i> Dashboard Admin</a>
+                @endif
+                <div class="profile-menu-divider"></div>
+                <form action="{{ auth()->user()->role == 'admin' ? route('logout') : route('pelanggan.logout') }}" method="POST" style="margin: 0;">
+                  @csrf
+                  <button type="submit" class="profile-menu-item btn-logout-dropdown"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+                </form>
               </div>
-          </div>
-
-          <!-- ============================================ -->
-          <!-- MODAL RIWAYAT PESANAN -->
-          <!-- ============================================ -->
-          <div id="modalListRiwayat" class="auth-modal-overlay">
-              <div class="auth-modal-box" style="padding: 20px; max-width: 450px; text-align: left;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;">
-                      <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin: 0;"><i class="fas fa-history" style="color: var(--gold-crayola); margin-right: 8px;"></i> Riwayat Pesanan Saya</h3>
-                      <button class="auth-close-btn" style="position: static;" onclick="tutupModalRiwayat()">&times;</button>
-                  </div>
-                  
-                  <div id="containerDataRiwayat" style="max-height: 380px; overflow-y: auto; padding-right: 5px;">
-                      <div style="text-align: center; padding: 30px 0; color: #888;">
-                          <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--gold-crayola);"></i>
-                          <p style="margin-top: 10px; font-size: 13px;">Memuat riwayat...</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!-- ============================================ -->
-          <!-- MODAL DAFTAR, RIWAYAT & LONCENG NOTIFIKASI -->
-          <!-- ============================================ -->
-          <div id="modalListNotif" class="auth-modal-overlay">
-              <div class="auth-modal-box" style="padding: 20px; max-width: 400px; text-align: left;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;">
-                      <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin: 0;"><i class="fas fa-bell" style="color: var(--gold-crayola); margin-right: 8px;"></i> Notifikasi Saya</h3>
-                      <button class="auth-close-btn" style="position: static;" onclick="tutupModalNotif()">&times;</button>
-                  </div>
-                  
-                  <div style="max-height: 350px; overflow-y: auto; padding-right: 5px;">
-                      @forelse($semua_notif as $notif)
-                          <div style="padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--gold-crayola);">
-                              <strong style="color: var(--gold-crayola); display: block; font-size: 14px;">{{ $notif->title }}</strong>
-                              <p style="margin: 6px 0 0 0; font-size: 13px; color: #ccc; line-height: 1.5;">{{ $notif->message }}</p>
-                              <span style="font-size: 11px; color: #888; display: block; margin-top: 8px;"><i class="fas fa-clock"></i> {{ $notif->created_at->diffForHumans() }}</span>
-                          </div>
-                      @empty
-                          <div style="text-align: center; padding: 30px 0;">
-                              <i class="fas fa-bell-slash" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
-                              <p style="color: #888; font-size: 13px;">Belum ada notifikasi.</p>
-                          </div>
-                      @endforelse
-                  </div>
-              </div>
-          </div>
-
-          <script>
-              // Modal Riwayat
-              function bukaModalRiwayat() {
-                  document.getElementById('modalListRiwayat').classList.add('show');
-                  
-                  // Tarik data pakai Fetch API secara instan
-                  fetch("{{ route('pelanggan.api.orders') }}")
-                      .then(res => res.json())
-                      .then(data => {
-                          const container = document.getElementById('containerDataRiwayat');
-                          if(data.length === 0) {
-                              container.innerHTML = `
-                                  <div style="text-align: center; padding: 30px 0;">
-                                      <i class="fas fa-shopping-bag" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
-                                      <p style="color: #888; font-size: 13px;">Kamu belum pernah melakukan pesanan.</p>
-                                  </div>`;
-                              return;
-                          }
-
-                          let html = '';
-                          data.forEach(order => {
-                              let badgeColor = order.payment_status === 'paid' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(234, 179, 8, 0.2)';
-                              let textColor = order.payment_status === 'paid' ? '#22c55e' : '#eab308';
-                              let statusText = order.payment_status === 'paid' ? 'LUNAS' : 'PENDING';
-
-                              // Looping daftar menu di dalam pesanan ini
-                              let itemsListHtml = '';
-                              if (order.items && order.items.length > 0) {
-                                  order.items.forEach(item => {
-                                      itemsListHtml += `
-                                          <div style="display: flex; justify-content: space-between; font-size: 12px; color: #ccc; margin-bottom: 3px;">
-                                              <span>${item.qty}x ${item.menu_name}</span>
-                                              <span>Rp ${parseInt(item.subtotal).toLocaleString('id-ID')}</span>
-                                          </div>
-                                      `;
-                                  });
-                              }
-
-                              html += `
-                                  <div style="padding: 14px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                          <span style="color: var(--gold-crayola); font-weight: bold; font-size: 13px;">#Order ID: ${order.id}</span>
-                                          <span style="background: ${badgeColor}; color: ${textColor}; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold;">${statusText}</span>
-                                      </div>
-                                      <div style="font-size: 11px; color: #888; margin-bottom: 8px;"><i class="fas fa-clock"></i> ${new Date(order.created_at).toLocaleString('id-ID')}</div>
-                                      
-                                      <!-- Kotak Rincian Menu -->
-                                      <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-bottom: 8px;">
-                                          <div style="font-size: 11px; color: var(--gold-crayola); font-weight: bold; margin-bottom: 4px;">Daftar Menu:</div>
-                                          ${itemsListHtml}
-                                      </div>
-
-                                      <div style="font-size: 12px; color: #aaa; margin-bottom: 2px;">Metode: <b style="color:#fff;">${order.payment_method.toUpperCase()}</b> (${order.delivery_type.toUpperCase()})</div>
-                                      <div style="font-size: 14px; font-weight: bold; color: #fff; display: flex; justify-content: space-between; align-items: center; margin-top: 6px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6px;">
-                                          <span>Total:</span>
-                                          <span style="color: #22c55e;">Rp ${parseInt(order.total).toLocaleString('id-ID')}</span>
-                                      </div>
-                                  </div>
-                              `;
-                          });
-                          container.innerHTML = html;
-                      });
-              }
-
-              function tutupModalRiwayat() {
-                  document.getElementById('modalListRiwayat').classList.remove('show');
-              }
-
-              // Modal Notifikasi
-              function bukaModalNotif() {
-                  document.getElementById('modalListNotif').classList.add('show');
-                  const badge = document.getElementById('badgeNotifHijau');
-                  if(badge) badge.style.display = 'none';
-
-                  fetch("{{ route('pelanggan.notif.read') }}", {
-                      method: "POST",
-                      headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}", "Content-Type": "application/json" }
-                  });
-              }
-
-              function tutupModalNotif() {
-                  document.getElementById('modalListNotif').classList.remove('show');
-              }
-              
-              // Tutup modal jika klik di luar kotak
-              window.addEventListener('click', function(e) {
-                  if (e.target === document.getElementById('modalListRiwayat')) tutupModalRiwayat();
-                  if (e.target === document.getElementById('modalListNotif')) tutupModalNotif();
-              });
-          </script>
-      @else
-          <button onclick="openAuthModal()" class="btn btn-primary" style="margin-right: 15px; padding: 10px 20px; min-width: max-content; min-height: 45px;">
+            </div>
+          @else
+            <button onclick="openAuthModal()" class="btn btn-primary desktop-login-btn" style="padding: 10px 20px; min-width: max-content; min-height: 45px;">
               <span class="text text-1">Login</span>
               <span class="text text-2" aria-hidden="true">Login</span>
-          </button>
-      @endauth
+            </button>
+          @endauth
+        </div>
 
-      <!-- ============================================ -->
+        <a href="{{ route('cart.index') }}" class="btn btn-secondary btn-header-pesanan">
+          <span class="text text-1">Pesanan @if($cartCount > 0) ({{ $cartCount }}) @endif</span>
+          <span class="text text-2" aria-hidden="true">Pesanan @if($cartCount > 0) ({{ $cartCount }}) @endif</span>
+        </a>
 
-      <a href="{{ route('cart.index') }}" class="btn btn-secondary">
-           <span class="text text-1">
-              Pesanan @if($cartCount > 0) ({{ $cartCount }}) @endif
-          </span>
-          <span class="text text-2" aria-hidden="true">
-              Pesanan @if($cartCount > 0) ({{ $cartCount }}) @endif
-          </span>
-      </a>
+      </div>
 
       <button class="nav-open-btn" aria-label="buka menu" data-nav-toggler>
         <span class="line line-1"></span>
@@ -459,330 +210,155 @@
     </div>
   </header>
 
+  <!-- KONTEN UTAMA -->
   <main>
     <article>
-
-      <!-- 
-        - #HERO
-      -->
-
+      <!-- HERO SECTION -->
       <section class="hero text-center" aria-label="beranda" id="home">
-
         <ul class="hero-slider" data-hero-slider>
-
           <li class="slider-item active" data-hero-slider-item>
-
-            <div class="slider-bg">
-              <img src="./assets/images/hero-slider-1.png" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
+            <div class="slider-bg"><img src="./assets/images/hero-slider-1.png" width="1880" height="950" alt="" class="img-cover"></div>
             <p class="label-2 section-subtitle slider-reveal">Tradisional & Higienis</p>
-
-            <h1 class="display-1 hero-title slider-reveal">
-              Untuk cinta <br>
-              makanan lezat
-            </h1>
-
-            <p class="body-2 hero-text slider-reveal">
-              Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
-            </p>
-
+            <h1 class="display-1 hero-title slider-reveal">Untuk cinta <br> makanan lezat</h1>
+            <p class="body-2 hero-text slider-reveal">Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat</p>
             <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
-
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
             </a>
-
           </li>
-
           <li class="slider-item" data-hero-slider-item>
-
-            <div class="slider-bg">
-              <img src="./assets/images/hero-slider-2.png" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
+            <div class="slider-bg"><img src="./assets/images/hero-slider-2.png" width="1880" height="950" alt="" class="img-cover"></div>
             <p class="label-2 section-subtitle slider-reveal">Pengalaman yang Menyenangkan</p>
-
-            <h1 class="display-1 hero-title slider-reveal">
-              Rasa Terinspirasi <br>
-              oleh Musim
-            </h1>
-
-            <p class="body-2 hero-text slider-reveal">
-              Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
-            </p>
-
+            <h1 class="display-1 hero-title slider-reveal">Rasa Terinspirasi <br> oleh Musim</h1>
+            <p class="body-2 hero-text slider-reveal">Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat</p>
             <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
-
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
             </a>
-
           </li>
-
           <li class="slider-item" data-hero-slider-item>
-
-            <div class="slider-bg">
-              <img src="./assets/images/hero-slider-3.png" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
+            <div class="slider-bg"><img src="./assets/images/hero-slider-3.png" width="1880" height="950" alt="" class="img-cover"></div>
             <p class="label-2 section-subtitle slider-reveal">Lezat & Menggugah Selera</p>
-
-            <h1 class="display-1 hero-title slider-reveal">
-              Di mana setiap rasa <br>
-              memiliki cerita
-            </h1>
-
-            <p class="body-2 hero-text slider-reveal">
-              Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat
-            </p>
-
+            <h1 class="display-1 hero-title slider-reveal">Di mana setiap rasa <br> memiliki cerita</h1>
+            <p class="body-2 hero-text slider-reveal">Datang bersama keluarga & rasakan kebahagiaan makanan yang lezat</p>
             <a href="#menu" class="btn btn-primary slider-reveal">
               <span class="text text-1">Lihat Menu</span>
-
               <span class="text text-2" aria-hidden="true">Lihat Menu</span>
             </a>
-
           </li>
-
         </ul>
-
-        <button class="slider-btn prev" aria-label="geser ke sebelumnya" data-prev-btn>
-          <ion-icon name="chevron-back"></ion-icon>
-        </button>
-
-        <button class="slider-btn next" aria-label="geser ke berikutnya" data-next-btn>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </button>
-
+        <button class="slider-btn prev" aria-label="geser ke sebelumnya" data-prev-btn><ion-icon name="chevron-back"></ion-icon></button>
+        <button class="slider-btn next" aria-label="geser ke berikutnya" data-next-btn><ion-icon name="chevron-forward"></ion-icon></button>
         <a href="#reservasi" class="hero-btn has-after">
           <img src="./assets/images/hero-icon.png" width="48" height="48" alt="ikon pemesanan">
-
           <span class="label-2 text-center span">Pesan Meja</span>
         </a>
-
       </section>
 
-      <!-- ============================================ -->
-      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
-      <!-- ============================================ -->
+      <!-- RUNNING TEXT -->
       <section class="running-text-section">
-          <div class="running-text-wrapper">
-              <div class="running-text-track">
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-              </div>
+        <div class="running-text-wrapper">
+          <div class="running-text-track">
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
           </div>
+        </div>
       </section>
 
-      <!-- 
-        - #ABOUT
-      -->
-
+      <!-- ABOUT -->
       <section class="section about text-center" aria-labelledby="about-label" id="about">
         <div class="container">
-
           <div class="about-content">
-
             <p class="label-2 section-subtitle" id="about-label">Cerita Kami</p>
-
             <h2 class="headline-1 section-title">Setiap Rasa Memiliki Cerita</h2>
-
-            <p class="section-text">
-              Warung Nasi Kuning Ibu Opik hadir sejak 1950 dengan resep nasi kuning khas yang diwariskan turun-temurun. 
-              Setiap bumbu dipilih dengan cermat untuk menciptakan cita rasa yang autentik dan menggugah selera.
-            </p>
-
+            <p class="section-text">Warung Nasi Kuning Ibu Opik hadir sejak 1950 dengan resep nasi kuning khas yang diwariskan turun-temurun. Setiap bumbu dipilih dengan cermat untuk menciptakan cita rasa yang autentik dan menggugah selera.</p>
             <div class="contact-label">Pesan Lewat Telepon</div>
-
             <a href="tel:+6285559150809" class="body-1 contact-number hover-underline">+62 855 5915 0809</a>
-
             <a href="#about" class="btn btn-primary">
               <span class="text text-1">Selengkapnya</span>
-
               <span class="text text-2" aria-hidden="true">Selengkapnya</span>
             </a>
-
           </div>
-
           <figure class="about-banner">
-
-            <img src="./assets/images/logo.png" width="570" height="570" loading="lazy" alt="tentang kami"
-              class="w-100" data-parallax-item data-parallax-speed="1">
-
-            {{-- <div class=" has-before" data-parallax-item data-parallax-speed="1.75">
-              <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt=""
-                class="w-100">
-            </div> BACKUP YG BAWAH --}}
-
-            <div class=" has-before" data-parallax-item data-parallax-speed="1.75">
-              <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt=""
-                class="w-100">
+            <img src="./assets/images/logo.png" width="570" height="570" loading="lazy" alt="tentang kami" class="w-100" data-parallax-item data-parallax-speed="1">
+            <div class="has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt="" class="w-100">
             </div>
-
             <div class="abs-img abs-img-2 has-before">
               <img src="./assets/images/badge-2.png" width="133" height="134" loading="lazy" alt="">
             </div>
-
           </figure>
-
           <img src="./assets/images/shape-3.png" width="197" height="194" loading="lazy" alt="" class="shape">
-
         </div>
       </section>
 
-      <!-- ============================================ -->
-      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
-      <!-- ============================================ -->
+      <!-- RUNNING TEXT -->
       <section class="running-text-section">
-          <div class="running-text-wrapper">
-              <div class="running-text-track">
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-              </div>
+        <div class="running-text-wrapper">
+          <div class="running-text-track">
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
           </div>
+        </div>
       </section>
 
-      <!-- 
-        - #SPECIAL DISH
-      -->
-
+      <!-- #SPECIAL DISH -->
       <section class="special-dish text-center" aria-labelledby="dish-label">
-
         <div class="special-dish-banner">
-          <img src="./assets/images/hero-slider-3.png" width="940" height="900" loading="lazy" alt="menu spesial"
-            class="img-cover">
+          <img src="./assets/images/hero-slider-3.png" width="940" height="900" loading="lazy" alt="menu spesial" class="img-cover">
         </div>
-
         <div class="special-dish-content bg-black-10">
           <div class="container">
-
             <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="lencana" class="abs-img">
-
             <p class="section-subtitle label-2">Menu Spesial</p>
-
             <h2 class="headline-1 section-title">Nasi Kuning Komplit</h2>
-
-            <p class="section-text">
-              Nasi kuning khas dengan ayam goreng, telur, sambal, dan berbagai lauk pilihan. 
-              Disajikan dengan bumbu rahasia Ibu Opik yang membuatnya istimewa.
-            </p>
-
+            <p class="section-text">Nasi kuning khas dengan ayam goreng, telur, sambal, dan berbagai lauk pilihan. Disajikan dengan bumbu rahasia Ibu Opik yang membuatnya istimewa.</p>
             <div class="wrapper">
               <del class="del body-3">Rp 15.000</del>
-
               <span class="span body-1">Rp 10.000</span>
             </div>
-
             <a href="#" class="btn btn-primary">
               <span class="text text-1">Lihat Semua Menu</span>
-
               <span class="text text-2" aria-hidden="true">Lihat Semua Menu</span>
             </a>
-
           </div>
         </div>
-
         <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
-
         <img src="./assets/images/shape-9.png" width="351" height="462" loading="lazy" alt="" class="shape shape-2">
-
       </section>
 
-      <!-- - #MENU -->
+      <!-- #MENU -->
 
       <section class="section menu" aria-label="menu-label" id="menu">
         <div class="container">
-
           <p class="section-subtitle text-center label-2">Pilihan Spesial</p>
-
           <h2 class="headline-1 section-title text-center">Menu Lezat Kami</h2>
+          <p class="section-text text-center menu-intro">Nikmati cita rasa autentik nasi kuning khas Ibu Opik dengan bahan pilihan terbaik</p>
 
-          <p class="section-text text-center menu-intro">
-            Nikmati cita rasa autentik nasi kuning khas Ibu Opik dengan bahan pilihan terbaik
-          </p>
-
-          <!-- Menu Filter / Kategori -->
           <div class="menu-filter">
             <button class="filter-btn active" data-filter="all">Semua</button>
             <button class="filter-btn" data-filter="nasi">Nasi</button>
@@ -792,290 +368,130 @@
           </div>
 
           <div class="menu-grid">
-
-           @foreach ($menus as $menu)
-
+            @foreach ($menus as $menu)
             <div class="menu-item-card" data-category="{{ $menu->category }}">
-
-                <div class="menu-item-image">
-
-                    <img src="{{ asset('uploads/menu/' . $menu->image) }}"
-                        alt="{{ $menu->name }}"
-                        width="300"
-                        height="300"
-                        loading="lazy">
-
-                    @if($menu->stock > 0)
-                        <span class="menu-badge">
-                            Tersedia
-                        </span>
-                    @else
-                        <span class="menu-badge menu-badge-danger">
-                            Habis
-                        </span>
-                    @endif
-                </div>
-
-                <div class="menu-item-content">
-
-                    <div class="menu-item-header">
-
-                        <h3 class="menu-item-title">
-                            {{ $menu->name }}
-                        </h3>
-
-                        <span class="menu-item-price">
-                            Rp {{ number_format($menu->price,0,',','.') }}
-                        </span>
-
-                    </div>
-
-                    <p class="menu-item-description">
-                        {{ $menu->description }}
-                    </p>
-
-                    <div class="menu-item-footer">
-
-                        <span class="menu-item-rating">
-                            {{ ucfirst($menu->category) }}
-                        </span>
-
-                        @if($menu->stock > 0)
-                          <form action="{{ route('cart.add', $menu->id) }}" method="POST">
-                              @csrf
-                              <button type="submit" class="btn-order">
-                                  <ion-icon name="cart-outline"></ion-icon>
-                                  <span>Pesan</span>
-                              </button>
-                          </form>
-
-                          @else
-
-                          <button
-                              class="btn-order btn-order-2"
-                              disabled
-                              style="opacity:.6;cursor:not-allowed;">
-
-                              <ion-icon name="close-circle-outline"></ion-icon>
-                              <span>Stok Habis</span>
-                          </button>
-                          @endif
-                    </div>
-            </div>
-
-          </div>
-
-          @endforeach
-
-          </div>
-
-          <p class="menu-text text-center">
-            Setiap hari mulai <span class="span">08.00</span> sampai <span class="span">23.00</span>
-          </p>
-
-          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="bentuk"
-            class="shape shape-2 move-anim">
-          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="bentuk"
-            class="shape shape-3 move-anim">
-
-        </div>
-      </section>
-
-      <!-- ============================================ -->
-      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
-      <!-- ============================================ -->
-      <section class="running-text-section">
-          <div class="running-text-wrapper">
-              <div class="running-text-track">
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
+              <div class="menu-item-image">
+                <img src="{{ asset('uploads/menu/' . $menu->image) }}" alt="{{ $menu->name }}" width="300" height="300" loading="lazy">
+                @if($menu->stock > 0)
+                  <span class="menu-badge">Tersedia</span>
+                @else
+                  <span class="menu-badge menu-badge-danger">Habis</span>
+                @endif
               </div>
+              <div class="menu-item-content">
+                <div class="menu-item-header">
+                  <h3 class="menu-item-title">{{ $menu->name }}</h3>
+                  <span class="menu-item-price">Rp {{ number_format($menu->price,0,',','.') }}</span>
+                </div>
+                <p class="menu-item-description">{{ $menu->description }}</p>
+                <div class="menu-item-footer">
+                  <span class="menu-item-rating">{{ ucfirst($menu->category) }}</span>
+                  @if($menu->stock > 0)
+                    <form action="{{ route('cart.add', $menu->id) }}" method="POST">
+                      @csrf
+                      <button type="submit" class="btn-order"><ion-icon name="cart-outline"></ion-icon><span>Pesan</span></button>
+                    </form>
+                  @else
+                    <button class="btn-order btn-order-2" disabled style="opacity:.6;cursor:not-allowed;">
+                      <ion-icon name="close-circle-outline"></ion-icon><span>Stok Habis</span>
+                    </button>
+                  @endif
+                </div>
+              </div>
+            </div>
+            @endforeach
           </div>
+
+          <p class="menu-text text-center">Setiap hari mulai <span class="span">08.00</span> sampai <span class="span">23.00</span></p>
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="bentuk" class="shape shape-2 move-anim">
+          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="bentuk" class="shape shape-3 move-anim">
+        </div>
       </section>
 
-      <!-- 
-        - #TESTIMONIALS
-      -->
-
-      <section class="section testi text-center has-bg-image"
-        style="background-image: url('./assets/images/quotes-bg.png')" aria-label="testimoni">
-        <div class="container">
-
-          <div class="quote">”</div>
-
-          <p class="headline-2 testi-text">
-            Nasi Kuning Paling Mantap se-Galaxy Andromeda
-          </p>
-
-          <div class="wrapper">
-            <div class="separator"></div>
-            <div class="separator"></div>
-            <div class="separator"></div>
+      <!-- RUNNING TEXT -->
+      <section class="running-text-section">
+        <div class="running-text-wrapper">
+          <div class="running-text-track">
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
           </div>
         </div>
       </section>
 
-      <!-- 
-        - #RESERVATION
-      -->
+      <!-- TESTIMONIALS -->
+      
+      <section class="section testi text-center has-bg-image" style="background-image: url('./assets/images/quotes-bg.png')" aria-label="testimoni">
+        <div class="container">
+          <div class="quote">”</div>
+          <p class="headline-2 testi-text">Nasi Kuning Paling Mantap se-Galaxy Andromeda</p>
+          <div class="wrapper">
+            <div class="separator"></div><div class="separator"></div><div class="separator"></div>
+          </div>
+        </div>
+      </section>
 
+      <!-- RESERVATION -->
+      
       <section class="reservation">
         <div class="container" id="reservasi">
-
           <div class="form reservation-form bg-black-10">
-
             <form action="{{ route('reservation.store') }}" method="POST" class="form-left">
-            @csrf
-
-              <h2 class="headline-1 text-center">Booking Tempat</h2>
-
-              <p class="form-text text-center">
-                Pemesanan <a href="tel:+6285559150809" class="link">+62 855 5915 0809</a>
-                atau isi formulir di bawah ini
-              </p>
-
+              @csrf
+              <h2 class="headline-1 text-center"><del>Booking Tempat</del></h2>
+              <p class="text-center" style="font-size: 20px; color: red;">(Masih tahap perbaikan le, Insya Allah Soon Aamiin)</p>
+              <p class="form-text text-center">Pemesanan <a href="tel:+6285559150809" class="link">+62 855 5915 0809</a> atau isi formulir di bawah ini</p>
               <div class="input-wrapper">
                 <input type="text" name="name" placeholder="Nama Anda" autocomplete="off" class="input-field">
-
                 <input type="tel" name="phone" placeholder="Nomor Telepon" autocomplete="off" class="input-field">
               </div>
-
               <div class="input-wrapper">
-
                 <div class="icon-wrapper">
                   <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-
                   <select name="person" class="input-field">
-                    <option value="1">1 Orang</option>
-                    <option value="2">2 Orang</option>
-                    <option value="3">3 Orang</option>
-                    <option value="4">4 Orang</option>
-                    <option value="5">5 Orang</option>
-                    <option value="6">6 Orang</option>
-                    <option value="7">7 Orang</option>
+                    <option value="1">1 Orang</option><option value="2">2 Orang</option>
                   </select>
-
                   <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
                 </div>
-
                 <div class="icon-wrapper">
                   <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
-
                   <input type="date" name="reservation_date" class="input-field">
-
                   <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
                 </div>
-
                 <div class="icon-wrapper">
                   <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-
                   <select name="reservation_time" class="input-field">
-                    <option value="08:00am">08 : 00</option>
-                    <option value="09:00am">09 : 00</option>
-                    <option value="010:00am">10 : 00</option>
-                    <option value="011:00am">11 : 00</option>
-                    <option value="012:00am">12 : 00</option>
-                    <option value="01:00pm">13 : 00</option>
-                    <option value="02:00pm">14 : 00</option>
-                    <option value="03:00pm">15 : 00</option>
-                    <option value="04:00pm">16 : 00</option>
-                    <option value="05:00pm">17 : 00</option>
-                    <option value="06:00pm">18 : 00</option>
-                    <option value="07:00pm">19 : 00</option>
-                    <option value="08:00pm">20 : 00</option>
-                    <option value="09:00pm">21 : 00</option>
-                    <option value="10:00pm">22 : 00</option>
+                    <option value="08:00am">08 : 00</option><option value="09:00am">09 : 00</option>
                   </select>
-
                   <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
                 </div>
-
               </div>
-
               <textarea name="message" placeholder="Pesan" autocomplete="off" class="input-field"></textarea>
-
-              <button type="submit" class="btn btn-secondary">
+              <button type="submit" class="btn btn-secondary" disabled style="opacity:.6;cursor:not-allowed;">
                 <span class="text text-1">Pesan Meja</span>
-
                 <span class="text text-2" aria-hidden="true">Pesan Meja</span>
               </button>
-
             </form>
-
             <div class="form-right text-center" style="background-image: url('./assets/images/form-pattern.png')">
-
               <h2 class="headline-1 text-center">Hubungi Kami</h2>
-
               <p class="contact-label">Pemesanan</p>
-
               <a href="tel:+628555150809" class="body-1 contact-number hover-underline">+62 855 5915 0809</a>
-
               <div class="separator"></div>
-
               <p class="contact-label">Lokasi</p>
-
-              <address class="body-4">
-                Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani
-              </address>
-
-              <p class="contact-label">JADWAL</p>
-
-              <p class="body-4">
-                Senin sampai Jum'at <br>
-                08.00 - 20.00
-              </p>
-
-              <p class="contact-label">JADWAL</p>
-
-              <p class="body-4">
-                Sabtu sampai Minggu <br>
-                7.00 - 23.00
-              </p>
-
+              <address class="body-4">Kp. Cimuntuk RT 01/01, Jl. Raya Sukatani</address>
             </div>
-
           </div>
-
         </div>
       </section>
 
@@ -1159,202 +575,32 @@
         </div>
       </section>
 
-      <!-- ============================================ -->
-      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
-      <!-- ============================================ -->
+      <!-- RUNNING TEXT -->
       <section class="running-text-section">
-          <div class="running-text-wrapper">
-              <div class="running-text-track">
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-              </div>
+        <div class="running-text-wrapper">
+          <div class="running-text-track">
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Telur Balado</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk</span>
+            <span class="running-text-item"><i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss</span>
           </div>
-      </section>
-
-      <!-- 
-        - #EVENT
-      -->
-
-      <section class="section event bg-black-10" aria-label="acara">
-        <div class="container">
-
-          <p class="section-subtitle label-2 text-center">Acara Mendatang</p>
-
-          <h2 class="section-title headline-1 text-center">Soon Aamiin</h2>
-
-          {{-- <ul class="grid-list">
-
-            <li>
-              <div class="event-card has-before hover:shine">
-
-                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
-                  <img src="./assets/images/event-1.jpg" width="350" height="450" loading="lazy"
-                    alt="Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata." class="img-cover">
-
-                  <time class="publish-date label-2" datetime="2022-09-15">15/09/2022</time>
-                </div>
-
-                <div class="card-content">
-                  <p class="card-subtitle label-2 text-center">Makanan, Rasa</p>
-
-                  <h3 class="card-title title-2 text-center">
-                    Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata.
-                  </h3>
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="event-card has-before hover:shine">
-
-                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
-                  <img src="./assets/images/event-2.jpg" width="350" height="450" loading="lazy"
-                    alt="Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata." class="img-cover">
-
-                  <time class="publish-date label-2" datetime="2022-09-08">08/09/2022</time>
-                </div>
-
-                <div class="card-content">
-                  <p class="card-subtitle label-2 text-center">Makanan Sehat</p>
-
-                  <h3 class="card-title title-2 text-center">
-                    Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata.
-                  </h3>
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="event-card has-before hover:shine">
-
-                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
-                  <img src="./assets/images/event-3.jpg" width="350" height="450" loading="lazy"
-                    alt="Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata." class="img-cover">
-
-                  <time class="publish-date label-2" datetime="2022-09-03">03/09/2022</time>
-                </div>
-
-                <div class="card-content">
-                  <p class="card-subtitle label-2 text-center">Resep</p>
-
-                  <h3 class="card-title title-2 text-center">
-                    Rasa yang begitu lezat, Anda akan mencoba menikmatinya dengan mata.
-                  </h3>
-                </div>
-
-              </div>
-            </li>
-
-          </ul> --}}
-
-          <a href="#" class="btn btn-primary">
-            <span class="text text-1">Lihat Blog Kami</span>
-
-            <span class="text text-2" aria-hidden="true">Lihat Blog Kami</span>
-          </a>
-
         </div>
       </section>
+
     </article>
   </main>
 
-  <!-- ============================================ -->
-      <!-- RUNNING TEXT / MARQUEE - DI BAWAH HERO       -->
-      <!-- ============================================ -->
-      <section class="running-text-section">
-          <div class="running-text-wrapper">
-              <div class="running-text-track">
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Teh Manis
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Dadar Spesial
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Komplit
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Oreg Tempe
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Mihun sohun
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Nasi Kuning Originale
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Telur Balado
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Es Jeruk
-                  </span>
-                  <span class="running-text-item">
-                      <i class="fa-solid fa-arrows-to-dot"></i> Sambal Tomatss
-                  </span>
-              </div>
-          </div>
-      </section>
-
-  <!-- 
-    - #FOOTER
-  -->
+  <!-- FOOTER -->
 
   <footer id="contact" class="footer section has-bg-image text-center"
     style="background-image: url('./assets/images/footer-bg.png')">
@@ -1458,174 +704,158 @@
     </div>
   </footer>
 
-  <!-- 
-    - #CHECKOUT BUTTON
-  -->
-
-
-  @php
-    $cartCount = collect(session('cart', []))->sum('qty');
-  @endphp
-
-  <a href="{{ route('checkout') }}"
-    class="floating-cart {{ $cartCount > 0 ? 'has-items' : '' }}"
-    id="floatingCart"
-    aria-label="Lihat Pesanan">
-
-      <i class="fas fa-shopping-cart"></i>
-
-      <!-- TOOLTIP -->
-      <span class="cart-tooltip">
-          <i class="fas fa-shopping-cart" style="margin-right: 4px; color: var(--gold-crayola);"></i>
-          Lihat Pesanan
-      </span>
-
-      @if($cartCount > 0)
-          <span class="cart-badge" id="floatingCartBadge">
-              {{ $cartCount }}
-          </span>
-      @endif
-
+  <!-- FLOATING CART -->
+  @php $cartCount = collect(session('cart', []))->sum('qty'); @endphp
+  <a href="{{ route('checkout') }}" class="floating-cart {{ $cartCount > 0 ? 'has-items' : '' }}" id="floatingCart" aria-label="Lihat Pesanan">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-tooltip"><i class="fas fa-shopping-cart" style="margin-right: 4px; color: var(--gold-crayola);"></i> Lihat Pesanan</span>
+    @if($cartCount > 0)
+      <span class="cart-badge" id="floatingCartBadge">{{ $cartCount }}</span>
+    @endif
   </a>
 
-  <!-- 
-    - #BACK TO TOP
-  -->
+  <!-- BACK TO TOP -->
+  <a href="#top" class="back-top-btn active" aria-label="kembali ke atas" data-back-top-btn><ion-icon name="chevron-up" aria-hidden="true"></ion-icon></a>
 
-  <a href="#top" class="back-top-btn active" aria-label="kembali ke atas" data-back-top-btn>
-    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
-  </a>
-
-  <!-- 
-    - custom js link
-  -->
+  <!-- SCRIPTS -->
   <script src="./assets/js/script.js"></script>
   <script src="./assets/js/menu.js"></script>
-  
-  <!-- 
-    - ionicon link
-  -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <!-- ============================================ -->
-  <!-- TOAST NOTIFICATION - DI TENGAH -->
-  <!-- ============================================ -->
-
-  <!-- Overlay -->
+  <!-- TOAST NOTIFICATION -->
   <div id="toast-overlay" class="cart-toast-overlay"></div>
-
-  <!-- Toast -->
   <div id="cart-toast" class="cart-toast">
-
-      <!-- Icon Besar -->
-      <div class="cart-toast-icon">
-          <i class="fas fa-check"></i>
-      </div>
-
-      <!-- Content -->
-      <div class="cart-toast-content">
-          <div class="cart-toast-title">
-              Berhasil Ditambahkan!
-          </div>
-
-          <div class="cart-toast-item" id="toast-item-name">
-              Nasi Kuning Komplit
-          </div>
-
-          <div class="cart-toast-message">
-              <i class="fas fa-shopping-cart"></i>
-              Masuk ke keranjang belanja kamu
-          </div>
-      </div>
-
-      <!-- Progress Bar -->
-      <div class="toast-progress">
-          <div class="progress-fill"></div>
-      </div>
-
+    <div class="cart-toast-icon"><i class="fas fa-check"></i></div>
+    <div class="cart-toast-content">
+      <div class="cart-toast-title">Berhasil Ditambahkan!</div>
+      <div class="cart-toast-item" id="toast-item-name">Nasi Kuning Komplit</div>
+      <div class="cart-toast-message"><i class="fas fa-shopping-cart"></i> Masuk ke keranjang belanja kamu</div>
+    </div>
+    <div class="toast-progress"><div class="progress-fill"></div></div>
   </div>
 
-  <!-- ============================================ -->
-  <!-- MODAL LOGIN & REGISTER PELANGGAN -->
-  <!-- ============================================ -->
+  <!-- MODAL LOGIN & REGISTER & RIWAYAT & NOTIF -->
   <style>
-      .auth-modal-overlay {
-          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
-          display: none; align-items: center; justify-content: center; z-index: 999999;
-          opacity: 0; transition: opacity 0.3s ease;
-      }
-      .auth-modal-overlay.show { display: flex; opacity: 1; }
-      .auth-modal-box {
-          background: #111; border: 1px solid var(--gold-crayola, #d4a843);
-          width: 90%; max-width: 400px; border-radius: 12px; padding: 30px;
-          position: relative; color: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      }
-      .auth-close-btn {
-          position: absolute; top: 15px; right: 15px; background: transparent; 
-          border: none; color: #fff; font-size: 24px; cursor: pointer; transition: 0.3s;
-      }
-      .auth-close-btn:hover { color: #ef4444; }
-      .auth-tabs { display: flex; border-bottom: 2px solid #333; margin-bottom: 20px; }
-      .auth-tab {
-          flex: 1; text-align: center; padding: 10px; cursor: pointer;
-          font-family: var(--ff-forum, 'Forum', serif); font-size: 20px; color: #888; transition: 0.3s;
-      }
-      .auth-tab.active { color: var(--gold-crayola, #d4a843); border-bottom: 2px solid var(--gold-crayola, #d4a843); }
-      .auth-form { display: none; }
-      .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
-      .auth-input-group { margin-bottom: 15px; text-align: left; position: relative; }
-      .auth-input-group label { display: block; font-size: 14px; margin-bottom: 5px; color: #ccc; }
-      .auth-input-group input {
-          width: 100%; padding: 12px; background: #222; border: 1px solid #444;
-          color: #fff; border-radius: 6px; outline: none; font-family: inherit;
-      }
-      .auth-input-group input:focus { border-color: var(--gold-crayola, #d4a843); }
-      
-      /* TOGGLE PASSWORD (MATA) */
-      .toggle-password {
-          position: absolute; right: 12px; top: 38px; color: #888; cursor: pointer;
-      }
-      .toggle-password:hover { color: var(--gold-crayola); }
+    .auth-modal-overlay { 
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); 
+      display: none; align-items: center; justify-content: center; 
+      z-index: 999999; opacity: 0; transition: opacity 0.3s ease; 
+    }
+    .auth-modal-overlay.show { display: flex; opacity: 1; }
+    .auth-modal-box { 
+      background: #111; border: 1px solid var(--gold-crayola, #d4a843); 
+      width: 90%; max-width: 400px; border-radius: 12px; padding: 30px; 
+      position: relative; color: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+    }
+    .auth-close-btn { 
+      position: absolute; top: 15px; right: 15px; background: transparent; 
+      border: none; color: #fff; font-size: 24px; cursor: pointer; transition: 0.3s; 
+    }
+    .auth-close-btn:hover { color: #ef4444; }
+    .auth-tabs { 
+      display: flex; border-bottom: 2px solid #333; margin-bottom: 20px; 
+    }
+    .auth-tab { 
+      flex: 1; text-align: center; padding: 10px; cursor: pointer; 
+      font-family: var(--ff-forum, 'Forum', serif); font-size: 20px; 
+      color: #888; transition: 0.3s; 
+    }
+    .auth-tab.active { 
+      color: var(--gold-crayola, #d4a843); 
+      border-bottom: 2px solid var(--gold-crayola, #d4a843); 
+    }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
 
-      /* KEKUATAN PASSWORD */
-      .pw-strength { height: 4px; border-radius: 2px; margin-top: 5px; transition: 0.3s; width: 0%; }
-      .pw-weak { width: 33%; background: #ef4444; }
-      .pw-medium { width: 66%; background: #eab308; }
-      .pw-strong { width: 100%; background: #22c55e; }
-      .pw-text { font-size: 11px; margin-top: 3px; display: none; }
+    /* INPUT GROUP */
+    .auth-input-group { 
+      margin-bottom: 18px; text-align: left; position: relative; 
+    }
+    .auth-input-group label { 
+      display: block; font-size: 13px; margin-bottom: 5px; color: #aaa; 
+      font-weight: 500; letter-spacing: 0.3px; 
+    }
+    .auth-input-group input { 
+      width: 100%; padding: 12px 40px 12px 14px; 
+      background: #1a1a1a; border: 1.5px solid #333; 
+      color: #fff; border-radius: 8px; outline: none; 
+      font-family: inherit; font-size: 14px; 
+      transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+      box-sizing: border-box;
+    }
+    .auth-input-group input:focus { 
+      border-color: var(--gold-crayola, #d4a843); 
+      box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15); 
+    }
+    .auth-input-group input::placeholder { color: #555; }
 
-      .auth-submit-btn {
-          width: 100%; padding: 12px; background: var(--gold-crayola, #d4a843);
-          color: #000; font-weight: bold; border: none; border-radius: 6px;
-          cursor: pointer; font-size: 16px; margin-top: 10px; transition: 0.3s; font-family: inherit;
-      }
-      .auth-submit-btn:hover { background: #b8922f; }
-      .auth-alert { background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; border: 1px solid rgba(239,68,68,0.3); }
-      
-      .forgot-password { display: block; text-align: right; font-size: 12px; color: var(--gold-crayola); margin-top: -5px; margin-bottom: 15px; text-decoration: none; }
-      .forgot-password:hover { text-decoration: underline; }
+    /* TOMBOL MATA - PRESISI DI TENGAH INPUT */
+    .input-wrapper-relative { position: relative; width: 100%; }
+    .toggle-password { 
+      position: absolute; right: 14px; top: 50%; 
+      transform: translateY(-50%); color: #666; 
+      cursor: pointer; font-size: 16px; transition: 0.3s; z-index: 5;
+    }
+    .toggle-password:hover { color: var(--gold-crayola, #d4a843); }
+
+    /* STRENGTH INDICATOR SUPER KEREN */
+    .pw-strength-bg { background: #333; height: 6px; border-radius: 6px; margin-top: 8px; overflow: hidden; width: 100%; }
+    .pw-strength { height: 100%; width: 0%; border-radius: 6px; transition: width 0.4s ease, background 0.4s ease, box-shadow 0.4s ease; }
+    .pw-weak { width: 33%; background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+    .pw-medium { width: 66%; background: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.6); }
+    .pw-strong { width: 100%; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
+    .pw-text { font-size: 11px; margin-top: 6px; display: none; font-weight: 600; letter-spacing: 0.3px; }
+    .pw-text.show { display: block; animation: fadeIn 0.3s; }
+
+    .auth-submit-btn { 
+      width: 100%; padding: 13px; 
+      background: var(--gold-crayola, #d4a843); 
+      color: #000; font-weight: bold; 
+      border: none; border-radius: 8px; 
+      cursor: pointer; font-size: 16px; 
+      margin-top: 10px; transition: all 0.3s ease; 
+      font-family: inherit; 
+    }
+    .auth-submit-btn:hover { 
+      background: #b8922f; 
+      transform: translateY(-1px); 
+      box-shadow: 0 4px 15px rgba(212, 168, 67, 0.3); 
+    }
+    .auth-alert { 
+      background: rgba(239, 68, 68, 0.1); 
+      color: #ef4444; 
+      padding: 10px 14px; 
+      border-radius: 8px; 
+      font-size: 13px; 
+      margin-bottom: 15px; 
+      border: 1px solid rgba(239,68,68,0.25); 
+    }
+    .forgot-password { 
+      display: block; text-align: right; 
+      font-size: 12px; color: var(--gold-crayola); 
+      margin-top: -8px; margin-bottom: 15px; 
+      text-decoration: none; transition: 0.3s; 
+    }
+    .forgot-password:hover { 
+      text-decoration: underline; 
+      color: #d4a843; 
+    }
   </style>
 
   <div id="authModal" class="auth-modal-overlay">
       <div class="auth-modal-box">
           <button class="auth-close-btn" onclick="closeAuthModal()">&times;</button>
-          
           <div class="auth-tabs">
               <div class="auth-tab active" onclick="switchAuthTab('login')">Masuk</div>
               <div class="auth-tab" onclick="switchAuthTab('register')">Daftar</div>
           </div>
-
           @if($errors->any())
               <div class="auth-alert">
-                  @foreach ($errors->all() as $error)
-                      <div>- {{ $error }}</div>
-                  @endforeach
+                  @foreach ($errors->all() as $error)<div>- {{ $error }}</div>@endforeach
               </div>
           @endif
-
-          <!-- FORM LOGIN -->
           <form id="formLogin" class="auth-form active" action="{{ route('pelanggan.login') }}" method="POST">
               @csrf
               <div class="auth-input-group">
@@ -1633,15 +863,17 @@
                   <input type="text" name="login_id" required placeholder="Masukkan Email atau No HP">
               </div>
               <div class="auth-input-group">
-                  <label>Password</label>
-                  <input type="password" id="loginPw" name="password" required placeholder="Masukkan password">
-                  <i class="fas fa-eye toggle-password" onclick="togglePw('loginPw', this)"></i>
+                <label>Password</label>
+                <div class="input-wrapper-relative">
+                    <!-- ID dibedakan jadi loginPw -->
+                    <input type="password" id="loginPw" name="password" required placeholder="Masukkan password kamu">
+                    <i class="fas fa-eye toggle-password" onclick="togglePw('loginPw', this)"></i>
+                </div>
               </div>
-              <a href="#" class="forgot-password" onclick="alert('Fitur Reset Password sedang dalam pengembangan. Silakan hubungi Admin via WhatsApp.')">Lupa Password?</a>
+              <a href="#" class="forgot-password" onclick="alert('Hubungi Admin via WhatsApp.')">Lupa Password?</a>
               <button type="submit" class="auth-submit-btn">Masuk ke Akun</button>
           </form>
 
-          <!-- FORM REGISTER -->
           <form id="formRegister" class="auth-form" action="{{ route('pelanggan.register') }}" method="POST">
               @csrf
               <div class="auth-input-group">
@@ -1650,17 +882,24 @@
               </div>
               <div class="auth-input-group">
                   <label>Email (Opsional)</label>
-                  <input type="email" name="email" placeholder="budi@gmail.com (Boleh dikosongkan)">
+                  <input type="email" name="email" placeholder="budi@gmail.com (Opsional)">
               </div>
               <div class="auth-input-group">
                   <label>No WhatsApp</label>
-                  <input type="tel" name="phone" required placeholder="08xxxxxxxxxx">
+                  <!-- Validasi otomatis hanya angka -->
+                  <input type="tel" name="phone" required placeholder="08xxxxxxxxxx" oninput="this.value = this.value.replace(/[^0-9]/g, '');" minlength="10" maxlength="14">
               </div>
               <div class="auth-input-group">
                   <label>Password</label>
-                  <input type="password" id="regPw" name="password" required minlength="6" placeholder="Minimal 6 karakter" onkeyup="checkStrength(this.value)">
-                  <i class="fas fa-eye toggle-password" onclick="togglePw('regPw', this)"></i>
-                  <div id="pwBar" class="pw-strength"></div>
+                  <div class="input-wrapper-relative">
+                      <!-- ID dibedakan jadi regPw -->
+                      <input type="password" id="regPw" name="password" required minlength="6" placeholder="Minimal 6 karakter" oninput="checkStrength(this.value)">
+                      <i class="fas fa-eye toggle-password" onclick="togglePw('regPw', this)"></i>
+                  </div>
+                  <!-- Strength Bar Keren -->
+                  <div class="pw-strength-bg">
+                      <div id="pwBar" class="pw-strength"></div>
+                  </div>
                   <div id="pwText" class="pw-text"></div>
               </div>
               <button type="submit" class="auth-submit-btn">Daftar Sekarang</button>
@@ -1668,219 +907,457 @@
       </div>
   </div>
 
-  <!-- ============================================ -->
-  <!-- MODAL BACA NOTIFIKASI -->
-  <!-- ============================================ -->
-  <div id="notifDetailModal" class="auth-modal-overlay">
-      <div class="auth-modal-box" style="text-align: center; max-width: 350px;">
-          <button class="auth-close-btn" onclick="closeNotifModal()">&times;</button>
-          
-          <div style="width: 60px; height: 60px; background: rgba(212, 168, 67, 0.15); color: var(--gold-crayola, #d4a843); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 15px;">
-              <i class="fas fa-bell"></i>
+  <div id="modalListRiwayat" class="auth-modal-overlay">
+      <div class="auth-modal-box" style="padding: 20px; max-width: 450px; text-align: left;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;">
+              <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin: 0;"><i class="fas fa-history" style="color: var(--gold-crayola); margin-right: 8px;"></i> Riwayat Pesanan</h3>
+              <button class="auth-close-btn" style="position: static;" onclick="tutupModalRiwayat()">&times;</button>
           </div>
-          
-          <h3 id="notifModalTitle" style="color: #fff; margin-bottom: 10px; font-size: 18px; font-weight: 600;">Judul Notif</h3>
-          
-          <p id="notifModalMessage" style="color: #ccc; font-size: 14px; line-height: 1.6; margin-bottom: 20px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-              Pesan notifikasi lengkap di sini.
-          </p>
-          
-          <span id="notifModalTime" style="color: #888; font-size: 12px; display: block; margin-bottom: 15px;"><i class="fas fa-clock"></i> Waktu</span>
-
-          <button onclick="closeNotifModal()" class="auth-submit-btn" style="padding: 10px; font-size: 14px;">Tutup Pesan</button>
+          <div id="containerDataRiwayat" style="max-height: 380px; overflow-y: auto; padding-right: 5px;">
+              <div style="text-align: center; padding: 30px 0; color: #888;">
+                  <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--gold-crayola);"></i>
+                  <p style="margin-top: 10px; font-size: 13px;">Memuat riwayat...</p>
+              </div>
+          </div>
+          <div style="text-align: center; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+              <a href="{{ route('customer.orders') }}" style="color: var(--gold-crayola); text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block; width: 100%;">Lihat Riwayat Lengkap <i class="fas fa-arrow-right" style="margin-left: 5px;"></i></a>
+          </div>
       </div>
   </div>
 
+  <div id="modalListNotif" class="auth-modal-overlay">
+    <div class="auth-modal-box" style="padding: 20px; max-width: 400px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;">
+        <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin: 0;"><i class="fas fa-bell" style="color: var(--gold-crayola); margin-right: 8px;"></i> Notifikasi Saya</h3>
+        <button class="auth-close-btn" style="position: static;" onclick="tutupModalNotif()">&times;</button>
+      </div>
+      
+      <style>
+        /* Gaya dasar swipe item */
+        .swipe-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          margin-bottom: 8px;
+          background: #ef4444;
+          transition: height 0.25s ease, margin 0.25s ease, opacity 0.25s ease;
+          touch-action: pan-y;
+          user-select: none;
+        }
+        .swipe-item.hidden {
+          height: 0 !important;
+          margin: 0 !important;
+          opacity: 0;
+          overflow: hidden;
+        }
+        .swipe-content-wrapper {
+          position: relative;
+          z-index: 2;
+          background: #1e1e1e;
+          border-left: 3px solid var(--gold-crayola);
+          padding: 12px;
+          border-radius: 8px;
+          transform: translateX(0);
+          transition: transform 0.15s ease;
+          will-change: transform;
+          cursor: grab;
+        }
+        .swipe-content-wrapper:active {
+          cursor: grabbing;
+        }
+        .swipe-delete-bg {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 80px;
+          background: #ef4444;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          font-size: 20px;
+          border-radius: 0 8px 8px 0;
+          z-index: 1;
+          pointer-events: none;
+        }
+        .swipe-content-wrapper .swipe-hint {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 14px;
+          color: #666;
+          animation: swipeHintAnim 1.5s infinite;
+          pointer-events: none;
+        }
+        @keyframes swipeHintAnim {
+          0%, 100% { transform: translateY(-50%) translateX(0); opacity: 0.5; }
+          50% { transform: translateY(-50%) translateX(-6px); opacity: 1; }
+        }
+      </style>
+
+      <div id="notif-list-container" style="max-height: 350px; overflow-y: auto; padding-right: 5px; overflow-x: hidden;">
+        @auth
+          @php $semua_notif = \App\Models\UserNotification::where('user_id', auth()->id())->latest()->take(5)->get(); @endphp
+          @forelse($semua_notif as $notif)
+            <div id="notif-item-{{ $notif->id }}" class="swipe-item" data-id="{{ $notif->id }}">
+              <div class="swipe-delete-bg">
+                <i class="fas fa-trash-alt"></i>
+              </div>
+              <div class="swipe-content-wrapper" style="cursor: grab;">
+                <strong style="color: var(--gold-crayola); display: block; font-size: 14px; padding-right: 25px;">{{ $notif->title }}</strong>
+                <p style="margin: 6px 0 0 0; font-size: 13px; color: #ccc; line-height: 1.5;">{{ $notif->message }}</p>
+                <span style="font-size: 11px; color: #888; display: block; margin-top: 8px;"><i class="fas fa-clock"></i> {{ $notif->created_at->diffForHumans() }}</span>
+                <div class="swipe-hint"><i class="fas fa-angle-double-left"></i></div>
+              </div>
+            </div>
+          @empty
+            <div id="empty-notif" style="text-align: center; padding: 30px 0;">
+              <i class="fas fa-bell-slash" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
+              <p style="color: #888; font-size: 13px;">Belum ada notifikasi.</p>
+            </div>
+          @endforelse
+        @endauth
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRM MODAL (ALA ADMIN) -->
+  <div id="customConfirmModal" class="auth-modal-overlay" style="z-index: 9999999;">
+    <div class="auth-modal-box" style="max-width: 350px; text-align: center; padding: 30px 20px;">
+      <i class="fas fa-exclamation-triangle" style="font-size: 45px; color: #ef4444; margin-bottom: 15px; drop-shadow: 0 0 10px rgba(239, 68, 68, 0.4);"></i>
+      <h3 style="color: #fff; font-size: 18px; margin-bottom: 10px; font-family: 'DM Sans', sans-serif;">Konfirmasi Hapus</h3>
+      <p id="confirmMessage" style="color: #ccc; font-size: 14px; margin-bottom: 25px;">Apakah kamu yakin ingin menghapus data ini?</p>
+      <form id="deleteForm" method="POST" action="">
+        @csrf
+        @method('DELETE')
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button type="button" onclick="tutupConfirmModal()" style="padding: 10px 20px; border-radius: 6px; border: 1px solid #444; background: transparent; color: #fff; cursor: pointer; transition: 0.3s;">Batal</button>
+          <button type="submit" style="padding: 10px 20px; border-radius: 6px; border: none; background: #ef4444; color: #fff; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(239,68,68,0.3);">Ya, Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
-      // Fungsi untuk nampilin isi notifikasi ke dalam Modal
-      function openNotifModal(title, message, time) {
-          document.getElementById('notifModalTitle').innerText = title;
-          document.getElementById('notifModalMessage').innerText = message;
-          document.getElementById('notifModalTime').innerHTML = '<i class="fas fa-clock"></i> ' + time;
-          
-          // Buka modalnya
-          document.getElementById('notifDetailModal').classList.add('show');
+      function closeNavbar() {
+          const navbar = document.querySelector('.navbar');
+          const overlay = document.querySelector('.overlay');
+          if (navbar) navbar.classList.remove('active');
+          if (overlay) overlay.classList.remove('active');
+          document.body.style.overflow = '';
       }
-
-      function closeNotifModal() {
-          document.getElementById('notifDetailModal').classList.remove('show');
-      }
-
-      // Tutup modal kalau user klik luar kotak
-      window.addEventListener('click', function(event) {
-          const notifDetailModal = document.getElementById('notifDetailModal');
-          if (event.target === notifDetailModal) {
-              closeNotifModal();
-          }
-      });
-  </script>
-
-  <script>
-      function openAuthModal() { document.getElementById('authModal').classList.add('show'); }
-      function closeAuthModal() { document.getElementById('authModal').classList.remove('show'); }
+      function openAuthModal() { document.body.style.overflow = 'hidden'; document.getElementById('authModal').classList.add('show'); }
+      function closeAuthModal() { document.body.style.overflow = 'auto'; document.getElementById('authModal').classList.remove('show'); }
       
       function switchAuthTab(tab) {
           const tabs = document.querySelectorAll('.auth-tab');
           const forms = document.querySelectorAll('.auth-form');
           tabs.forEach(t => t.classList.remove('active'));
           forms.forEach(f => f.classList.remove('active'));
-
-          if (tab === 'login') {
-              tabs[0].classList.add('active');
-              document.getElementById('formLogin').classList.add('active');
-          } else {
-              tabs[1].classList.add('active');
-              document.getElementById('formRegister').classList.add('active');
-          }
+          if (tab === 'login') { tabs[0].classList.add('active'); document.getElementById('formLogin').classList.add('active'); } 
+          else { tabs[1].classList.add('active'); document.getElementById('formRegister').classList.add('active'); }
       }
 
-      // FITUR MATA (SHOW/HIDE PASSWORD)
       function togglePw(inputId, iconElement) {
           const input = document.getElementById(inputId);
-          if (input.type === "password") {
-              input.type = "text";
-              iconElement.classList.remove("fa-eye");
-              iconElement.classList.add("fa-eye-slash");
-          } else {
-              input.type = "password";
-              iconElement.classList.remove("fa-eye-slash");
-              iconElement.classList.add("fa-eye");
-          }
+          if (input.type === "password") { input.type = "text"; iconElement.classList.replace("fa-eye", "fa-eye-slash"); } 
+          else { input.type = "password"; iconElement.classList.replace("fa-eye-slash", "fa-eye"); }
       }
 
-      // FITUR KEKUATAN PASSWORD
       function checkStrength(pw) {
-          const bar = document.getElementById('pwBar');
-          const text = document.getElementById('pwText');
-          text.style.display = 'block';
+  const bar = document.getElementById('pwBar');
+  const text = document.getElementById('pwText');
+  
+  if (pw.length === 0) {
+    bar.className = 'pw-strength';
+    text.className = 'pw-text';
+    text.style.display = 'none';
+    return;
+  }
+  
+  text.style.display = 'block';
+  text.className = 'pw-text show';
+  
+  if (pw.length < 6) {
+    bar.className = 'pw-strength pw-weak';
+    text.style.color = '#ef4444';
+    text.innerText = '🔴 Lemah (Min. 6 karakter)';
+  } else if (pw.length >= 6 && /[A-Z]/.test(pw) && /[0-9]/.test(pw)) {
+    bar.className = 'pw-strength pw-strong';
+    text.style.color = '#22c55e';
+    text.innerText = '🟢 Sangat Kuat!';
+  } else if (pw.length >= 6 && (/[A-Z]/.test(pw) || /[0-9]/.test(pw))) {
+    bar.className = 'pw-strength pw-medium';
+    text.style.color = '#eab308';
+    text.innerText = '🟡 Sedang (Campur huruf & angka)';
+  } else {
+    bar.className = 'pw-strength pw-medium';
+    text.style.color = '#eab308';
+    text.innerText = '🟡 Sedang';
+  }
+}
 
-          if (pw.length === 0) {
-              bar.className = 'pw-strength'; text.style.display = 'none';
-          } else if (pw.length < 6) {
-              bar.className = 'pw-strength pw-weak'; text.style.color = '#ef4444'; text.innerText = 'Lemah (Min. 6 karakter)';
-          } else if (pw.length >= 6 && pw.match(/[A-Z]/) && pw.match(/[0-9]/)) {
-              bar.className = 'pw-strength pw-strong'; text.style.color = '#22c55e'; text.innerText = 'Sangat Kuat!';
-          } else {
-              bar.className = 'pw-strength pw-medium'; text.style.color = '#eab308'; text.innerText = 'Sedang';
-          }
-      }
-
-      // Buka modal otomatis kalau ada error
       @if($errors->any()) window.onload = function() { openAuthModal(); } @endif
-  </script>
 
-  <div id="authModal" class="auth-modal-overlay">
-      <div class="auth-modal-box">
-          <button class="auth-close-btn" onclick="closeAuthModal()">&times;</button>
-          
-          <div class="auth-tabs">
-              <div class="auth-tab active" onclick="switchAuthTab('login')">Masuk</div>
-              <div class="auth-tab" onclick="switchAuthTab('register')">Daftar</div>
-          </div>
+      function bukaModalRiwayat() {
+          document.body.style.overflow = 'hidden'; 
+          document.getElementById('modalListRiwayat').classList.add('show');
+          fetch("{{ route('pelanggan.api.orders') }}")
+              .then(res => res.json())
+              .then(data => {
+                  const container = document.getElementById('containerDataRiwayat');
+                  if(!data || data.length === 0) {
+                      container.innerHTML = `<div style="text-align: center; padding: 30px 0;"><i class="fas fa-shopping-bag" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i><p style="color: #888; font-size: 13px;">Kamu belum pernah melakukan pesanan.</p></div>`; return;
+                  }
+                  let html = '';
+                  data.forEach(order => {
+                      let badgeColor = order.payment_status === 'paid' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(234, 179, 8, 0.2)';
+                      let textColor = order.payment_status === 'paid' ? '#22c55e' : '#eab308';
+                      let statusText = order.payment_status === 'paid' ? 'LUNAS' : 'PENDING';
+                      
+                      let itemsListHtml = '';
+                      if (order.items && order.items.length > 0) {
+                          order.items.forEach(item => { itemsListHtml += `<div style="display: flex; justify-content: space-between; font-size: 12px; color: #ccc; margin-bottom: 3px;"><span>${item.qty}x ${item.menu_name}</span><span>Rp ${parseInt(item.subtotal).toLocaleString('id-ID')}</span></div>`; });
+                      }
+                      
+                      let detailPelanggan = `
+                          <div style="font-size: 11px; color: #aaa; margin-bottom: 8px; line-height: 1.6;">
+                              <div><i class="fas fa-user" style="width: 14px;"></i> ${order.name ?? 'Pelanggan'}</div>
+                              <div><i class="fas fa-phone" style="width: 14px;"></i> ${order.phone ?? '-'}</div>
+                              <div><i class="fas fa-motorcycle" style="width: 14px;"></i> Tipe: <b style="color:#fff;">${(order.delivery_type || 'Bawa Pulang').toUpperCase()}</b></div>
+                              ${order.note ? `<div style="color: var(--gold-crayola);"><i class="fas fa-sticky-note" style="width: 14px;"></i> Catatan: ${order.note}</div>` : ''}
+                          </div>
+                      `;
 
-          <!-- Tampilkan Pesan Error Jika Login/Daftar Gagal -->
-          @if($errors->any())
-              <div class="auth-alert">
-                  @foreach ($errors->all() as $error)
-                      <div>- {{ $error }}</div>
-                  @endforeach
-              </div>
-          @endif
+                      html += `
+                          <div style="padding: 14px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+                              <button onclick="konfirmasiHapus('riwayat', ${order.id})" style="position: absolute; top: 12px; right: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 11px; transition: 0.3s;"><i class="fas fa-trash"></i></button>
+                              
+                              <div style="margin-bottom: 6px; padding-right: 30px;">
+                                  <span style="color: var(--gold-crayola); font-weight: bold; font-size: 13px; display: block; margin-bottom: 4px;">#Order ID: ${order.id}</span>
+                                  <span style="background: ${badgeColor}; color: ${textColor}; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold;">${statusText}</span>
+                                  <span style="font-size: 11px; color: #888; margin-left: 6px;"><i class="fas fa-clock"></i> ${new Date(order.created_at).toLocaleString('id-ID')}</span>
+                              </div>
+                              
+                              ${detailPelanggan}
 
-          <!-- Form Login -->
-          <form id="formLogin" class="auth-form active" action="{{ route('pelanggan.login') }}" method="POST">
-              @csrf
-              <div class="auth-input-group">
-                  <label>Email</label>
-                  <input type="email" name="email" required placeholder="Masukkan email">
-              </div>
-              <div class="auth-input-group">
-                  <label>Password</label>
-                  <input type="password" name="password" required placeholder="Masukkan password">
-              </div>
-              <button type="submit" class="auth-submit-btn">Masuk ke Akun</button>
-          </form>
-
-          <!-- Form Register -->
-          <form id="formRegister" class="auth-form" action="{{ route('pelanggan.register') }}" method="POST">
-              @csrf
-              <div class="auth-input-group">
-                  <label>Nama Lengkap</label>
-                  <input type="text" name="name" required placeholder="Contoh: Budi Santoso">
-              </div>
-              <div class="auth-input-group">
-                  <label>Email</label>
-                  <input type="email" name="email" required placeholder="Contoh: budi@gmail.com">
-              </div>
-              <div class="auth-input-group">
-                  <label>No WhatsApp</label>
-                  <input type="tel" name="phone" required placeholder="08xxxxxxxxxx">
-              </div>
-              <div class="auth-input-group">
-                  <label>Password</label>
-                  <input type="password" name="password" required minlength="6" placeholder="Minimal 6 karakter">
-              </div>
-              <button type="submit" class="auth-submit-btn">Daftar Sekarang</button>
-          </form>
-      </div>
-  </div>
-
-  <script>
-      function openAuthModal() {
-          document.getElementById('authModal').classList.add('show');
+                              <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-bottom: 8px;">
+                                  <div style="font-size: 11px; color: var(--gold-crayola); font-weight: bold; margin-bottom: 4px;">Daftar Menu:</div>
+                                  ${itemsListHtml}
+                              </div>
+                              
+                              <div style="font-size: 12px; color: #aaa; margin-bottom: 2px;">Metode Pembayaran: <b style="color:#fff;">${(order.payment_method || '').toUpperCase()}</b></div>
+                              <div style="font-size: 14px; font-weight: bold; color: #fff; display: flex; justify-content: space-between; align-items: center; margin-top: 6px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6px;">
+                                  <span>Total Pesanan:</span>
+                                  <span style="color: #22c55e;">Rp ${parseInt(order.total).toLocaleString('id-ID')}</span>
+                              </div>
+                          </div>`;
+                  });
+                  container.innerHTML = html;
+              });
       }
-      function closeAuthModal() {
-          document.getElementById('authModal').classList.remove('show');
-      }
-      function switchAuthTab(tab) {
-          const tabs = document.querySelectorAll('.auth-tab');
-          const forms = document.querySelectorAll('.auth-form');
-          
-          tabs.forEach(t => t.classList.remove('active'));
-          forms.forEach(f => f.classList.remove('active'));
+      function tutupModalRiwayat() { document.body.style.overflow = 'auto'; document.getElementById('modalListRiwayat').classList.remove('show'); }
 
-          if (tab === 'login') {
-              tabs[0].classList.add('active');
-              document.getElementById('formLogin').classList.add('active');
-          } else {
-              tabs[1].classList.add('active');
-              document.getElementById('formRegister').classList.add('active');
+      function bukaModalNotif() {
+          document.body.style.overflow = 'hidden'; document.getElementById('modalListNotif').classList.add('show');
+          const badge = document.getElementById('badgeNotifHijau'); if(badge) badge.style.display = 'none';
+          fetch("{{ route('pelanggan.notif.read') }}", { method: "POST", headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}", "Content-Type": "application/json" } });
+      }
+      function tutupModalNotif() { document.body.style.overflow = 'auto'; document.getElementById('modalListNotif').classList.remove('show'); }
+
+      // FUNGSI KONFIRMASI HAPUS CUSTOM MODAL
+      function konfirmasiHapus(tipe, id) {
+          document.getElementById('customConfirmModal').classList.add('show');
+          const form = document.getElementById('deleteForm');
+          const msg = document.getElementById('confirmMessage');
+          
+          if (tipe === 'riwayat') {
+              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Riwayat Pesanan</b> ini?';
+              form.action = `/pelanggan/pesanan/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
+          } else if (tipe === 'notif') {
+              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Notifikasi</b> ini?';
+              form.action = `/pelanggan/notif/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
           }
       }
+
+      function tutupConfirmModal() { document.getElementById('customConfirmModal').classList.remove('show'); }
       
-      // Tutup jika klik area background gelap
-      window.addEventListener('click', function(event) {
-          const authModal = document.getElementById('authModal');
-          if (event.target === authModal) {
-              closeAuthModal();
-          }
+      window.addEventListener('click', function(e) {
+          if (e.target === document.getElementById('authModal')) closeAuthModal();
+          if (e.target === document.getElementById('modalListRiwayat')) tutupModalRiwayat();
+          if (e.target === document.getElementById('modalListNotif')) tutupModalNotif();
+          if (e.target === document.getElementById('customConfirmModal')) tutupConfirmModal();
       });
 
-      // Otomatis buka modal kalau ada error dari server
-      @if($errors->any())
-          window.onload = function() { openAuthModal(); }
-      @endif
+      function hapusNotifInstan(id) {
+        const el = document.getElementById(`notif-item-${id}`);
+        if (!el) return;
 
-      // Klik bebas di luar menu untuk menutup dropdown otomatis
-      window.addEventListener('click', function(event) {
-          // Tutup Modal Login (sudah ada)
-          const authModal = document.getElementById('authModal');
-          if (event.target === authModal) {
-              closeAuthModal();
-          }
+        // Animasi kayak notif pesan: mengecil + hilang
+        el.style.transition = 'height 0.25s ease, margin 0.25s ease, opacity 0.25s ease';
+        el.style.height = el.offsetHeight + 'px'; // kunci tinggi
+        el.style.overflow = 'hidden';
 
-          // Tutup Dropdown Profil
-          const dropdownMenu = document.getElementById('userDropdownMenu');
-          const triggerBtn = document.querySelector('.profile-trigger');
-          
-          if (dropdownMenu && dropdownMenu.classList.contains('active')) {
-              // Jika yang diklik bukan menu dan bukan tombol fotonya, tutup!
-              if (!dropdownMenu.contains(event.target) && !triggerBtn.contains(event.target)) {
-                  dropdownMenu.classList.remove('active');
-              }
+        // Paksa reflow biar transisi jalan
+        void el.offsetHeight;
+
+        el.classList.add('hidden');
+
+        setTimeout(() => {
+          // Hapus item dari DOM
+          el.remove();
+
+          // Cek sisa notifikasi, tampilkan pesan kosong jika habis
+          const container = document.getElementById('notif-list-container');
+          const remaining = container.querySelectorAll('.swipe-item:not(.hidden)').length;
+          if (remaining === 0 && !document.getElementById('empty-notif')) {
+            container.innerHTML = `
+              <div id="empty-notif" style="text-align: center; padding: 30px 0; animation: fadeIn 0.5s;">
+                <i class="fas fa-bell-slash" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
+                <p style="color: #888; font-size: 13px;">Belum ada notifikasi.</p>
+              </div>
+            `;
           }
+        }, 300);
+
+        // Hapus di server (background)
+        fetch(`/pelanggan/notif/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        }).catch(err => console.error("Gagal hapus notif:", err));
+      }
+
+      // ========== SWIPE-TO-DELETE NOTIFIKASI (DESKTOP + MOBILE) ==========
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('notif-list-container');
+      if (!container) return;
+
+      // Event listener pakai delegation biar item baru juga ke-detect
+      container.addEventListener('mousedown', startSwipe);
+      container.addEventListener('touchstart', startSwipe, { passive: false });
+
+      let currentItem = null;
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+      let wrapper = null;
+
+      function startSwipe(e) {
+        // Cari elemen .swipe-content-wrapper
+        let target = e.target.closest('.swipe-content-wrapper');
+        if (!target) return;
+        if (e.type === 'mousedown' && e.button !== 0) return;
+
+        const item = target.closest('.swipe-item');
+        if (!item) return;
+
+        // Jangan ganggu jika sedang animasi hidden
+        if (item.classList.contains('hidden')) return;
+
+        currentItem = item;
+        wrapper = target;
+        isDragging = true;
+
+        const pos = getPos(e);
+        startX = pos.x;
+        currentX = 0;
+
+        // Biarkan elemen tidak ter-select
+        wrapper.style.transition = 'none';
+        wrapper.style.cursor = 'grabbing';
+
+        // Listener global
+        document.addEventListener('mousemove', onSwipe);
+        document.addEventListener('mouseup', endSwipe);
+        document.addEventListener('touchmove', onSwipe, { passive: false });
+        document.addEventListener('touchend', endSwipe, { passive: false });
+
+        // Cegah scroll saat swipe
+        e.preventDefault();
+      }
+
+      function getPos(e) {
+        if (e.touches) {
+          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+      }
+
+      function onSwipe(e) {
+        if (!isDragging || !currentItem || !wrapper) return;
+        e.preventDefault();
+
+        const pos = getPos(e);
+        const deltaX = pos.x - startX;
+
+        // Hanya geser ke kiri (negatif), tidak boleh ke kanan
+        let newX = Math.min(0, deltaX);
+        // Batasi maksimal -80px (biar tidak kelewatan)
+        newX = Math.max(-80, newX);
+
+        currentX = newX;
+        wrapper.style.transform = `translateX(${newX}px)`;
+
+        // Efek opacity background delete (opsional)
+        const pct = Math.abs(newX) / 80;
+        const bg = currentItem.querySelector('.swipe-delete-bg');
+        if (bg) {
+          bg.style.opacity = Math.min(1, pct * 1.5);
+        }
+      }
+
+      function endSwipe(e) {
+        if (!isDragging || !currentItem || !wrapper) {
+          cleanup();
+          return;
+        }
+
+        // Hapus listener global
+        document.removeEventListener('mousemove', onSwipe);
+        document.removeEventListener('mouseup', endSwipe);
+        document.removeEventListener('touchmove', onSwipe);
+        document.removeEventListener('touchend', endSwipe);
+
+        const threshold = 50; // px
+        if (Math.abs(currentX) > threshold) {
+          // Hapus notifikasi!
+          const id = currentItem.dataset.id;
+          if (id) {
+            hapusNotifInstan(id);
+          }
+        } else {
+          // Kembali ke posisi semula
+          wrapper.style.transition = 'transform 0.2s ease';
+          wrapper.style.transform = 'translateX(0)';
+          const bg = currentItem.querySelector('.swipe-delete-bg');
+          if (bg) bg.style.opacity = '0';
+        }
+
+        wrapper.style.cursor = 'grab';
+        cleanup();
+      }
+
+      function cleanup() {
+        isDragging = false;
+        currentItem = null;
+        wrapper = null;
+        currentX = 0;
+      }
+
+      // Selesaikan jika mouse keluar dari window
+      document.addEventListener('mouseleave', function() {
+        if (isDragging) {
+          endSwipe({});
+        }
       });
+    });
   </script>
-</body>
 
+</body>
 </html>

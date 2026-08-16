@@ -71,6 +71,11 @@
                 <span id="sidebarPendingOrders" class="badge warning">{{ $pendingOrders ?? 0 }}</span>
             </a>
 
+            <a href="{{ route('admin.ready_orders') }}">
+                <i class="fas fa-motorcycle"></i>
+                <span>Antrean Kurir</span>
+            </a>
+
             <a href="{{ route('customers.index') }}">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
@@ -164,7 +169,7 @@
                                     <th>No HP</th>
                                     <th class="text-center">Metode</th>
                                     <th class="text-center">Total Harga</th>
-                                    <th class="text-center">Pembayaran</th>
+                                    <th class="text-center">Status Pembayaran</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -227,8 +232,8 @@
                                                 <i class="fas fa-fire"></i> Proses
                                             </button>
                                         @elseif($order->status == 'Diproses')
-                                            <button type="button" class="btn btn-sm btn-success quick-btn" onclick="updateOrderStatus({{ $order->id }}, 'Diproses', '{{ addslashes($order->customer_name) }}')" title="Langsung Selesaikan">
-                                                <i class="fas fa-check-circle"></i> Selesai
+                                            <button type="button" class="btn btn-sm btn-success quick-btn" onclick="updateOrderStatus({{ $order->id }}, 'Diproses', '{{ addslashes($order->customer_name) }}')" title="Selesai Dimasak & Pindah ke Kurir">
+                                                <i class="fas fa-box"></i> Siap!
                                             </button>
                                         @endif
 
@@ -534,7 +539,7 @@
             const row = document.getElementById(`order-row-${orderId}`);
             
             if (currentStatus === 'Menunggu') {
-                showToast('Status Diperbarui', `Pesanan atas nama ${customerName} kini sedang Diproses.`);
+                showToast('Status Diperbarui', `Pesanan atas nama ${customerName} mulai Diproses di dapur.`);
                 
                 // Update UI (Menunggu -> Diproses)
                 if (row) {
@@ -549,16 +554,17 @@
                         if(quickBtn) {
                             quickBtn.className = 'btn btn-sm btn-success quick-btn';
                             quickBtn.setAttribute('onclick', `updateOrderStatus(${orderId}, 'Diproses', '${customerName.replace(/'/g, "\\'")}')`);
-                            quickBtn.title = 'Langsung Selesaikan';
-                            quickBtn.innerHTML = '<i class="fas fa-check-circle"></i> Selesai';
+                            quickBtn.title = 'Selesai Dimasak & Pindah ke Kurir';
+                            quickBtn.innerHTML = '<i class="fas fa-box"></i> Siap!';
                         }
                     }
                 }
 
-            } else {
-                showToast('Pesanan Selesai!', `Pesanan atas nama ${customerName} telah selesai dan masuk ke Riwayat.`);
+            } else if (currentStatus === 'Diproses') {
+                // Notifikasinya sekarang benar!
+                showToast('Selesai Dimasak!', `Pesanan ${customerName} dipindahkan ke Antrean Kurir.`);
                 
-                // Animasi Hapus Baris
+                // Baris dihapus dari dapur biar dapur bersih
                 if (row) {
                     row.style.transition = 'all 0.5s ease';
                     row.style.opacity = '0';
@@ -567,18 +573,16 @@
                     setTimeout(() => {
                         row.remove(); 
                         
-                        // 1. KURANGI TOTAL PESANAN DI ATAS TABEL
                         const totalBadge = document.getElementById('totalOrdersBadge');
                         if (totalBadge) {
                             let currentTotal = parseInt(totalBadge.textContent.replace(/[^0-9]/g, ''));
                             if (!isNaN(currentTotal) && currentTotal > 0) {
                                 totalBadge.textContent = `Total: ${currentTotal - 1} Pesanan`;
                             }
-                            
                             if (currentTotal - 1 === 0) {
                                 document.getElementById('orderTableBody').innerHTML = `
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                    <td colspan="8" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
                                         <i class="fas fa-clipboard" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5; display: block;"></i>
                                         Belum ada pesanan yang masuk.
                                     </td>
@@ -586,17 +590,12 @@
                             }
                         }
 
-                        // 2. KURANGI BADGE NOTIFIKASI DI SIDEBAR KIRI
                         const sidebarBadge = document.getElementById('sidebarPendingOrders');
                         if (sidebarBadge) {
                             let pendingCount = parseInt(sidebarBadge.textContent.trim());
                             if (!isNaN(pendingCount) && pendingCount > 0) {
                                 sidebarBadge.textContent = pendingCount - 1;
-                                
-                                // (Opsional) Kalau pesanan habis (0), sembunyikan badgenya biar rapi
-                                if (pendingCount - 1 === 0) {
-                                    sidebarBadge.style.display = 'none';
-                                }
+                                if (pendingCount - 1 === 0) sidebarBadge.style.display = 'none';
                             }
                         }
                     }, 500); 

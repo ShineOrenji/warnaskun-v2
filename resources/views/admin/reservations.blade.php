@@ -70,6 +70,11 @@
                 <span class="badge warning">{{ $pendingOrders ?? 0 }}</span>
             </a>
 
+            <a href="{{ route('admin.ready_orders') }}">
+                <i class="fas fa-motorcycle"></i>
+                <span>Antrean Kurir</span>
+            </a>
+
             <a href="{{ route('customers.index') }}">
                 <i class="fas fa-users"></i>
                 <span>Pelanggan</span>
