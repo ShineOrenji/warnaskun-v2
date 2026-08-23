@@ -88,4 +88,43 @@ class DashboardController extends Controller
         'chartData'
     ));
     }
+
+    public function settings()
+    {
+        $totalMenus = \App\Models\Menu::count();
+        $pendingOrders = \App\Models\Order::where('status', 'Menunggu')->count();
+        
+        return view('admin.settings', compact('totalMenus', 'pendingOrders'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $user = auth()->user();
+        
+        // 1. Update data akun admin
+        $user->name = $request->name;
+        
+        // Cek apakah login_id diisi email atau no hp
+        if (filter_var($request->login_id, FILTER_VALIDATE_EMAIL)) {
+            $user->email = $request->login_id;
+        } else {
+            $user->phone = $request->login_id;
+        }
+
+        // Jika password diisi, update password baru
+        if ($request->filled('password')) {
+            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+        
+        $user->save();
+
+        // 2. Update Logo Web jika ada yang di-upload
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            // Pastikan folder public/assets/images ada, lalu Timpa file logo.png
+            $file->move(public_path('assets/images'), 'logo.png');
+        }
+
+        return back()->with('success', 'Pengaturan berhasil diperbarui!');
+    }
 }

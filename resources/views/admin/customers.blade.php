@@ -115,31 +115,36 @@
         <nav class="sidebar-nav">
             <div class="nav-label">Main Menu</div>
 
-            <a href="{{ route('dashboard.index') }}">
-                <i class="fas fa-chart-line"></i>
-                <span>Dashboard</span>
+            <a href="{{ route('dashboard.index') }}" class="{{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
 
-            <a href="{{ route('menu.index') }}">
-                <i class="fas fa-utensils"></i>
-                <span>Menu</span>
-                <span class="badge gold">{{ $totalMenus ?? 0 }}</span>
+            <a href="{{ route('menu.index') }}" class="{{ request()->routeIs('menu.*') ? 'active' : '' }}">
+                <i class="fas fa-utensils"></i><span>Menu</span>
+                @if(isset($totalMenus) && $totalMenus > 0)
+                    <span class="badge gold">{{ $totalMenus }}</span>
+                @endif
             </a>
 
-            <a href="{{ route('orders.index') }}">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Pesanan</span>
-                <span class="badge warning">{{ $pendingOrders ?? 0 }}</span>
+            <a href="{{ route('orders.index') }}" class="{{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                <i class="fas fa-shopping-cart"></i><span>Pesanan (Dapur)</span>
+                @if(isset($pendingOrders) && $pendingOrders > 0)
+                    <span class="badge warning">{{ $pendingOrders }}</span>
+                @endif
             </a>
 
-            <a href="{{ route('admin.ready_orders') }}">
-                <i class="fas fa-motorcycle"></i>
-                <span>Antrean Kurir</span>
+            <a href="{{ route('admin.ready_orders') }}" class="{{ request()->routeIs('admin.ready_orders') ? 'active' : '' }}">
+                <i class="fas fa-motorcycle"></i><span>Antrean Kurir</span>
+                @if(isset($readyOrders) && $readyOrders > 0)
+                    <span class="badge info">{{ $readyOrders }}</span>
+                @endif
             </a>
 
-            <a href="{{ route('customers.index') }}" class="active">
-                <i class="fas fa-users"></i>
-                <span>Pelanggan</span>
+            <a href="{{ route('customers.index') }}" class="{{ request()->routeIs('customers.*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i><span>Pelanggan</span>
+                @if(isset($newCustomers) && $newCustomers > 0)
+                    <span class="badge danger">{{ $newCustomers }} Baru</span>
+                @endif
             </a>
 
             <a href="{{ route('reservations.index') }}">
@@ -149,9 +154,8 @@
 
             <div class="nav-label" style="margin-top: 24px;">Settings</div>
 
-            <a href="#">
-                <i class="fas fa-cog"></i>
-                <span>Pengaturan</span>
+            <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                <i class="fas fa-cog"></i><span>Pengaturan Web</span>
             </a>
 
             <button type="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--text-secondary, #a0a0a0); text-decoration: none; font-size: 14px; font-family: 'DM Sans', sans-serif; transition: all 0.3s ease; margin-bottom: 2px; cursor: pointer; width: 100%; background: transparent; border: none; text-align: left;">
@@ -485,9 +489,16 @@
                     <input type="text" name="name" id="editName" required style="width: 100%; background: #121212; color: #ffffff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 14px; border-radius: 8px; outline: none; font-family: inherit;">
                 </div>
                 
-                <div style="margin-bottom: 24px;">
+                <div style="margin-bottom: 16px;">
                     <label style="display: block; margin-bottom: 8px; color: #9ca3af; font-size: 13px; font-weight: 600;">Nomor WhatsApp/HP</label>
                     <input type="text" name="phone" id="editPhone" required style="width: 100%; background: #121212; color: #ffffff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 14px; border-radius: 8px; outline: none; font-family: inherit;">
+                </div>
+
+                <!-- TAMBAHAN BARU: Kekuatan Super Admin Ganti Password Pelanggan -->
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; margin-bottom: 8px; color: #eab308; font-size: 13px; font-weight: 600;">Ganti Password (Opsional)</label>
+                    <input type="text" name="new_password" placeholder="Kosongkan jika tidak ingin diganti" style="width: 100%; background: #121212; color: #ffffff; border: 1px solid rgba(212, 168, 67, 0.4); padding: 10px 14px; border-radius: 8px; outline: none; font-family: inherit;">
+                    <span style="font-size: 11px; color: #888; display: block; margin-top: 4px;">*Jika pelanggan lupa password, ketik password baru di sini.</span>
                 </div>
                 
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">

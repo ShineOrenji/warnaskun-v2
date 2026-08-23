@@ -1,63 +1,145 @@
-<<<<<<< HEAD
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Warung Nasi Kuning
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Warung Nasi Kuning** is a web-based ordering system designed to simplify online ordering for a local food business.
 
-## About Laravel
+The application allows customers to browse available menus, manage their cart, and place orders online, while providing administrators with tools to manage menus, inventory, and orders.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Customer
 
-## Learning Laravel
+* **Menu Browsing** — View available food and prices
+* **Shopping Cart** — Add, remove, and adjust menu quantities
+* **Stock Validation** — Prevent orders from exceeding available stock
+* **Checkout** — Submit customer and order information
+* **Delivery Options** — Delivery or self-pickup
+* **Order Notes** — Add additional instructions to orders
+* **Order Confirmation** — View submitted order information
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Admin
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Dashboard** — Overview of the application
+* **Menu Management** — Create, update, and remove menus
+* **Inventory Management** — Monitor and manage menu stock
+* **Order Management** — Process and update customer orders
+* **Customer History** — Keep track of previous customers and orders
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## Tech Stack
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+| Technology   | Purpose                  |
+| ------------ | ------------------------ |
+| Laravel      | Backend framework        |
+| PHP          | Server-side programming  |
+| MySQL        | Database                 |
+| Blade        | Templating engine        |
+| Tailwind CSS | UI styling               |
+| JavaScript   | Client-side interactions |
 
-```bash
-composer require laravel/boost --dev
+---
 
-php artisan boost:install
+## Project Structure
+
+```text
+warnaskun-v2/
+├── app/
+│   ├── Http/
+│   ├── Models/
+│   └── ...
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── public/
+│   └── assets/
+├── resources/
+│   └── views/
+├── routes/
+│   └── web.php
+├── storage/
+└── README.md
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone the repository
 
-## Code of Conduct
+```bash
+git clone <repository-url>
+cd warnaskun-v2
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Install dependencies
 
-## Security Vulnerabilities
+```bash
+composer install
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Configure environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure your database credentials in `.env`.
+
+### 4. Run migrations
+
+```bash
+php artisan migrate
+```
+
+### 5. Start the development server
+
+```bash
+php artisan serve
+```
+
+For frontend development:
+
+```bash
+npm run dev
+```
+
+---
+
+## Environment Configuration
+
+Example database configuration:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+---
+
+## Project Status
+
+**Active Development**
+
+The application is currently being developed and improved, with ongoing work on the ordering system, inventory management, and administrative features.
+
+---
+
+## Author
+
+**Fahmi**
+
+Developed as a web application project for Warung Nasi Kuning.
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
-# warnaskun-v2
-Warung Nasi Kuning mamak saya
->>>>>>> ae24b82307ef5609d20696bc0686cb2f3837c5c3
+This project is intended for educational and development purposes.

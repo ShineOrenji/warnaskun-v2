@@ -27,11 +27,11 @@
 
 <body id="top">
 
-  <!-- PRELOADER -->
+  {{-- <!-- PRELOADER -->
   <div class="preload" data-preaload>
     <div class="circle"></div>
     <p class="text">Ibu Opik</p>
-  </div>
+  </div> --}}
 
   <!-- TOP BAR -->
   <div class="topbar">
@@ -249,10 +249,6 @@
         </ul>
         <button class="slider-btn prev" aria-label="geser ke sebelumnya" data-prev-btn><ion-icon name="chevron-back"></ion-icon></button>
         <button class="slider-btn next" aria-label="geser ke berikutnya" data-next-btn><ion-icon name="chevron-forward"></ion-icon></button>
-        <a href="#reservasi" class="hero-btn has-after">
-          <img src="./assets/images/hero-icon.png" width="48" height="48" alt="ikon pemesanan">
-          <span class="label-2 text-center span">Pesan Meja</span>
-        </a>
       </section>
 
       <!-- RUNNING TEXT -->
@@ -295,9 +291,6 @@
             <img src="./assets/images/logo.png" width="570" height="570" loading="lazy" alt="tentang kami" class="w-100" data-parallax-item data-parallax-speed="1">
             <div class="has-before" data-parallax-item data-parallax-speed="1.75">
               <img src="./assets/images/logo.png" width="285" height="285" loading="lazy" alt="" class="w-100">
-            </div>
-            <div class="abs-img abs-img-2 has-before">
-              <img src="./assets/images/badge-2.png" width="133" height="134" loading="lazy" alt="">
             </div>
           </figure>
           <img src="./assets/images/shape-3.png" width="197" height="194" loading="lazy" alt="" class="shape">
@@ -643,7 +636,7 @@
             <div class="icon-wrapper">
               <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
 
-              <input type="email" name="email_address" placeholder="Email Anda" autocomplete="off" class="input-field">
+              <input type="email" name="email_address" placeholder="Email Anda" required autocomplete="off" class="input-field">
             </div>
 
             <button type="submit" class="btn btn-secondary">
@@ -870,7 +863,7 @@
                     <i class="fas fa-eye toggle-password" onclick="togglePw('loginPw', this)"></i>
                 </div>
               </div>
-              <a href="#" class="forgot-password" onclick="alert('Hubungi Admin via WhatsApp.')">Lupa Password?</a>
+              <a href="javascript:void(0)" class="forgot-password" onclick="bukaModalLupaPassword()">Lupa Password?</a>
               <button type="submit" class="auth-submit-btn">Masuk ke Akun</button>
           </form>
 
@@ -878,11 +871,11 @@
               @csrf
               <div class="auth-input-group">
                   <label>Nama Lengkap</label>
-                  <input type="text" name="name" required placeholder="Contoh: Budi Santoso">
+                  <input type="text" name="name" required placeholder="Contoh: Fahmi Rhamadan">
               </div>
               <div class="auth-input-group">
                   <label>Email (Opsional)</label>
-                  <input type="email" name="email" placeholder="budi@gmail.com (Opsional)">
+                  <input type="email" name="email" placeholder="Fahmi123@gmail.com (Opsional)">
               </div>
               <div class="auth-input-group">
                   <label>No WhatsApp</label>
@@ -904,6 +897,46 @@
               </div>
               <button type="submit" class="auth-submit-btn">Daftar Sekarang</button>
           </form>
+          <!-- FORM LUPA PASSWORD -->
+          <div id="formLupaPassword" class="auth-form" style="display: none;">
+              <div style="text-align: center; margin-bottom: 20px;">
+                  <i class="fas fa-lock" style="font-size: 30px; color: var(--gold-crayola); margin-bottom: 10px;"></i>
+                  <h3 style="color: #fff; font-size: 18px; margin-bottom: 5px;">Lupa Password?</h3>
+                  <p style="color: #aaa; font-size: 13px;">Masukkan Email atau No HP yang terdaftar.</p>
+              </div>
+              
+              <div class="auth-input-group">
+                  <input type="text" id="resetInput" required placeholder="Contoh: Fahmi123@gmail.com atau 0812xxx" onkeyup="cekTipeReset(this.value)">
+              </div>
+
+              <!-- Tombol Default Cari Akun -->
+              <div id="defaultCekBtn">
+                  <button type="button" class="auth-submit-btn" style="background: #444; color: #fff;" onclick="cekTipeReset(document.getElementById('resetInput').value)">
+                      <i class="fas fa-search" style="margin-right: 5px;"></i> Cari Akun Saya
+                  </button>
+              </div>
+
+              <!-- Akan muncul kalau yg diketik EMAIL -->
+              <div id="resetEmailArea" style="display: none;">
+                  <button type="button" class="auth-submit-btn" style="background: #22c55e; color: #fff;" onclick="kirimLinkEmail()">
+                      <i class="fas fa-envelope"></i> Kirim Link Reset ke Email
+                  </button>
+              </div>
+
+              <!-- Akan muncul kalau yg diketik NO HP (ANGKA) -->
+              <div id="resetWAArea" style="display: none;">
+                  <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234,179,8,0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #eab308; text-align: center; line-height: 1.4;">
+                      <i class="fas fa-info-circle"></i> Karena kamu mendaftar pakai No HP, silakan minta Admin untuk mereset passwordmu via WhatsApp.
+                  </div>
+                  <a href="#" id="linkWaAdmin" target="_blank" class="auth-submit-btn" style="display: block; background: #25D366; color: #fff; text-decoration: none; text-align: center;">
+                      <i class="fab fa-whatsapp" style="font-size: 18px; margin-right: 5px;"></i> Chat Admin Sekarang
+                  </a>
+              </div>
+
+              <div style="text-align: center; margin-top: 20px;">
+                  <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color: #888; font-size: 13px; text-decoration: none;"><i class="fas fa-arrow-left"></i> Kembali ke Login</a>
+              </div>
+          </div>
       </div>
   </div>
 
@@ -1048,16 +1081,43 @@
           if (overlay) overlay.classList.remove('active');
           document.body.style.overflow = '';
       }
-      function openAuthModal() { document.body.style.overflow = 'hidden'; document.getElementById('authModal').classList.add('show'); }
+      function openAuthModal() { 
+          document.body.style.overflow = 'hidden'; 
+          document.getElementById('authModal').classList.add('show'); 
+          switchAuthTab('login'); // <-- INI OBATNYA! Biar pas dibuka selalu balik ke Login
+      }
       function closeAuthModal() { document.body.style.overflow = 'auto'; document.getElementById('authModal').classList.remove('show'); }
       
       function switchAuthTab(tab) {
+          // 1. Munculin lagi bungkus tab (Menu Login/Daftar)
+          const tabContainer = document.querySelector('.auth-tabs');
+          if (tabContainer) tabContainer.style.display = 'flex';
+
+          // 2. Bersihkan semua form dari class active dan paksaan 'hilang'
           const tabs = document.querySelectorAll('.auth-tab');
           const forms = document.querySelectorAll('.auth-form');
+          
           tabs.forEach(t => t.classList.remove('active'));
-          forms.forEach(f => f.classList.remove('active'));
-          if (tab === 'login') { tabs[0].classList.add('active'); document.getElementById('formLogin').classList.add('active'); } 
-          else { tabs[1].classList.add('active'); document.getElementById('formRegister').classList.add('active'); }
+          forms.forEach(f => {
+              f.classList.remove('active');
+              f.style.display = ''; // <-- INI KUNCI FIX-NYA! Menghapus efek 'none'
+          });
+
+          // 3. Aktifkan form sesuai pilihan (Login atau Register)
+          if (tab === 'login') { 
+              tabs[0].classList.add('active'); 
+              document.getElementById('formLogin').classList.add('active'); 
+          } else { 
+              tabs[1].classList.add('active'); 
+              document.getElementById('formRegister').classList.add('active'); 
+          }
+
+          // 4. Pastikan form Lupa Password disembunyikan
+          const formLupa = document.getElementById('formLupaPassword');
+          if (formLupa) {
+              formLupa.classList.remove('active');
+              formLupa.style.display = 'none';
+          }
       }
 
       function togglePw(inputId, iconElement) {
@@ -1083,19 +1143,19 @@
   if (pw.length < 6) {
     bar.className = 'pw-strength pw-weak';
     text.style.color = '#ef4444';
-    text.innerText = '🔴 Lemah (Min. 6 karakter)';
+    text.innerText = '🔴 Goblok (Min. 6 karakter)';
   } else if (pw.length >= 6 && /[A-Z]/.test(pw) && /[0-9]/.test(pw)) {
     bar.className = 'pw-strength pw-strong';
     text.style.color = '#22c55e';
-    text.innerText = '🟢 Sangat Kuat!';
+    text.innerText = '🟢 Absolute Password!';
   } else if (pw.length >= 6 && (/[A-Z]/.test(pw) || /[0-9]/.test(pw))) {
     bar.className = 'pw-strength pw-medium';
     text.style.color = '#eab308';
-    text.innerText = '🟡 Sedang (Campur huruf & angka)';
+    text.innerText = '🟡 Lumayan (Campur huruf & angka)';
   } else {
     bar.className = 'pw-strength pw-medium';
     text.style.color = '#eab308';
-    text.innerText = '🟡 Sedang';
+    text.innerText = '🟡 Oke lah';
   }
 }
 
@@ -1158,205 +1218,204 @@
                   container.innerHTML = html;
               });
       }
-      function tutupModalRiwayat() { document.body.style.overflow = 'auto'; document.getElementById('modalListRiwayat').classList.remove('show'); }
-
-      function bukaModalNotif() {
-          document.body.style.overflow = 'hidden'; document.getElementById('modalListNotif').classList.add('show');
-          const badge = document.getElementById('badgeNotifHijau'); if(badge) badge.style.display = 'none';
-          fetch("{{ route('pelanggan.notif.read') }}", { method: "POST", headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}", "Content-Type": "application/json" } });
-      }
-      function tutupModalNotif() { document.body.style.overflow = 'auto'; document.getElementById('modalListNotif').classList.remove('show'); }
-
-      // FUNGSI KONFIRMASI HAPUS CUSTOM MODAL
-      function konfirmasiHapus(tipe, id) {
-          document.getElementById('customConfirmModal').classList.add('show');
-          const form = document.getElementById('deleteForm');
-          const msg = document.getElementById('confirmMessage');
-          
-          if (tipe === 'riwayat') {
-              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Riwayat Pesanan</b> ini?';
-              form.action = `/pelanggan/pesanan/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
-          } else if (tipe === 'notif') {
-              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Notifikasi</b> ini?';
-              form.action = `/pelanggan/notif/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
-          }
-      }
-
-      function tutupConfirmModal() { document.getElementById('customConfirmModal').classList.remove('show'); }
-      
-      window.addEventListener('click', function(e) {
-          if (e.target === document.getElementById('authModal')) closeAuthModal();
-          if (e.target === document.getElementById('modalListRiwayat')) tutupModalRiwayat();
-          if (e.target === document.getElementById('modalListNotif')) tutupModalNotif();
-          if (e.target === document.getElementById('customConfirmModal')) tutupConfirmModal();
-      });
-
-      function hapusNotifInstan(id) {
-        const el = document.getElementById(`notif-item-${id}`);
-        if (!el) return;
-
-        // Animasi kayak notif pesan: mengecil + hilang
-        el.style.transition = 'height 0.25s ease, margin 0.25s ease, opacity 0.25s ease';
-        el.style.height = el.offsetHeight + 'px'; // kunci tinggi
-        el.style.overflow = 'hidden';
-
-        // Paksa reflow biar transisi jalan
-        void el.offsetHeight;
-
-        el.classList.add('hidden');
-
-        setTimeout(() => {
-          // Hapus item dari DOM
-          el.remove();
-
-          // Cek sisa notifikasi, tampilkan pesan kosong jika habis
-          const container = document.getElementById('notif-list-container');
-          const remaining = container.querySelectorAll('.swipe-item:not(.hidden)').length;
-          if (remaining === 0 && !document.getElementById('empty-notif')) {
-            container.innerHTML = `
-              <div id="empty-notif" style="text-align: center; padding: 30px 0; animation: fadeIn 0.5s;">
-                <i class="fas fa-bell-slash" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
-                <p style="color: #888; font-size: 13px;">Belum ada notifikasi.</p>
-              </div>
-            `;
-          }
-        }, 300);
-
-        // Hapus di server (background)
-        fetch(`/pelanggan/notif/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        }).catch(err => console.error("Gagal hapus notif:", err));
-      }
 
       // ========== SWIPE-TO-DELETE NOTIFIKASI (DESKTOP + MOBILE) ==========
-    document.addEventListener('DOMContentLoaded', function() {
-      const container = document.getElementById('notif-list-container');
-      if (!container) return;
+      document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('notif-list-container');
+        if (!container) return;
 
-      // Event listener pakai delegation biar item baru juga ke-detect
-      container.addEventListener('mousedown', startSwipe);
-      container.addEventListener('touchstart', startSwipe, { passive: false });
+        // Event listener pakai delegation biar item baru juga ke-detect
+        container.addEventListener('mousedown', startSwipe);
+        container.addEventListener('touchstart', startSwipe, { passive: false });
 
-      let currentItem = null;
-      let startX = 0;
-      let currentX = 0;
-      let isDragging = false;
-      let wrapper = null;
+        let currentItem = null;
+        let startX = 0;
+        let startY = 0; // Tambahan: untuk mendeteksi pergerakan vertikal
+        let currentX = 0;
+        let isDragging = false;
+        let isScrolling = false; // Tambahan: flag untuk mode scroll
+        let wrapper = null;
 
-      function startSwipe(e) {
-        // Cari elemen .swipe-content-wrapper
-        let target = e.target.closest('.swipe-content-wrapper');
-        if (!target) return;
-        if (e.type === 'mousedown' && e.button !== 0) return;
+        function startSwipe(e) {
+          let target = e.target.closest('.swipe-content-wrapper');
+          if (!target) return;
+          if (e.type === 'mousedown' && e.button !== 0) return;
 
-        const item = target.closest('.swipe-item');
-        if (!item) return;
+          const item = target.closest('.swipe-item');
+          if (!item || item.classList.contains('hidden')) return;
 
-        // Jangan ganggu jika sedang animasi hidden
-        if (item.classList.contains('hidden')) return;
+          currentItem = item;
+          wrapper = target;
+          isDragging = true;
+          isScrolling = false; // Reset flag saat sentuhan baru
 
-        currentItem = item;
-        wrapper = target;
-        isDragging = true;
+          const pos = getPos(e);
+          startX = pos.x;
+          startY = pos.y; // Catat posisi Y awal
+          currentX = 0;
 
-        const pos = getPos(e);
-        startX = pos.x;
-        currentX = 0;
+          wrapper.style.transition = 'none';
+          wrapper.style.cursor = 'grabbing';
 
-        // Biarkan elemen tidak ter-select
-        wrapper.style.transition = 'none';
-        wrapper.style.cursor = 'grabbing';
+          // Listener global
+          document.addEventListener('mousemove', onSwipe);
+          document.addEventListener('mouseup', endSwipe);
+          document.addEventListener('touchmove', onSwipe, { passive: false });
+          document.addEventListener('touchend', endSwipe, { passive: false });
 
-        // Listener global
-        document.addEventListener('mousemove', onSwipe);
-        document.addEventListener('mouseup', endSwipe);
-        document.addEventListener('touchmove', onSwipe, { passive: false });
-        document.addEventListener('touchend', endSwipe, { passive: false });
-
-        // Cegah scroll saat swipe
-        e.preventDefault();
-      }
-
-      function getPos(e) {
-        if (e.touches) {
-          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        }
-        return { x: e.clientX, y: e.clientY };
-      }
-
-      function onSwipe(e) {
-        if (!isDragging || !currentItem || !wrapper) return;
-        e.preventDefault();
-
-        const pos = getPos(e);
-        const deltaX = pos.x - startX;
-
-        // Hanya geser ke kiri (negatif), tidak boleh ke kanan
-        let newX = Math.min(0, deltaX);
-        // Batasi maksimal -80px (biar tidak kelewatan)
-        newX = Math.max(-80, newX);
-
-        currentX = newX;
-        wrapper.style.transform = `translateX(${newX}px)`;
-
-        // Efek opacity background delete (opsional)
-        const pct = Math.abs(newX) / 80;
-        const bg = currentItem.querySelector('.swipe-delete-bg');
-        if (bg) {
-          bg.style.opacity = Math.min(1, pct * 1.5);
-        }
-      }
-
-      function endSwipe(e) {
-        if (!isDragging || !currentItem || !wrapper) {
-          cleanup();
-          return;
+          // e.preventDefault(); <-- HAPUS BAGIAN INI BIAR HP BISA SCROLL VERTIKAL
         }
 
-        // Hapus listener global
-        document.removeEventListener('mousemove', onSwipe);
-        document.removeEventListener('mouseup', endSwipe);
-        document.removeEventListener('touchmove', onSwipe);
-        document.removeEventListener('touchend', endSwipe);
-
-        const threshold = 50; // px
-        if (Math.abs(currentX) > threshold) {
-          // Hapus notifikasi!
-          const id = currentItem.dataset.id;
-          if (id) {
-            hapusNotifInstan(id);
+        function getPos(e) {
+          if (e.touches) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
-        } else {
-          // Kembali ke posisi semula
-          wrapper.style.transition = 'transform 0.2s ease';
-          wrapper.style.transform = 'translateX(0)';
+          return { x: e.clientX, y: e.clientY };
+        }
+
+        function onSwipe(e) {
+          if (!isDragging || !currentItem || !wrapper) return;
+
+          const pos = getPos(e);
+          const deltaX = pos.x - startX;
+          const deltaY = pos.y - startY;
+
+          // Cek apakah user niatnya scroll vertikal (ke bawah/atas) atau swipe horizontal
+          if (!isScrolling) {
+            if (Math.abs(deltaY) > Math.abs(deltaX)) {
+              isScrolling = true;
+            }
+          }
+
+          // Kalau user lagi scroll vertikal, biarkan layar bergerak (batalkan logika geser item)
+          if (isScrolling) {
+            wrapper.style.transform = 'translateX(0)';
+            return;
+          }
+
+          // Kalau horizontal swipe, cegah scroll biar pergerakan gak goyang/bentrok
+          if (e.cancelable) e.preventDefault(); 
+
+          let newX = Math.min(0, deltaX);
+          newX = Math.max(-80, newX);
+          currentX = newX;
+          wrapper.style.transform = `translateX(${newX}px)`;
+
+          const pct = Math.abs(newX) / 80;
           const bg = currentItem.querySelector('.swipe-delete-bg');
-          if (bg) bg.style.opacity = '0';
+          if (bg) {
+            bg.style.opacity = Math.min(1, pct * 1.5);
+          }
         }
 
-        wrapper.style.cursor = 'grab';
-        cleanup();
-      }
+        function endSwipe(e) {
+          // Hapus listener dipindah ke atas biar aman dan gak nyangkut memorinya
+          document.removeEventListener('mousemove', onSwipe);
+          document.removeEventListener('mouseup', endSwipe);
+          document.removeEventListener('touchmove', onSwipe);
+          document.removeEventListener('touchend', endSwipe);
 
-      function cleanup() {
-        isDragging = false;
-        currentItem = null;
-        wrapper = null;
-        currentX = 0;
-      }
+          if (!isDragging || !currentItem || !wrapper) {
+            cleanup();
+            return;
+          }
 
-      // Selesaikan jika mouse keluar dari window
-      document.addEventListener('mouseleave', function() {
-        if (isDragging) {
-          endSwipe({});
+          const threshold = 50; 
+          // Cek threshold dan pastikan bukan sedang scrolling
+          if (!isScrolling && Math.abs(currentX) > threshold) {
+            const id = currentItem.dataset.id;
+            if (id) {
+              hapusNotifInstan(id);
+            }
+          } else {
+            wrapper.style.transition = 'transform 0.2s ease';
+            wrapper.style.transform = 'translateX(0)';
+            const bg = currentItem.querySelector('.swipe-delete-bg');
+            if (bg) bg.style.opacity = '0';
+          }
+
+          wrapper.style.cursor = 'grab';
+          cleanup();
         }
+
+        function cleanup() {
+          isDragging = false;
+          isScrolling = false;
+          currentItem = null;
+          wrapper = null;
+          currentX = 0;
+        }
+
+        document.addEventListener('mouseleave', function() {
+          if (isDragging) {
+            endSwipe({});
+          }
+        });
       });
-    });
+
+      function bukaModalLupaPassword() {
+          // Sembunyikan menu tab atas
+          const tabContainer = document.querySelector('.auth-tabs');
+          if(tabContainer) tabContainer.style.display = 'none'; 
+          
+          // Sembunyikan semua form login & register secara paksa
+          document.querySelectorAll('.auth-form').forEach(f => {
+              f.classList.remove('active');
+              f.style.display = 'none'; 
+          });
+          
+          // Tampilkan form lupa password
+          const formLupa = document.getElementById('formLupaPassword');
+          formLupa.classList.add('active');
+          formLupa.style.display = 'block'; 
+      }
+
+      // Modif dikit switchAuthTab biar garis tab muncul lagi pas kembali ke login
+      const originalSwitchAuthTab = switchAuthTab;
+      switchAuthTab = function(tab) {
+          // Munculin lagi bungkus tab-nya
+          const tabContainer = document.querySelector('.auth-tabs');
+          if(tabContainer) tabContainer.style.display = 'flex'; 
+          
+          // Sembunyikan form lupa password
+          const formLupa = document.getElementById('formLupaPassword');
+          if(formLupa) {
+              formLupa.classList.remove('active');
+              formLupa.style.display = 'none';
+          }
+          
+          // Jalankan fungsi aslinya
+          originalSwitchAuthTab(tab);
+      }
+
+      function cekTipeReset(val) {
+          const btnDefault = document.getElementById('defaultCekBtn');
+          const areaEmail = document.getElementById('resetEmailArea');
+          const areaWA = document.getElementById('resetWAArea');
+          const linkWa = document.getElementById('linkWaAdmin');
+          
+          if (val.length < 4) {
+              btnDefault.style.display = 'block';
+              areaEmail.style.display = 'none';
+              areaWA.style.display = 'none';
+              return;
+          }
+
+          // Kalau format email
+          if (val.includes('@')) {
+              btnDefault.style.display = 'none';
+              areaEmail.style.display = 'block';
+              areaWA.style.display = 'none';
+          } 
+          // Kalau format angka (No HP)
+          else if (/^[0-9]+$/.test(val)) {
+              btnDefault.style.display = 'none';
+              areaEmail.style.display = 'none';
+              areaWA.style.display = 'block';
+              let pesan = encodeURIComponent(`Halo Admin Ibu Opik, akun saya dengan No HP *${val}* lupa password nih. Mohon bantu resetkan ya! 🙏`);
+              linkWa.href = `https://wa.me/6285559150809?text=${pesan}`;
+          }
+      }
   </script>
 
 </body>

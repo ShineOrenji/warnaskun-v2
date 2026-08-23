@@ -7,7 +7,7 @@ use App\Models\Order; // Untuk hitung sidebar
 use App\Models\Menu;  // Untuk hitung sidebar
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 class CustomerController extends Controller
 {
     public function index(Request $request)
@@ -102,23 +102,36 @@ class CustomerController extends Controller
 
     public function updateCustomer(Request $request)
     {
-        // 1. Validasi data yang diinput
+        // 1. Validasi input dari form
         $request->validate([
             'old_phone' => 'required',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
+            'new_password' => 'nullable|min:6' // Password opsional, minimal 6 karakter
         ]);
 
-        // 2. Update SEMUA riwayat pesanan yang menggunakan nomor HP lama ini
-        // Kita ubah namanya dan nomornya menjadi yang baru
-        OrderHistory::where('phone', $request->old_phone)
-            ->update([
-                'customer_name' => $request->name,
-                'phone' => $request->phone
-            ]);
+        // 2. Cari data pelanggan berdasarkan nomor HP lama
+        $user = \App\Models\User::where('phone', $request->old_phone)->first();
 
-        // 3. Kembali ke halaman sebelumnya dengan pesan sukses
-        return redirect()->back()->with('success', 'Data pelanggan berhasil diperbarui!');
+        if (!$user) {
+            return back()->with('error', 'Pelanggan tidak ditemukan.');
+        }
+
+        // 3. Update Nama dan No HP
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+
+        // 4. LOGIKA KEKUATAN SUPER ADMIN: 
+        // Jika kolom 'Ganti Password' diisi, maka update passwordnya
+        if ($request->filled('new_password')) {
+            $user->password = Hash::make($request->new_password);
+        }
+
+        // 5. Simpan ke database
+        $user->save();
+
+        // 6. Kembalikan ke halaman sebelumnya dengan pesan sukses
+        return back()->with('success', 'Data pelanggan dan password berhasil diperbarui!');
     }
 
     // Fungsi untuk menghapus riwayat pesanan

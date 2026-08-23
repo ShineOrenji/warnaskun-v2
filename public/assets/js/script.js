@@ -246,6 +246,81 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cek pas scroll
     window.addEventListener('scroll', checkScroll);
-
-    console.log('🟡 Floating Cart - muncul pas scroll!');
 });
+
+function tutupModalRiwayat() { document.body.style.overflow = 'auto'; document.getElementById('modalListRiwayat').classList.remove('show'); }
+
+      function bukaModalNotif() {
+          document.body.style.overflow = 'hidden'; document.getElementById('modalListNotif').classList.add('show');
+          const badge = document.getElementById('badgeNotifHijau'); if(badge) badge.style.display = 'none';
+          fetch("{{ route('pelanggan.notif.read') }}", { method: "POST", headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}", "Content-Type": "application/json" } });
+      }
+      function tutupModalNotif() { document.body.style.overflow = 'auto'; document.getElementById('modalListNotif').classList.remove('show'); }
+
+      // FUNGSI KONFIRMASI HAPUS CUSTOM MODAL
+      function konfirmasiHapus(tipe, id) {
+          document.getElementById('customConfirmModal').classList.add('show');
+          const form = document.getElementById('deleteForm');
+          const msg = document.getElementById('confirmMessage');
+          
+          if (tipe === 'riwayat') {
+              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Riwayat Pesanan</b> ini?';
+              form.action = `/pelanggan/pesanan/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
+          } else if (tipe === 'notif') {
+              msg.innerHTML = 'Apakah kamu yakin ingin menghapus <b>Notifikasi</b> ini?';
+              form.action = `/pelanggan/notif/${id}`; // Pastikan rute ini sesuai dengan route Laravel kamu
+          }
+      }
+
+      function tutupConfirmModal() { document.getElementById('customConfirmModal').classList.remove('show'); }
+      
+      window.addEventListener('click', function(e) {
+          if (e.target === document.getElementById('authModal')) closeAuthModal();
+          if (e.target === document.getElementById('modalListRiwayat')) tutupModalRiwayat();
+          if (e.target === document.getElementById('modalListNotif')) tutupModalNotif();
+          if (e.target === document.getElementById('customConfirmModal')) tutupConfirmModal();
+      });
+
+      function hapusNotifInstan(id) {
+        const el = document.getElementById(`notif-item-${id}`);
+        if (!el) return;
+
+        // Animasi kayak notif pesan: mengecil + hilang
+        el.style.transition = 'height 0.25s ease, margin 0.25s ease, opacity 0.25s ease';
+        el.style.height = el.offsetHeight + 'px'; // kunci tinggi
+        el.style.overflow = 'hidden';
+
+        // Paksa reflow biar transisi jalan
+        void el.offsetHeight;
+
+        el.classList.add('hidden');
+
+        setTimeout(() => {
+          // Hapus item dari DOM
+          el.remove();
+
+          // Cek sisa notifikasi, tampilkan pesan kosong jika habis
+          const container = document.getElementById('notif-list-container');
+          const remaining = container.querySelectorAll('.swipe-item:not(.hidden)').length;
+          if (remaining === 0 && !document.getElementById('empty-notif')) {
+            container.innerHTML = `
+              <div id="empty-notif" style="text-align: center; padding: 30px 0; animation: fadeIn 0.5s;">
+                <i class="fas fa-bell-slash" style="color: #444; font-size: 32px; margin-bottom: 10px;"></i>
+                <p style="color: #888; font-size: 13px;">Belum ada notifikasi.</p>
+              </div>
+            `;
+          }
+        }, 300);
+
+        // Hapus di server (background)
+        fetch(`/pelanggan/notif/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        }).catch(err => console.error("Gagal hapus notif:", err));
+      }
+
+      

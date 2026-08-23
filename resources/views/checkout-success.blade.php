@@ -168,10 +168,6 @@
                     <i class="fas fa-qrcode"></i> Bayar Sekarang (QRIS)
                 </button>
             @endif
-
-            <a href="{{ route('customer.orders') }}" class="btn-success" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
-                <i class="fas fa-list"></i> Lihat Riwayat Pesanan
-            </a>
             <a href="{{ url('/') }}#menu" class="btn-success" style="background: transparent; color: var(--gold); border: 1px solid var(--gold);">
                 <i class="fas fa-utensils"></i> Pesan Lagi
             </a>

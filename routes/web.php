@@ -79,7 +79,10 @@ Route::delete('/admin/customers/delete-item/{id}',
 | MENU ADMIN
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+
+Route::get('/admin/settings', [DashboardController::class, 'settings'])->name('admin.settings');
+Route::post('/admin/settings/update', [DashboardController::class, 'updateSettings'])->name('admin.settings.update');
 
 Route::get('/admin/menu', [MenuController::class, 'index'])
     ->name('menu.index');
@@ -165,9 +168,6 @@ Route::get('/admin/orders/{order}/modal',
 // Rute khusus pesanan siap / halaman kurir
 Route::get('/admin/pesanan-siap', [App\Http\Controllers\OrdersController::class, 'readyOrders'])->name('admin.ready_orders');
 
-// RUTE RIWAYAT PELANGGAN
-Route::get('/riwayat-pesanan', [CustomerOrderController::class, 'index'])->name('customer.orders');
-
 /*
 |--------------------------------------------------------------------------
 | CUSTOMERS
@@ -179,6 +179,9 @@ Route::get('/admin/customers',
     ->name('customers.index');
 
 });
+
+// RUTE RIWAYAT PELANGGAN
+Route::get('/riwayat-pesanan', [CustomerOrderController::class, 'index'])->name('customer.orders');
 
 /*
 |--------------------------------------------------------------------------

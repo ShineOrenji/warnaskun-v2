@@ -447,7 +447,7 @@ body.nav-active { overflow: hidden; }
   #PRELOAD
 \*-----------------------------------*/
 
-.preload {
+/* .preload {
   position: fixed;
   top: 0;
   left: 0;
@@ -504,7 +504,7 @@ body.preload-active { overflow: hidden; }
 @keyframes loadingText {
   0% { background-position: 100%; }
   100% { background-position: 0%; }
-}
+} */
 
 /*-----------------------------------*\
   #TOPBAR
@@ -1019,8 +1019,6 @@ body.preload-active { overflow: hidden; }
 }
 
 .menu-item-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold-crayola);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
@@ -1036,7 +1034,7 @@ body.preload-active { overflow: hidden; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-3);
+  transition: transform var(--transition-2);
 }
 
 .menu-item-card:hover .menu-item-image img {
